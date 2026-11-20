@@ -51,9 +51,9 @@ Always:
 ## 5. Colour
 
 - Dark-first. Base: near-black navy (#070B14). Light mode exists and must be equally polished.
-- Primary: electric blue (#3B82F6 family).
-- Signal colour: lime (#C6F432) ONLY for "live / passed / available" states. Never as a big fill.
-- Subtle film grain overlay and one soft blue glow per screen. No rainbow gradients.
+- Accent: silver-slate, #94A3B8 in dark mode and #475569 in light mode, paired with pure white (#F8FAFC) for headlines and primary buttons. No blue anywhere.
+- Signal colour: lime #C6F432 (dark) / #65A30D (light) ONLY for "live / passed / available" states. Never as a big fill.
+- Subtle film grain overlay and one soft glow per screen: a silver-white radial glow, opacity 0.08 to 0.18. An optional very soft cold tint (#CBD5E1) only behind the hero cut-out. No rainbow gradients.
 - Check contrast (WCAG AA) in both themes.
 
 ## 6. Motion
@@ -69,8 +69,8 @@ Always:
 ## 7. The owner's photo
 
 - The photo is a hero element, never "an image dropped in a box".
-- If a transparent cut-out exists (public/images/profile/cutout.png or .webp), place it on the gradient with a soft blue rim light and a shadow. It may overlap the frame edge slightly.
-- Else: tall frame with a large radius, subtle blue colour grade on the background only if possible, gentle parallax/tilt on desktop.
+- If a transparent cut-out exists (public/images/profile/cutout.png or .webp), place it on a soft silver-white radial glow with a soft cool white rim light and a shadow. It may overlap the frame edge slightly.
+- Else: tall frame with a large radius, subtle cool colour grade on the background only if possible, gentle parallax/tilt on desktop.
 - Face in the upper third. Never stretch. Always set width/height. Serve WebP/AVIF at 1x and 2x.
 
 ## 8. Verification before saying "done"
