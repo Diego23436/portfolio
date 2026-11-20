@@ -11,5 +11,6 @@ const root = /^[a-z]:/.test(cwd) ? cwd[0].toUpperCase() + cwd.slice(1) : cwd;
 export default defineConfig({
   root,
   site: "https://nkforlan.tech",
+  devToolbar: { enabled: false },
   integrations: [tailwind(), icon()],
 });

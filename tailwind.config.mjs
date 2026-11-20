@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 // All colours come from CSS variables in src/styles/global.css.
-// To change the accent colour, edit --accent, --accent-solid and --accent-strong there.
+// Change the palette there, in one place.
 const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
 
 export default {
@@ -10,35 +10,32 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          "Inter Variable",
-          "Inter",
-          "ui-sans-serif",
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "sans-serif",
-        ],
-        display: [
-          "Space Grotesk Variable",
-          "Space Grotesk",
-          "Inter Variable",
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-        ],
+        // Body
+        sans: ["Inter Variable", "Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+        // Big headings
+        display: ["Bricolage Grotesque Variable", "Bricolage Grotesque", "Inter Variable", "ui-sans-serif", "system-ui", "sans-serif"],
+        // 1-3 accent words per section
+        serif: ["Instrument Serif", "ui-serif", "Georgia", "serif"],
+        // Labels, numbers, terminal
+        mono: ["JetBrains Mono Variable", "JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       colors: {
+        // ---- New semantic tokens (they switch with the theme, no dark: prefix needed)
+        canvas: token("base"), // page background (named canvas: "base" would clash with text-base)
+        surface: token("surface"), // panels
+        fg: token("fg"), // main text and white-on-dark
+        soft: token("soft"), // muted text
+        edge: token("edge"), // hairlines (use with opacity: border-edge/15)
+        accent: token("accent"), // silver-slate: labels, icons, glow
+        live: token("live"), // lime: ONLY for live / passed / available
+        // ---- Old tokens, kept until every page is rebuilt
         portfolio: {
           ink: token("ink"),
           muted: token("muted"),
           paper: token("paper"),
           panel: token("panel"),
           line: token("line"),
-          // accent: text, icons, borders (changes in dark mode to stay readable)
           accent: token("accent"),
-          // accent-solid: button fills that carry white text (same in both modes)
           "accent-solid": token("accent-solid"),
           "accent-strong": token("accent-strong"),
           night: token("night"),

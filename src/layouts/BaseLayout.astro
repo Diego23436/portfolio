@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { content, profile, type Locale } from "../data/content";
@@ -22,71 +23,42 @@ const pageDescription = description ?? t.meta.description;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
-    <meta name="theme-color" content="#2563EB" />
+    <meta name="theme-color" content="#070B14" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F6F8FC" media="(prefers-color-scheme: light)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{pageTitle}</title>
+    <ClientRouter />
     <script is:inline>
+      // Runs before the page paints (no flash). Dark first: dark unless the visitor chose light.
       (() => {
-        document.documentElement.classList.add("js");
-        const saved = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const dark = saved ? saved === "dark" : prefersDark;
-        document.documentElement.classList.toggle("dark", dark);
+        const apply = () => {
+          const root = document.documentElement;
+          root.classList.add("js");
+          let saved = null;
+          try {
+            saved = localStorage.getItem("theme");
+          } catch (error) {}
+          root.classList.toggle("dark", saved ? saved === "dark" : true);
+        };
+        apply();
+        if (!window.__themeSwap) {
+          window.__themeSwap = true;
+          // View Transitions replace the document: apply the theme again after each swap.
+          document.addEventListener("astro:after-swap", apply);
+        }
       })();
     </script>
   </head>
-  <body
-    class="bg-portfolio-paper font-sans text-portfolio-ink antialiased transition-colors dark:bg-portfolio-night dark:text-slate-100"
-  >
-    <div class="texture-grid fixed inset-0 -z-10 opacity-80"></div>
+  <body class="bg-canvas font-sans text-fg antialiased">
+    <div class="spotlight" data-spotlight aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
     <Header lang={lang} />
     <main id="main">
       <slot />
     </main>
     <Footer lang={lang} />
-    <script is:inline>
-      (() => {
-        const items = document.querySelectorAll(".reveal");
-        if ("IntersectionObserver" in window) {
-          const io = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("is-visible");
-                  io.unobserve(entry.target);
-                }
-              });
-            },
-            { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
-          );
-          items.forEach((el) => io.observe(el));
-        } else {
-          items.forEach((el) => el.classList.add("is-visible"));
-        }
-      })();
-    </script>
-    <script is:inline>
-      (() => {
-        const buttons = document.querySelectorAll("[data-theme-toggle]");
-        const sync = () => {
-          const isDark = document.documentElement.classList.contains("dark");
-          buttons.forEach((button) => {
-            button.setAttribute("data-theme", isDark ? "dark" : "light");
-            button.setAttribute("aria-pressed", String(isDark));
-          });
-        };
-
-        buttons.forEach((button) => {
-          button.addEventListener("click", () => {
-            const willBeDark = !document.documentElement.classList.contains("dark");
-            document.documentElement.classList.toggle("dark", willBeDark);
-            localStorage.setItem("theme", willBeDark ? "dark" : "light");
-            sync();
-          });
-        });
-
-        sync();
-      })();
+    <script>
+      import "../scripts/foundation";
     </script>
   </body>
 </html>

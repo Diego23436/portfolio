@@ -1,0 +1,14 @@
+{
+  "cutout": {
+    "source": "cutout.png",
+    "sourceWidth": 433,
+    "sourceHeight": 577,
+    "variants": [
+      {
+        "file": "cutout-433.webp",
+        "width": 433,
+        "height": 577
+      }
+    ]
+  }
+}

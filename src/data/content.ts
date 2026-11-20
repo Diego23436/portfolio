@@ -1,3 +1,5 @@
+import photoMeta from "./photos.generated.json";
+
 export const locales = ["en", "fr"] as const;
 export type Locale = (typeof locales)[number];
 
@@ -55,6 +57,21 @@ export const profile = {
         fr: "Portrait rapproché de Nk Forlan en polo rayé sombre avec une sacoche",
       },
     },
+    // Transparent cut-out for the hero. Swap public/images/profile/cutout.png, then run "npm run photos".
+    // Sizes come from src/data/photos.generated.json (written by that script).
+    cutout: photoMeta.cutout
+      ? {
+          variants: photoMeta.cutout.variants.map((variant) => ({
+            src: `/images/profile/${variant.file}`,
+            width: variant.width,
+            height: variant.height,
+          })),
+          alt: {
+            en: "Nk Forlan, cut-out portrait in a dark striped polo, thumbs up",
+            fr: "Nk Forlan, portrait détouré en polo rayé sombre, pouce levé",
+          },
+        }
+      : null,
     fullBody: {
       src: "/images/profile/about.webp",
       width: 560,

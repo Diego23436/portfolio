@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import CvDownload from "./CvDownload.astro";
 import { content, localeLabels, profile, type Locale } from "../data/content";
 
@@ -77,11 +78,12 @@ const linkActive = "bg-portfolio-accent/10 font-semibold text-portfolio-accent";
       <button
         type="button"
         data-theme-toggle
-        class="theme-toggle flex h-10 w-16 items-center rounded-md border border-portfolio-line bg-portfolio-panel px-2 transition hover:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
+        class="theme-toggle relative grid size-10 place-items-center rounded-full border border-edge/20 bg-surface text-fg transition hover:border-accent"
         aria-label={t.actions.theme}
         aria-pressed="false"
       >
-        <span class="theme-knob block size-5 rounded-sm bg-portfolio-accent transition-transform"></span>
+        <Icon name="lucide:sun" class="ti ti-sun size-5" aria-hidden="true" />
+        <Icon name="lucide:moon" class="ti ti-moon size-5" aria-hidden="true" />
       </button>
     </div>
 
@@ -118,11 +120,12 @@ const linkActive = "bg-portfolio-accent/10 font-semibold text-portfolio-accent";
           <button
             type="button"
             data-theme-toggle
-            class="theme-toggle flex h-10 w-16 items-center rounded-md border border-portfolio-line px-2 dark:border-portfolio-night-line"
+            class="theme-toggle relative grid size-10 place-items-center rounded-full border border-edge/20 text-fg"
             aria-label={t.actions.theme}
             aria-pressed="false"
           >
-            <span class="theme-knob block size-5 rounded-sm bg-portfolio-accent transition-transform"></span>
+            <Icon name="lucide:sun" class="ti ti-sun size-5" aria-hidden="true" />
+            <Icon name="lucide:moon" class="ti ti-moon size-5" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -132,19 +135,20 @@ const linkActive = "bg-portfolio-accent/10 font-semibold text-portfolio-accent";
 
 <script>
   // Close the mobile menu after a tap on a link, a tap outside, or the Escape key.
-  const menu = document.querySelector<HTMLDetailsElement>("[data-mobile-menu]");
-  if (menu) {
-    menu.addEventListener("click", (event) => {
-      if ((event.target as HTMLElement).closest("nav a")) menu.open = false;
-    });
-    document.addEventListener("click", (event) => {
-      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && menu.open) {
-        menu.open = false;
-        menu.querySelector("summary")?.focus();
-      }
-    });
-  }
+  // The listeners sit on the document and look the menu up each time,
+  // so they keep working after page changes (View Transitions).
+  const openMenu = () => document.querySelector<HTMLDetailsElement>("[data-mobile-menu][open]");
+  document.addEventListener("click", (event) => {
+    const menu = openMenu();
+    if (!menu) return;
+    const target = event.target as HTMLElement;
+    if (target.closest("[data-mobile-menu] nav a") || !menu.contains(target)) menu.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    const menu = openMenu();
+    if (event.key === "Escape" && menu) {
+      menu.open = false;
+      menu.querySelector("summary")?.focus();
+    }
+  });
 </script>
