@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import ResumeCards from "../../components/ResumeCards.astro";
+import { content, locales, type Locale } from "../../data/content";
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = content[lang];
+---
+
+<BaseLayout lang={lang} title={t.resumePage.title}>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading title={t.resumePage.title} intro={t.resumePage.intro} />
+
+    <div class="mt-10">
+      <ResumeCards lang={lang} />
+    </div>
+  </section>
+</BaseLayout>

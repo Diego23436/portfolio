@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import ResumeCards from "../../components/ResumeCards.astro";
+import { content, locales, profile, type Locale } from "../../data/content";
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = content[lang];
+---
+
+<BaseLayout lang={lang} title={t.nav.about}>
+  <section class="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-[0.95fr_1.05fr] md:items-center lg:px-8">
+    <SectionHeading title={t.aboutPreview.title} intro={t.aboutPreview.body} />
+
+    <figure class="mx-auto w-full max-w-md overflow-hidden rounded-lg border border-portfolio-line bg-white p-2 shadow-sm dark:border-portfolio-night-line dark:bg-portfolio-night-panel md:mx-0 md:justify-self-end">
+      <img
+        src={profile.photos.fullBody.src}
+        alt={profile.photos.fullBody.alt[lang]}
+        class="aspect-[4/5] size-full rounded-md object-cover object-top"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+  </section>
+
+  <section class="mx-auto grid max-w-6xl gap-8 px-4 pb-16 sm:px-6 md:grid-cols-[0.9fr_1.1fr] lg:px-8">
+    <div class="rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+      <h2 class="text-2xl font-black">{t.skills.title}</h2>
+      <div class="mt-6 grid gap-5">
+        {
+          t.skills.groups.map((group) => (
+            <div>
+              <h3 class="font-bold text-portfolio-accent">{group.title}</h3>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {group.items.map((item) => <span class="rounded-md bg-portfolio-paper px-2.5 py-1 text-xs font-bold text-portfolio-muted dark:bg-portfolio-night dark:text-slate-300">{item}</span>)}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-black">{t.journey.title}</h2>
+      <div class="mt-6 grid gap-4">
+        {
+          t.journey.items.map((item) => (
+            <article class="rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+              <p class="text-sm font-bold text-portfolio-accent">{item.period}</p>
+              <h3 class="mt-2 text-xl font-black">{item.title}</h3>
+              <p class="mt-1 text-sm font-bold text-portfolio-muted dark:text-slate-400">{item.place}</p>
+              <p class="mt-3 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{item.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white/70 py-16 dark:bg-portfolio-night-panel/60">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading title={t.resumePage.title} intro={t.resumePage.intro} />
+      <div class="mt-8">
+        <ResumeCards lang={lang} />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

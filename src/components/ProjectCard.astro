@@ -1,0 +1,58 @@
+---
+import { content, type Locale } from "../data/content";
+import type { projects } from "../data/content";
+
+type Project = (typeof projects)[number];
+type Props = {
+  project: Project;
+  lang: Locale;
+};
+
+const { project, lang } = Astro.props;
+const t = content[lang];
+---
+
+<article class="group grid h-full overflow-hidden rounded-lg border border-portfolio-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-portfolio-accent hover:shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+  <div class="relative aspect-[16/9] overflow-hidden bg-portfolio-ink text-white dark:bg-slate-950">
+    <img
+      src={project.image}
+      alt={project.imageAlt[lang]}
+      loading="lazy"
+      class="size-full object-cover opacity-75 transition duration-500 group-hover:scale-105"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-portfolio-ink via-portfolio-ink/45 to-transparent"></div>
+    <div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-teal-200">{project.repositoryStatus[lang]}</p>
+        <h3 class="mt-2 text-xl font-black">{project.title[lang]}</h3>
+      </div>
+      <span class="rounded-md bg-white/10 px-2 py-1 text-xs font-bold backdrop-blur">Case</span>
+    </div>
+  </div>
+  <div class="grid gap-5 p-5">
+    <p class="text-sm leading-6 text-portfolio-muted dark:text-slate-300">{project.summary[lang]}</p>
+    <div class="flex flex-wrap gap-2">
+      {project.stack.map((item) => <span class="rounded-md bg-portfolio-paper px-2.5 py-1 text-xs font-bold text-portfolio-muted dark:bg-portfolio-night dark:text-slate-300">{item}</span>)}
+    </div>
+    <div class="mt-auto flex flex-wrap gap-2">
+      <a
+        href={`/${lang}/projects/${project.slug}/`}
+        class="inline-flex rounded-md bg-portfolio-ink px-4 py-2 text-sm font-bold text-white transition group-hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night dark:group-hover:bg-portfolio-accent dark:group-hover:text-white"
+      >
+        {t.actions.viewCaseStudy}
+      </a>
+      {
+        "demoUrl" in project && project.demoUrl && (
+          <a
+            href={project.demoUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex rounded-md border border-portfolio-line px-4 py-2 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line"
+          >
+            {t.actions.viewLive}
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>

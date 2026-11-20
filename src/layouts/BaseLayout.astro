@@ -1,0 +1,69 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { content, profile, type Locale } from "../data/content";
+import "../styles/global.css";
+
+type Props = {
+  lang: Locale;
+  title?: string;
+  description?: string;
+};
+
+const { lang, title, description } = Astro.props;
+const t = content[lang];
+const pageTitle = title ? `${title} | ${profile.name}` : t.meta.title;
+const pageDescription = description ?? t.meta.description;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={pageDescription} />
+    <meta name="theme-color" content="#0f9f8f" />
+    <title>{pageTitle}</title>
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const dark = saved ? saved === "dark" : prefersDark;
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
+  </head>
+  <body
+    class="bg-portfolio-paper font-sans text-portfolio-ink antialiased transition-colors dark:bg-portfolio-night dark:text-slate-100"
+  >
+    <div class="texture-grid fixed inset-0 -z-10 opacity-80"></div>
+    <Header lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script is:inline>
+      (() => {
+        const buttons = document.querySelectorAll("[data-theme-toggle]");
+        const sync = () => {
+          const isDark = document.documentElement.classList.contains("dark");
+          buttons.forEach((button) => {
+            button.setAttribute("data-theme", isDark ? "dark" : "light");
+            button.setAttribute("aria-pressed", String(isDark));
+          });
+        };
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const willBeDark = !document.documentElement.classList.contains("dark");
+            document.documentElement.classList.toggle("dark", willBeDark);
+            localStorage.setItem("theme", willBeDark ? "dark" : "light");
+            sync();
+          });
+        });
+
+        sync();
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import { content, locales, type Locale } from "../../data/content";
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = content[lang];
+---
+
+<BaseLayout lang={lang} title={t.nav.services}>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading title={t.services.title} intro={t.services.intro} />
+
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        t.services.items.map((item) => (
+          <article class="rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+            <h2 class="text-lg font-black">{item}</h2>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`/${lang}/contact/`} class="rounded-md bg-portfolio-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night dark:hover:bg-portfolio-accent dark:hover:text-white">
+        {t.actions.contactMe}
+      </a>
+      <a href={`/${lang}/projects/`} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        {t.actions.viewProjects}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

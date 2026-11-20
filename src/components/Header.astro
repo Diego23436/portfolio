@@ -1,0 +1,110 @@
+---
+import CvDownload from "./CvDownload.astro";
+import { content, localeLabels, type Locale } from "../data/content";
+
+type Props = {
+  lang: Locale;
+};
+
+const { lang } = Astro.props;
+const t = content[lang];
+const otherLang: Locale = lang === "en" ? "fr" : "en";
+const currentPath = Astro.url.pathname;
+const otherPath = currentPath.startsWith(`/${lang}`)
+  ? currentPath.replace(`/${lang}`, `/${otherLang}`)
+  : `/${otherLang}/`;
+
+const navItems = [
+  { label: t.nav.home, href: `/${lang}/` },
+  { label: t.nav.about, href: `/${lang}/about/` },
+  { label: t.nav.projects, href: `/${lang}/projects/` },
+  { label: t.nav.services, href: `/${lang}/services/` },
+  { label: t.nav.contact, href: `/${lang}/contact/` },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-portfolio-line/80 bg-portfolio-paper/90 backdrop-blur-xl dark:border-portfolio-night-line dark:bg-portfolio-night/88">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+    <a href={`/${lang}/`} class="group flex items-center gap-3" aria-label="Home">
+      <span class="grid size-10 place-items-center rounded-md bg-portfolio-ink text-sm font-black text-white transition-colors group-hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night">
+        KD
+      </span>
+      <span class="hidden leading-tight sm:block">
+        <span class="block text-sm font-bold">James</span>
+        <span class="block text-xs text-portfolio-muted dark:text-slate-400">Software Engineering</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="rounded-md px-3 py-2 text-sm font-medium text-portfolio-muted transition hover:bg-white hover:text-portfolio-ink dark:text-slate-300 dark:hover:bg-portfolio-night-panel dark:hover:text-white"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="hidden items-center gap-2 md:flex">
+      <CvDownload lang={lang} compact />
+      <a
+        href={otherPath}
+        class="rounded-md border border-portfolio-line bg-white px-3 py-2 text-sm font-bold text-portfolio-ink transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel dark:text-slate-100"
+        aria-label={`Switch to ${localeLabels[otherLang].label}`}
+      >
+        {localeLabels[otherLang].short}
+      </a>
+      <button
+        type="button"
+        data-theme-toggle
+        class="theme-toggle flex h-10 w-16 items-center rounded-md border border-portfolio-line bg-white px-2 transition hover:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
+        aria-label={t.actions.theme}
+        aria-pressed="false"
+      >
+        <span class="theme-knob block size-5 rounded-sm bg-portfolio-accent transition-transform"></span>
+      </button>
+    </div>
+
+    <details class="relative md:hidden">
+      <summary class="cursor-pointer rounded-md border border-portfolio-line bg-white px-3 py-2 text-sm font-bold dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        {t.actions.menu}
+      </summary>
+      <div class="absolute right-0 mt-3 w-72 rounded-lg border border-portfolio-line bg-white p-3 shadow-2xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        <nav class="grid gap-1" aria-label="Mobile navigation">
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                class="rounded-md px-3 py-2 text-sm font-medium text-portfolio-muted hover:bg-portfolio-paper hover:text-portfolio-ink dark:text-slate-300 dark:hover:bg-portfolio-night dark:hover:text-white"
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <div class="mt-3 grid grid-cols-[1fr_auto_auto] items-center gap-2 border-t border-portfolio-line pt-3 dark:border-portfolio-night-line">
+          <CvDownload lang={lang} compact />
+          <a
+            href={otherPath}
+            class="rounded-md border border-portfolio-line px-3 py-2 text-sm font-bold dark:border-portfolio-night-line"
+            aria-label={`Switch to ${localeLabels[otherLang].label}`}
+          >
+            {localeLabels[otherLang].short}
+          </a>
+          <button
+            type="button"
+            data-theme-toggle
+            class="theme-toggle flex h-10 w-16 items-center rounded-md border border-portfolio-line px-2 dark:border-portfolio-night-line"
+            aria-label={t.actions.theme}
+            aria-pressed="false"
+          >
+            <span class="theme-knob block size-5 rounded-sm bg-portfolio-accent transition-transform"></span>
+          </button>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>

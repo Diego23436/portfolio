@@ -1,0 +1,269 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import { content, locales, profile, type Locale } from "../../data/content";
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = content[lang];
+---
+
+<BaseLayout lang={lang} title={t.contactPage.title}>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading title={t.contactPage.title} intro={t.contactPage.intro} />
+
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      <a href={profile.whatsappUrl} class="rounded-lg border border-portfolio-line bg-white p-6 transition hover:-translate-y-1 hover:border-portfolio-accent hover:shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-portfolio-accent">{t.actions.whatsapp}</p>
+        <h2 class="mt-3 text-2xl font-black">{profile.phoneDisplay}</h2>
+        <p class="mt-3 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{t.contactPage.responseNote}</p>
+      </a>
+
+      <article class="rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-portfolio-accent">{t.actions.emailMe}</p>
+        <h2 class="mt-3 break-words text-2xl font-black">{profile.email}</h2>
+        <p class="mt-3 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{t.contactPage.responseNote}</p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <a href={`mailto:${profile.email}`} class="rounded-md bg-portfolio-ink px-4 py-2 text-sm font-bold text-white transition hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night dark:hover:bg-portfolio-accent dark:hover:text-white">
+            {t.actions.openMailApp}
+          </a>
+          <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${profile.email}`} target="_blank" rel="noreferrer" class="rounded-md border border-portfolio-line px-4 py-2 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line">
+            {t.actions.openGmail}
+          </a>
+          <button type="button" data-copy-email data-email={profile.email} data-copied-label={t.actions.copiedEmail} class="rounded-md border border-portfolio-line px-4 py-2 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line">
+            {t.actions.copyEmail}
+          </button>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href={profile.github} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">{t.actions.github}</a>
+      <a href={profile.linkedin} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">{t.actions.linkedin}</a>
+    </div>
+
+    <section class="mt-12 rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+      <div class="max-w-3xl">
+        <h2 class="text-2xl font-black">{t.contactPage.whatsappForm.title}</h2>
+        <p class="mt-3 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{t.contactPage.whatsappForm.intro}</p>
+      </div>
+
+      <form
+        class="mt-8 grid gap-5"
+        data-whatsapp-form
+        data-whatsapp-number={profile.whatsappNumber}
+      >
+        <label class="grid gap-2 text-sm font-bold">
+          {t.contactPage.whatsappForm.name}
+          <input
+            name="name"
+            required
+            autocomplete="name"
+            placeholder={t.contactPage.whatsappForm.namePlaceholder}
+            class="rounded-md border border-portfolio-line bg-portfolio-paper px-4 py-3 text-sm font-medium text-portfolio-ink outline-none transition focus:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night dark:text-slate-100"
+          />
+        </label>
+
+        <label class="grid gap-2 text-sm font-bold">
+          {t.contactPage.whatsappForm.message}
+          <textarea
+            name="message"
+            required
+            rows="5"
+            placeholder={t.contactPage.whatsappForm.messagePlaceholder}
+            class="rounded-md border border-portfolio-line bg-portfolio-paper px-4 py-3 text-sm font-medium leading-6 text-portfolio-ink outline-none transition focus:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night dark:text-slate-100"
+          ></textarea>
+        </label>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="submit" class="rounded-md bg-portfolio-accent px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent-strong">
+            {t.contactPage.whatsappForm.submit}
+          </button>
+          <p class="hidden text-sm font-semibold text-portfolio-accent" data-whatsapp-feedback role="status" aria-live="polite">
+            {t.contactPage.whatsappForm.feedback}
+          </p>
+        </div>
+      </form>
+    </section>
+
+    <section class="mt-12 rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+      <div class="max-w-3xl">
+        <h2 class="text-2xl font-black">{t.contactPage.form.title}</h2>
+        <p class="mt-3 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{t.contactPage.form.intro}</p>
+      </div>
+
+      <form
+        class="mt-8 grid gap-5"
+        data-contact-form
+        data-endpoint={`https://formsubmit.co/ajax/${profile.email}`}
+        data-submit-label={t.contactPage.form.submit}
+        data-sending-label={t.contactPage.form.sending}
+        data-success-message={t.contactPage.form.feedback}
+        data-error-message={t.contactPage.form.error}
+      >
+        <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+
+        <div class="grid gap-5 md:grid-cols-2">
+          <label class="grid gap-2 text-sm font-bold">
+            {t.contactPage.form.name}
+            <input
+              name="name"
+              required
+              autocomplete="name"
+              placeholder={t.contactPage.form.namePlaceholder}
+              class="rounded-md border border-portfolio-line bg-portfolio-paper px-4 py-3 text-sm font-medium text-portfolio-ink outline-none transition focus:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night dark:text-slate-100"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-bold">
+            {t.contactPage.form.email}
+            <input
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder={t.contactPage.form.emailPlaceholder}
+              class="rounded-md border border-portfolio-line bg-portfolio-paper px-4 py-3 text-sm font-medium text-portfolio-ink outline-none transition focus:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night dark:text-slate-100"
+            />
+          </label>
+        </div>
+
+        <label class="grid gap-2 text-sm font-bold">
+          {t.contactPage.form.subject}
+          <input
+            name="subject"
+            required
+            placeholder={t.contactPage.form.subjectPlaceholder}
+            class="rounded-md border border-portfolio-line bg-portfolio-paper px-4 py-3 text-sm font-medium text-portfolio-ink outline-none transition focus:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night dark:text-slate-100"
+          />
+        </label>
+
+        <label class="grid gap-2 text-sm font-bold">
+          {t.contactPage.form.message}
+          <textarea
+            name="message"
+            required
+            rows="7"
+            placeholder={t.contactPage.form.messagePlaceholder}
+            class="rounded-md border border-portfolio-line bg-portfolio-paper px-4 py-3 text-sm font-medium leading-6 text-portfolio-ink outline-none transition focus:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night dark:text-slate-100"
+          ></textarea>
+        </label>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="submit" class="rounded-md bg-portfolio-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night dark:hover:bg-portfolio-accent dark:hover:text-white">
+            {t.contactPage.form.submit}
+          </button>
+          <p class="hidden text-sm font-semibold text-portfolio-accent" data-contact-feedback role="status" aria-live="polite">
+            {t.contactPage.form.feedback}
+          </p>
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <script is:inline>
+    (() => {
+      document.querySelectorAll("[data-copy-email]").forEach((button) => {
+        const originalLabel = button.textContent;
+
+        button.addEventListener("click", async () => {
+          const email = button.getAttribute("data-email");
+          const copiedLabel = button.getAttribute("data-copied-label") || originalLabel;
+
+          try {
+            await navigator.clipboard.writeText(email);
+            button.textContent = copiedLabel;
+            window.setTimeout(() => {
+              button.textContent = originalLabel;
+            }, 1800);
+          } catch {
+            window.location.href = `mailto:${email}`;
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-whatsapp-form]").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const data = new FormData(form);
+          const number = form.getAttribute("data-whatsapp-number");
+          const name = String(data.get("name") || "").trim();
+          const message = String(data.get("message") || "").trim();
+          const text = [
+            `Hello James, my name is ${name}.`,
+            "",
+            message,
+          ].join("\n");
+          const feedback = form.querySelector("[data-whatsapp-feedback]");
+
+          feedback?.classList.remove("hidden");
+          window.open(`https://wa.me/${number}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+        });
+      });
+
+      document.querySelectorAll("[data-contact-form]").forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const data = new FormData(form);
+          const honeypot = String(data.get("_honey") || "").trim();
+          const subject = String(data.get("subject") || "").trim();
+          const endpoint = form.getAttribute("data-endpoint");
+          const submit = form.querySelector("button[type='submit']");
+          const feedback = form.querySelector("[data-contact-feedback]");
+          const submitLabel = form.getAttribute("data-submit-label") || submit?.textContent || "";
+          const sendingLabel = form.getAttribute("data-sending-label") || "Sending...";
+          const successMessage = form.getAttribute("data-success-message") || "Message sent.";
+          const errorMessage = form.getAttribute("data-error-message") || "The message could not be sent.";
+
+          if (honeypot) return;
+
+          const payload = Object.fromEntries(data.entries());
+          payload._subject = subject;
+          payload._replyto = String(data.get("email") || "");
+
+          feedback?.classList.add("hidden");
+          submit?.setAttribute("disabled", "true");
+          submit?.classList.add("opacity-75");
+          if (submit) submit.textContent = sendingLabel;
+
+          try {
+            const response = await fetch(endpoint, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) throw new Error("Form submission failed");
+
+            form.reset();
+            if (feedback) {
+              feedback.textContent = successMessage;
+              feedback.classList.remove("hidden", "text-red-600", "dark:text-red-400");
+              feedback.classList.add("text-portfolio-accent");
+            }
+          } catch {
+            if (feedback) {
+              feedback.textContent = errorMessage;
+              feedback.classList.remove("hidden", "text-portfolio-accent");
+              feedback.classList.add("text-red-600", "dark:text-red-400");
+            }
+          } finally {
+            submit?.removeAttribute("disabled");
+            submit?.classList.remove("opacity-75");
+            if (submit) submit.textContent = submitLabel;
+          }
+        });
+      });
+    })();
+  </script>
+</BaseLayout>
