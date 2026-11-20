@@ -13,4 +13,8 @@ export default defineConfig({
   site: "https://nkforlan.tech",
   devToolbar: { enabled: false },
   integrations: [tailwind(), icon()],
+  vite: {
+    // Pre-bundle GSAP so the dev server never has to re-optimise it in the middle of a session.
+    optimizeDeps: { include: ["gsap", "gsap/ScrollTrigger", "gsap/Flip"] },
+  },
 });

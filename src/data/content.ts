@@ -175,14 +175,24 @@ export const content = {
         "I am a full-stack and DevOps engineer from Douala. I build multi-tenant SaaS, document marketplaces, back-office tools and business websites, and I explain the tech in simple words.",
     },
     about: {
-      title: "About me",
+      intro: "I design and ship real products, for real businesses.",
       paragraphs: [
-        "I am a full-stack and DevOps engineer from Douala. I design and ship real products for real businesses: multi-tenant SaaS, document marketplaces, back-office tools and business websites.",
-        "I like clean architecture, and I model the data before I code. I work with tickets, merge requests, CI pipelines and code review. I take a product from the specification to deployment on a server with its own domain.",
+        "Full-stack and DevOps engineer from Douala. I model the data first, work in tickets and merge requests, and take a product from the spec to a server with a domain.",
         "Outside code, I am an experienced mathematics tutor. Teaching makes me better at explaining hard things simply.",
       ],
-      location: "Based in Douala, Cameroon. Open to remote work.",
-      languages: "Languages: English (first language) and French, fully bilingual.",
+      meta: "Douala, Cameroon · Open to remote work · EN / FR",
+      photoCaption: "Douala, 2026",
+      now: {
+        title: "Now",
+        updated: "Updated Nov 2026",
+        items: [
+          "Shipping Stocky, with a team of 3.",
+          "BTech year 3 at IUC: DevOps & Kubernetes, Network Management.",
+          "Backend tickets on Easy Klin.",
+          "Building this portfolio.",
+        ],
+      },
+      pathTitle: "Path",
     },
     skills: {
       title: "Tech Stack",
@@ -257,6 +267,8 @@ export const content = {
       items: [
         {
           period: "2024 – 2027 (expected)",
+          when: "2024–27",
+          line: "Year 3 (2026-27). Courses in English, including DevOps & Kubernetes.",
           title: "Bachelor of Technology (BTech) in Computer Science Engineering",
           place: "Institut Universitaire de la Côte (IUC), Douala",
           body: "Now in year 3 (2026-27). Courses are taught in English, including DevOps & Kubernetes and Network Management & Monitoring.",
@@ -264,6 +276,8 @@ export const content = {
         {
           // TODO: add the years for GCE A-Level and O-Level.
           period: "",
+          when: "",
+          line: "",
           title: "GCE Advanced Level and GCE Ordinary Level",
           place: "GBHS Bobongo Petit Paris",
           body: "",
@@ -275,6 +289,8 @@ export const content = {
       items: [
         {
           period: "24 Aug 2026 – 10 Oct 2026",
+          when: "2026",
+          line: "Led Stocky's design and build: architecture, data model, auth, deployment on a VPS.",
           title: "Software Engineering Intern",
           place: "Fast and Sure Travel SARL, Douala",
           body: "Worked in the IT team at the Douala branch. Led the design and build of Stocky, a multi-tenant SaaS, with a small team: architecture, data model, authentication, and deployment on a VPS with its own domain.",
@@ -282,6 +298,8 @@ export const content = {
         {
           // TODO: add the dates of the Easy Klin project.
           period: "",
+          when: "",
+          line: "NestJS API tickets with tests, on GitLab with CI and SonarQube.",
           title: "Backend Developer (team project)",
           place: "Easy Klin",
           body: "Backend developer on the NestJS API of a multi-agency laundry platform. Self-hosted GitLab, ticket-based sprints, rebase before merge request, CI pipelines, SonarQube quality gate and test-first work. Delivered several tickets (customer profile with addresses, catalogue service-combination logic, sales counting) with their tests.",
@@ -289,6 +307,8 @@ export const content = {
         {
           // TODO: add the start year of freelance work.
           period: "Ongoing",
+          when: "Ongoing",
+          line: "Web apps and sites for local businesses: documents, back office, quiz, clinic.",
           title: "Freelance Full-Stack Developer",
           place: "Independent",
           body: "Web apps and websites for local businesses and institutions: document services, an immigration agency back office, an education quiz platform and a clinic website.",
@@ -348,41 +368,30 @@ export const content = {
     },
     contactPage: {
       title: "Contact",
-      intro:
-        "For full-time roles, freelance projects or remote collaboration, email or WhatsApp is the fastest way to reach me.",
-      responseNote: "I usually reply with my availability, how I can help and the next steps.",
+      headBefore: "Let's ",
+      headItalic: "build",
+      headAfter: " something.",
+      email: { label: "Email", copy: "Copy", mail: "Open mail app", copied: "Copied ✓", failed: "Copy failed. Use the mail app." },
+      whatsapp: { label: "WhatsApp", open: "Open" },
       form: {
-        title: "Send a Message",
-        intro:
-          "Write the message here and send it directly from the portfolio.",
+        label: "Form",
+        open: "Write a message",
+        close: "Close",
         name: "Name",
-        namePlaceholder: "Your full name",
-        email: "Your Email",
-        emailPlaceholder: "you@example.com",
+        email: "Your email",
         subject: "Subject",
-        subjectPlaceholder: "Job offer, freelance project, collaboration...",
         message: "Message",
-        messagePlaceholder: "Tell me what you would like to discuss.",
-        submit: "Send Message",
+        submit: "Send message",
         sending: "Sending...",
-        feedback: "Message sent. Thank you for reaching out.",
-        error: "The message could not be sent. Please try again or use the email button above.",
-      },
-      whatsappForm: {
-        title: "Prepare a WhatsApp Message",
-        intro:
-          "Write your WhatsApp message here and open it ready to send.",
-        name: "Name",
-        namePlaceholder: "Your full name",
-        message: "Message",
-        messagePlaceholder: "Tell me what you would like to discuss on WhatsApp.",
-        submit: "Open WhatsApp",
-        feedback: "WhatsApp should open with your message ready.",
-        greeting: "Hello Forlan, my name is {name}.",
+        invalidName: "Enter your name.",
+        invalidEmail: "Enter a valid email.",
+        invalidSubject: "Add a subject.",
+        invalidMessage: "Write a message.",
+        sent: "message sent · I reply within 24h",
+        error: "The message could not be sent. Try email or WhatsApp.",
       },
     },
-    footer:
-      "Full-stack and DevOps engineer in Douala. I build and ship reliable web products.",
+    footer: { build: "deployed from Douala", cv: "CV" },
   },
   fr: {
     meta: {
@@ -469,14 +478,24 @@ export const content = {
         "Je suis ingénieur full-stack et DevOps, basé à Douala. Je construis des SaaS multi-tenant, des marketplaces de documents, des outils de back-office et des sites vitrines, et j'explique la technique avec des mots simples.",
     },
     about: {
-      title: "À propos de moi",
+      intro: "Je conçois et livre de vrais produits, pour de vraies entreprises.",
       paragraphs: [
-        "Je suis ingénieur full-stack et DevOps, basé à Douala. Je conçois et livre de vrais produits pour de vraies entreprises : SaaS multi-tenant, marketplaces de documents, outils de back-office et sites vitrines.",
-        "J'aime les architectures propres et je modélise les données avant de coder. Je travaille avec des tickets, des merge requests, des pipelines CI et de la revue de code. Je mène un produit de la spécification jusqu'au déploiement sur un serveur avec son propre domaine.",
-        "En dehors du code, je suis un répétiteur de mathématiques expérimenté. Enseigner m'aide à expliquer simplement les choses difficiles.",
+        "Ingénieur full-stack et DevOps à Douala. Je modélise les données d'abord, je travaille en tickets et merge requests, et je mène un produit du cahier des charges à un serveur avec un domaine.",
+        "En dehors du code, je suis répétiteur de mathématiques expérimenté. Enseigner m'aide à expliquer simplement les choses difficiles.",
       ],
-      location: "Basé à Douala, au Cameroun. Ouvert au travail à distance.",
-      languages: "Langues : anglais (langue maternelle) et français, bilingue complet.",
+      meta: "Douala, Cameroun · Ouvert au travail à distance · EN / FR",
+      photoCaption: "Douala, 2026",
+      now: {
+        title: "En ce moment",
+        updated: "Mis à jour nov. 2026",
+        items: [
+          "Livraison de Stocky, en équipe de 3.",
+          "BTech 3e année à l'IUC : DevOps & Kubernetes, Administration réseau.",
+          "Tickets backend sur Easy Klin.",
+          "Construction de ce portfolio.",
+        ],
+      },
+      pathTitle: "Parcours",
     },
     skills: {
       title: "Stack technique",
@@ -551,6 +570,8 @@ export const content = {
       items: [
         {
           period: "2024 – 2027 (prévu)",
+          when: "2024–27",
+          line: "3e année (2026-27). Cours en anglais, dont DevOps & Kubernetes.",
           title: "Bachelor of Technology (BTech) en Ingénierie Informatique",
           place: "Institut Universitaire de la Côte (IUC), Douala",
           body: "Actuellement en 3e année (2026-27). Les cours sont donnés en anglais, notamment DevOps & Kubernetes et Administration & supervision réseau.",
@@ -558,6 +579,8 @@ export const content = {
         {
           // TODO: add the years for GCE A-Level and O-Level.
           period: "",
+          when: "",
+          line: "",
           title: "GCE Advanced Level et GCE Ordinary Level",
           place: "GBHS Bobongo Petit Paris",
           body: "",
@@ -569,6 +592,8 @@ export const content = {
       items: [
         {
           period: "24 août 2026 – 10 oct. 2026",
+          when: "2026",
+          line: "J'ai mené la conception et le développement de Stocky : architecture, modèle de données, authentification, déploiement sur un VPS.",
           title: "Stagiaire en ingénierie logicielle",
           place: "Fast and Sure Travel SARL, Douala",
           body: "Stage dans l'équipe IT de l'agence de Douala. J'ai mené la conception et le développement de Stocky, un SaaS multi-tenant, avec une petite équipe : architecture, modèle de données, authentification et déploiement sur un VPS avec son propre domaine.",
@@ -576,6 +601,8 @@ export const content = {
         {
           // TODO: add the dates of the Easy Klin project.
           period: "",
+          when: "",
+          line: "Tickets sur l'API NestJS avec tests, sur GitLab avec CI et SonarQube.",
           title: "Développeur backend (projet d'équipe)",
           place: "Easy Klin",
           body: "Développeur backend sur l'API NestJS d'une plateforme de pressing multi-agences. GitLab auto-hébergé, sprints par tickets, rebase avant merge request, pipelines CI, quality gate SonarQube et développement guidé par les tests. Plusieurs tickets livrés (profil client avec adresses, logique de combinaison de services du catalogue, comptage des ventes) avec leurs tests.",
@@ -583,6 +610,8 @@ export const content = {
         {
           // TODO: add the start year of freelance work.
           period: "En cours",
+          when: "En cours",
+          line: "Applications et sites pour des entreprises locales : documents, back-office, quiz, clinique.",
           title: "Développeur full-stack freelance",
           place: "Indépendant",
           body: "Applications et sites web pour des entreprises et institutions locales : services de documents, back-office d'une agence d'immigration, plateforme de quiz éducative et site de clinique.",
@@ -642,42 +671,30 @@ export const content = {
     },
     contactPage: {
       title: "Contact",
-      intro:
-        "Pour un poste à temps plein, une mission freelance ou une collaboration à distance, l'email et WhatsApp sont les moyens les plus rapides pour me joindre.",
-      responseNote:
-        "Je réponds généralement avec ma disponibilité, la façon dont je peux aider et les prochaines étapes.",
+      headBefore: "",
+      headItalic: "Construisons",
+      headAfter: " quelque chose.",
+      email: { label: "Email", copy: "Copier", mail: "Ouvrir l'app mail", copied: "Copié ✓", failed: "Copie impossible. Utilisez l'app mail." },
+      whatsapp: { label: "WhatsApp", open: "Ouvrir" },
       form: {
-        title: "Envoyer un message",
-        intro:
-          "Écrivez le message ici et envoyez-le directement depuis le portfolio.",
+        label: "Formulaire",
+        open: "Écrire un message",
+        close: "Fermer",
         name: "Nom",
-        namePlaceholder: "Votre nom complet",
         email: "Votre email",
-        emailPlaceholder: "vous@example.com",
         subject: "Sujet",
-        subjectPlaceholder: "Offre d'emploi, mission freelance, collaboration...",
         message: "Message",
-        messagePlaceholder: "Expliquez ce que vous souhaitez discuter.",
         submit: "Envoyer le message",
         sending: "Envoi...",
-        feedback: "Message envoyé. Merci pour votre prise de contact.",
-        error: "Le message n'a pas pu être envoyé. Veuillez réessayer ou utiliser le bouton email ci-dessus.",
-      },
-      whatsappForm: {
-        title: "Préparer un message WhatsApp",
-        intro:
-          "Écrivez votre message WhatsApp ici et ouvrez-le prêt à envoyer.",
-        name: "Nom",
-        namePlaceholder: "Votre nom complet",
-        message: "Message",
-        messagePlaceholder: "Expliquez ce que vous souhaitez discuter sur WhatsApp.",
-        submit: "Ouvrir WhatsApp",
-        feedback: "WhatsApp devrait s'ouvrir avec votre message prêt.",
-        greeting: "Bonjour Forlan, je m'appelle {name}.",
+        invalidName: "Entrez votre nom.",
+        invalidEmail: "Entrez un email valide.",
+        invalidSubject: "Ajoutez un sujet.",
+        invalidMessage: "Écrivez un message.",
+        sent: "message envoyé · je réponds sous 24 h",
+        error: "Le message n'a pas pu être envoyé. Essayez l'email ou WhatsApp.",
       },
     },
-    footer:
-      "Ingénieur full-stack et DevOps à Douala. Je conçois et mets en ligne des produits web fiables.",
+    footer: { build: "déployé depuis Douala", cv: "CV" },
   },
 } as const;
 
@@ -725,4 +742,9 @@ export const deployLog = {
     { kind: "ok", label: "deploy", value: "nkforlan.tech" },
     { kind: "live", text: "live" },
   ],
+} as const;
+
+export const notFound = {
+  en: { line: "404 · route not deployed", suggest: "suggest", back: "Return to main", fr: "Route non déployée." },
+  fr: { line: "404 · route non déployée", suggest: "suggestions", back: "Retour à l'accueil", fr: "" },
 } as const;

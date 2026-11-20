@@ -1,55 +1,68 @@
 ---
 import { Icon } from "astro-icon/components";
 import { content, profile, whatsappLink, type Locale } from "../data/content";
+import { build } from "../data/build";
+import "../styles/pages.css";
 
-type Props = {
-  lang: Locale;
-};
+type Props = { lang: Locale };
 
 const { lang } = Astro.props;
 const t = content[lang];
 const year = new Date().getFullYear();
-
-const link =
-  "inline-flex items-center gap-2 text-portfolio-muted transition hover:text-portfolio-accent dark:text-slate-400";
 ---
 
-<footer class="border-t border-portfolio-line bg-portfolio-panel/70 dark:border-portfolio-night-line dark:bg-portfolio-night-panel/60">
-  <div class="mx-auto grid max-w-6xl gap-6 px-4 py-10 sm:px-6 md:grid-cols-[1fr_auto] lg:px-8">
-    <div>
-      <p class="font-display text-base font-bold">{profile.displayName}</p>
-      <p class="mt-2 max-w-xl text-sm text-portfolio-muted dark:text-slate-400">{t.footer}</p>
+<footer class="foot" data-footer>
+  <div class="foot-inner">
+    <div class="wm" data-wordmark aria-hidden="true">
+      <span class="wm-line">NK FORLAN</span>
+      <span class="wm-fill">NK FORLAN</span>
     </div>
-    <ul class="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-semibold">
-      <li>
-        <a class={link} href={profile.github} target="_blank" rel="noreferrer">
-          <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />{t.actions.github}
-        </a>
-      </li>
-      {
-        profile.linkedin && (
-          <li>
-            <a class={link} href={profile.linkedin} target="_blank" rel="noreferrer">
-              <Icon name="simple-icons:linkedin" class="size-4" aria-hidden="true" />{t.actions.linkedin}
-            </a>
-          </li>
-        )
-      }
-      <li>
-        <a class={link} href={`mailto:${profile.publicEmail}`}>
-          <Icon name="lucide:mail" class="size-4" aria-hidden="true" />{profile.publicEmail}
-        </a>
-      </li>
-      <li>
-        <a class={link} href={whatsappLink(lang)} target="_blank" rel="noreferrer">
-          <Icon name="simple-icons:whatsapp" class="size-4" aria-hidden="true" />{t.actions.whatsapp}
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="border-t border-portfolio-line/70 dark:border-portfolio-night-line">
-    <p class="mx-auto max-w-6xl px-4 py-4 text-xs text-portfolio-muted sm:px-6 lg:px-8 dark:text-slate-400">
-      © {year} {profile.displayName}
-    </p>
+
+    <div class="foot-row">
+      <p class="foot-time mono">
+        <i aria-hidden="true"></i>
+        <span data-clock data-suffix={t.hero.clock}>--:-- {t.hero.clock}</span>
+      </p>
+      <ul class="foot-links">
+        <li>
+          <a href={profile.github} target="_blank" rel="noreferrer">
+            <Icon name="simple-icons:github" aria-hidden="true" />{t.actions.github}
+          </a>
+        </li>
+        {
+          profile.linkedin && (
+            <li>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer">
+                <Icon name="simple-icons:linkedin" aria-hidden="true" />{t.actions.linkedin}
+              </a>
+            </li>
+          )
+        }
+        <li>
+          <a href={`mailto:${profile.publicEmail}`}>
+            <Icon name="lucide:mail" aria-hidden="true" />{profile.publicEmail}
+          </a>
+        </li>
+        <li>
+          <a href={whatsappLink(lang)} target="_blank" rel="noreferrer">
+            <Icon name="simple-icons:whatsapp" aria-hidden="true" />{t.actions.whatsapp}
+          </a>
+        </li>
+        <li>
+          <a href={profile.resume[lang]} download>
+            <Icon name="lucide:file-down" aria-hidden="true" />{t.footer.cv}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="foot-meta mono">
+      <span>© {year} {profile.displayName}</span>
+      <span>{build.version} · build {build.hash} · {t.footer.build}</span>
+    </div>
   </div>
 </footer>
+
+<script>
+  import "../scripts/footer";
+</script>

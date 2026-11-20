@@ -1,10 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import SectionHeading from "../../components/SectionHeading.astro";
-import ResumeCards from "../../components/ResumeCards.astro";
 import SkillsConstellation from "../../components/skills/SkillsConstellation.astro";
 import ProfessionalSkills from "../../components/ProfessionalSkills.astro";
 import { content, locales, profile, type Locale } from "../../data/content";
+import "../../styles/pages.css";
+import "../../styles/projects.css";
 
 export function getStaticPaths() {
   return locales.map((lang) => ({ params: { lang } }));
@@ -12,85 +12,89 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Locale;
 const t = content[lang];
+const a = t.about;
+const photo = profile.photos.fullBody;
 ---
 
-<BaseLayout lang={lang} title={t.nav.about}>
-  <section class="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-[0.95fr_1.05fr] md:items-center lg:px-8">
+<BaseLayout lang={lang} title={t.nav.about} description={a.paragraphs[0]}>
+  <section class="wrap about-hero">
     <div>
-      <SectionHeading title={t.about.title} />
-      <div class="mt-6 grid gap-4 text-base leading-7 text-portfolio-muted dark:text-slate-300">
-        {t.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      <h1 class="about-intro">{a.intro}</h1>
+      <div class="about-text">
+        {a.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
       </div>
-      <ul class="mt-6 grid gap-2 text-sm font-semibold text-portfolio-ink dark:text-slate-100">
-        <li>{t.about.location}</li>
-        <li>{t.about.languages}</li>
-      </ul>
+      <p class="about-meta mono">{a.meta}</p>
     </div>
 
-    <figure class="mx-auto w-full max-w-md overflow-hidden rounded-xl border border-portfolio-line bg-white p-2 shadow-sm dark:border-portfolio-night-line dark:bg-portfolio-night-panel md:mx-0 md:justify-self-end">
-      <img
-        src={profile.photos.fullBody.src}
-        alt={profile.photos.fullBody.alt[lang]}
-        class="aspect-[4/5] size-full rounded-md object-cover object-top"
-        width={profile.photos.fullBody.width}
-        height={profile.photos.fullBody.height}
-        loading="lazy"
-        decoding="async"
-      />
+    <figure class="about-photo" data-about-photo>
+      <div class="about-frame">
+        <img
+          src={photo.src}
+          alt={photo.alt[lang]}
+          width={photo.width}
+          height={photo.height}
+          loading="eager"
+          decoding="async"
+          data-about-img
+        />
+      </div>
+      <figcaption class="mono">{a.photoCaption}</figcaption>
     </figure>
   </section>
 
-  <section class="mx-auto grid max-w-6xl gap-8 px-4 pb-16 sm:px-6 lg:px-8">
-    <div class="grid gap-10 md:grid-cols-2">
-      <div>
-        <h2 class="text-2xl font-black">{t.experience.title}</h2>
-        <div class="mt-6 grid gap-4">
-          {
-            t.experience.items.map((item) => (
-              <article class="reveal rounded-xl border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-                {item.period && <p class="text-sm font-bold text-portfolio-accent">{item.period}</p>}
-                <h3 class="mt-2 text-xl font-black">{item.title}</h3>
-                <p class="mt-1 text-sm font-bold text-portfolio-muted dark:text-slate-400">{item.place}</p>
-                {item.body && <p class="mt-3 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{item.body}</p>}
-              </article>
-            ))
-          }
-        </div>
-      </div>
-      <div>
-        <h2 class="text-2xl font-black">{t.education.title}</h2>
-        <div class="mt-6 grid gap-4">
-          {
-            t.education.items.map((item) => (
-              <article class="reveal rounded-xl border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-                {item.period && <p class="text-sm font-bold text-portfolio-accent">{item.period}</p>}
-                <h3 class="mt-2 text-xl font-black">{item.title}</h3>
-                <p class="mt-1 text-sm font-bold text-portfolio-muted dark:text-slate-400">{item.place}</p>
-                {item.body && <p class="mt-3 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{item.body}</p>}
-              </article>
-            ))
-          }
-        </div>
-      </div>
+  <section class="wrap now">
+    <div>
+      <h2 class="sec-title">{a.now.title}</h2>
+      <p class="mono" style="margin-top: 16px; color: rgb(var(--soft));">{a.now.updated}</p>
     </div>
+    <ul class="now-list">
+      {a.now.items.map((item) => <li>{item}</li>)}
+    </ul>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-    <SectionHeading title={t.skills.title} />
-    <div class="mt-8"><SkillsConstellation lang={lang} /></div>
+  <section class="wrap" style="padding-top: clamp(72px, 10vw, 140px);">
+    <div class="sec-head reveal"><h2 class="sec-title">{t.skills.title}</h2></div>
+    <div style="margin-top: clamp(28px, 4vw, 48px);"><SkillsConstellation lang={lang} /></div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-    <SectionHeading title={t.proSkills.title} />
-    <div class="mt-8"><ProfessionalSkills lang={lang} /></div>
+  <section class="wrap" style="padding-top: clamp(72px, 10vw, 140px);">
+    <div class="sec-head reveal"><h2 class="sec-title">{t.proSkills.title}</h2></div>
+    <div style="margin-top: clamp(28px, 4vw, 48px);"><ProfessionalSkills lang={lang} /></div>
   </section>
 
-  <section class="bg-white/70 py-16 dark:bg-portfolio-night-panel/60">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <SectionHeading title={t.resumePage.title} intro={t.resumePage.intro} />
-      <div class="mt-8">
-        <ResumeCards lang={lang} />
-      </div>
-    </div>
+  <section class="wrap" style="padding-top: clamp(72px, 10vw, 140px);">
+    <div class="sec-head reveal"><h2 class="sec-title">{a.pathTitle}</h2></div>
+    <ol class="path" style="margin-top: clamp(28px, 4vw, 48px);">
+      <li class="path-group mono">{t.experience.title}</li>
+      {
+        t.experience.items.map((item) => (
+          <li class="path-row">
+            <span class="path-when mono">{item.when}</span>
+            <div>
+              <h3 class="path-title">{item.title}</h3>
+              <p class="path-place">{item.place}</p>
+              {item.line && <p class="path-line">{item.line}</p>}
+            </div>
+          </li>
+        ))
+      }
+      <li class="path-group mono" style="padding-top: 36px;">{t.education.title}</li>
+      {
+        t.education.items.map((item) => (
+          <li class="path-row">
+            <span class="path-when mono">{item.when}</span>
+            <div>
+              <h3 class="path-title">{item.title}</h3>
+              <p class="path-place">{item.place}</p>
+              {item.line && <p class="path-line">{item.line}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
   </section>
 </BaseLayout>
+
+<script>
+  import "../../scripts/about";
+</script>

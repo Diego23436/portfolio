@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { notFound } from "../data/content";
+import "../styles/pipeline.css";
+import "../styles/pages.css";
+
+const en = notFound.en;
+const fr = notFound.fr;
+---
+
+<BaseLayout lang="en" title="404" description={en.line}>
+  <section class="nf" data-notfound>
+    <div>
+      <figure class="term" aria-label={`${en.line}. ${en.fr}`}>
+        <div class="term-bar" aria-hidden="true">
+          <i></i><i></i><i></i>
+          <span class="term-title">forlan@prod: ~</span>
+        </div>
+        <pre class="term-body" aria-hidden="true"><span class="tl" data-kind="cmd"><span class="p">$</span> curl nkforlan.tech<span class="tx" data-path>/…</span></span>
+<span class="tl" data-kind="out"><span class="liv" style="color:#f87171">404</span> · route not deployed</span>
+<span class="tl" data-kind="out"><span class="dim">{en.fr}</span> <span class="dim">{fr.line}</span></span>
+<span class="tl" data-kind="cmd"><span class="p">$</span> <span class="tx">{en.suggest}</span></span>
+<span class="tl" data-kind="out arrowlist">→ <a href="/en/">/en/</a>   → <a href="/en/projects/">/en/projects/</a>   → <a href="/en/contact/">/en/contact/</a></span></pre>
+      </figure>
+      <div class="nf-back"><a class="btn" href="/en/" data-back>{en.back}</a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import "../scripts/notfound";
+</script>
