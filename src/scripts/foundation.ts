@@ -3,6 +3,7 @@
  * page-specific setup runs on every "astro:page-load".
  */
 import { hasFinePointer, prefersReducedMotion } from "./motion";
+import { copyText } from "./toast";
 
 const root = document.documentElement;
 
@@ -101,6 +102,31 @@ function initSpotlight() {
   paint();
 }
 
+/* ---------------- Clocks: any [data-clock] shows the time in Douala ---------------- */
+const douala = new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Douala", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+let clockTimer: number | undefined;
+
+function initClocks() {
+  window.clearInterval(clockTimer);
+  const clocks = document.querySelectorAll<HTMLElement>("[data-clock]");
+  if (!clocks.length) return;
+  const tick = () => {
+    const time = douala.format(new Date());
+    clocks.forEach((el) => {
+      el.textContent = el.dataset.suffix ? `${time} ${el.dataset.suffix}` : time;
+    });
+  };
+  tick();
+  clockTimer = window.setInterval(tick, 30_000);
+}
+
+/* ---------------- Copy buttons: <button data-copy-text="..." data-copied="Copied ✓"> ---------------- */
+document.addEventListener("click", (event) => {
+  const button = (event.target as HTMLElement).closest<HTMLElement>("[data-copy-text]");
+  if (!button) return;
+  void copyText(button.dataset.copyText ?? "", button.dataset.copied ?? "Copied", button.dataset.copyFailed ?? "Copy failed");
+});
+
 /* ---------------- Boot ---------------- */
 // A page swap resets the <html> classes, so put the spotlight class back.
 document.addEventListener("astro:after-swap", () => {
@@ -111,4 +137,5 @@ document.addEventListener("astro:page-load", () => {
   initThemeButtons();
   initReveal();
   initSpotlight();
+  initClocks();
 });

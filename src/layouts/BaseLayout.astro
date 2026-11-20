@@ -27,6 +27,7 @@ const pageDescription = description ?? t.meta.description;
     <meta name="theme-color" content="#F6F8FC" media="(prefers-color-scheme: light)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{pageTitle}</title>
+    <slot name="head" />
     <ClientRouter />
     <script is:inline>
       // Runs before the page paints (no flash). Dark first: dark unless the visitor chose light.
@@ -43,6 +44,8 @@ const pageDescription = description ?? t.meta.description;
         apply();
         if (!window.__themeSwap) {
           window.__themeSwap = true;
+          // First page load of the visit: allow the hero entrance animation (a page change removes this class).
+          if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("intro");
           // View Transitions replace the document: apply the theme again after each swap.
           document.addEventListener("astro:after-swap", apply);
         }
@@ -57,6 +60,7 @@ const pageDescription = description ?? t.meta.description;
       <slot />
     </main>
     <Footer lang={lang} />
+    <div class="toast" data-toast role="status" aria-live="polite"></div>
     <script>
       import "../scripts/foundation";
     </script>

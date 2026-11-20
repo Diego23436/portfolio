@@ -274,3 +274,34 @@ html.has-spotlight .spotlight {
     display: none !important;
   }
 }
+
+/* ---- Toast: small status message ("Copied ✓") ---- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 80;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: rgb(var(--base));
+  background: rgb(var(--fg));
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.hero-stage-in {
+  position: absolute;
+  inset: 0;
+}

@@ -1,0 +1,49 @@
+---
+import { Icon } from "astro-icon/components";
+import { content, marqueeTech, type Locale } from "../../data/content";
+import "../../styles/marquee.css";
+
+type Props = { lang: Locale };
+
+const { lang } = Astro.props;
+const words = content[lang].hero.marquee;
+const techNames = marqueeTech.map((tech) => tech.name).join(", ");
+---
+
+<section class="marquee" data-marquee>
+  <p class="sr-only">{words.join(", ")}. {techNames}.</p>
+
+  <div class="marquee-row" data-marquee-row data-dir="left" data-speed="70" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group marquee-big">
+        {
+          words.map((word, index) => (
+            <>
+              <span class={index % 2 === 0 ? "o" : "f"}>{word}</span>
+              <span class="marquee-star">✦</span>
+            </>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee-row" data-marquee-row data-dir="right" data-speed="45" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group">
+        {
+          marqueeTech.map((tech) => (
+            <span class="marquee-item">
+              <Icon name={tech.icon} aria-hidden="true" />
+              {tech.name}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/marquee";
+</script>

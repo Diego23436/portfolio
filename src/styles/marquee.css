@@ -1,0 +1,91 @@
+/* Role marquee under the hero. */
+.marquee {
+  display: grid;
+  gap: clamp(14px, 2vw, 22px);
+  padding-block: clamp(20px, 3vw, 36px);
+  overflow: hidden;
+  border-block: 1px solid rgb(var(--edge) / 0.14);
+}
+
+.marquee-row {
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee-group {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+/* Row 1: big outlined words, every second one filled */
+.marquee-big {
+  font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", sans-serif;
+  font-weight: 700;
+  font-variation-settings: "wdth" 90;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.marquee-big .o {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(var(--accent));
+}
+
+.marquee-big .f {
+  color: rgb(var(--fg));
+}
+
+.marquee-star {
+  margin-inline: 0.45em;
+  font-size: 0.4em;
+  color: rgb(var(--accent));
+}
+
+/* Row 2: logos + names */
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-inline: clamp(18px, 2.4vw, 34px);
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: rgb(var(--soft));
+}
+
+.marquee-item svg {
+  width: 22px;
+  height: 22px;
+  color: rgb(var(--fg));
+}
+
+/* Reduced motion: static rows that wrap, no clones */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-row {
+    white-space: normal;
+  }
+
+  .marquee-track {
+    width: auto;
+    flex-wrap: wrap;
+    transform: none !important;
+  }
+
+  .marquee-group {
+    flex-wrap: wrap;
+  }
+
+  .marquee-group.is-clone {
+    display: none;
+  }
+}

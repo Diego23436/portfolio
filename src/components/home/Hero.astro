@@ -1,0 +1,132 @@
+---
+import { content, cutoutImage, profile, type Locale } from "../../data/content";
+import "../../styles/hero.css";
+
+type Props = { lang: Locale };
+
+const { lang } = Astro.props;
+const h = content[lang].hero;
+const cutout = cutoutImage();
+const cutoutAlt = profile.photos.cutout?.alt[lang] ?? "";
+const fallback = profile.photos.portrait;
+---
+
+<section class="hero" data-hero>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-top" data-in="top">
+        <p class="hero-status">
+          <span class="hero-dot" aria-hidden="true"></span>
+          <span class="long">{h.status}</span>
+          <span class="short">{h.statusShort}</span>
+        </p>
+        <p class="hero-clock" data-clock data-suffix={h.clock}>--:-- {h.clock}</p>
+      </div>
+
+      <div class="hero-main">
+        <h1 class="hero-h1">
+          <span class="sr-only">{h.sentence}</span>
+          <span class="hero-line" aria-hidden="true">
+            <span class="hero-line-in">{h.lead} <span class="hero-ship">{h.ship}</span></span>
+          </span>
+          <span class="hero-line" aria-hidden="true">
+            <span class="hero-line-in">
+              <span class="hero-word-box" data-words>
+                {h.words.map((word) => <span class="hero-word" data-word>{word}</span>)}
+              </span>
+            </span>
+          </span>
+        </h1>
+
+        <p class="hero-sub" data-in="rise">{h.sub}</p>
+
+        <div class="hero-actions" data-in="rise">
+          <a class="hero-btn hero-btn--primary" href="#work" data-magnetic>{h.primary}</a>
+          <button
+            type="button"
+            class="hero-btn hero-btn--ghost"
+            data-magnetic
+            data-copy-text={profile.publicEmail}
+            data-copied={h.copied}
+            data-copy-failed={h.copyFailed}
+          >
+            {h.copy}
+          </button>
+        </div>
+
+        <dl class="hero-counters" data-in="rise">
+          {
+            h.counters.map((counter) => (
+              <div class="hero-counter">
+                <dt><span data-count={counter.value}>{counter.value}</span></dt>
+                <dd>{counter.label}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-stage">
+        <div class="hero-glow" data-in="glow" aria-hidden="true"></div>
+        <div class="hero-stage-in" data-in="photo">
+          <div class="hero-tilt" data-tilt>
+            {
+              cutout ? (
+                <>
+                  <div class="hero-circle" aria-hidden="true"></div>
+                  <img
+                    class="hero-cutout"
+                    src={cutout.src}
+                    srcset={cutout.srcset}
+                    sizes={cutout.sizes}
+                    width={cutout.width}
+                    height={cutout.height}
+                    alt={cutoutAlt}
+                    fetchpriority="high"
+                    decoding="async"
+                  />
+                </>
+              ) : (
+                <div class="hero-frame">
+                  <img
+                    src={fallback.src}
+                    width={fallback.width}
+                    height={fallback.height}
+                    alt={fallback.alt[lang]}
+                    fetchpriority="high"
+                  />
+                </div>
+              )
+            }
+          </div>
+        </div>
+
+        <div class="hero-chip-pos hero-chip-a" data-parallax="26" aria-hidden="true">
+          <div data-drift>
+            <span class="hero-chip" data-in="chip"><span class="ok">✓</span>{h.chips.ci}</span>
+          </div>
+        </div>
+        <div class="hero-chip-pos hero-chip-b" data-parallax="20" aria-hidden="true">
+          <div data-drift>
+            <span class="hero-chip" data-in="chip">
+              {h.chips.deploy}
+              <span class="hero-dots"><i></i><i></i><i></i></span>
+            </span>
+          </div>
+        </div>
+        <div class="hero-chip-pos hero-chip-c" data-parallax="16" aria-hidden="true">
+          <div data-drift>
+            <span class="hero-chip" data-in="chip">{h.chips.langs}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/hero";
+</script>

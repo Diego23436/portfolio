@@ -130,20 +130,27 @@ export const content = {
       mobileNav: "Mobile navigation",
     },
     hero: {
-      eyebrow: "Full-Stack & DevOps Engineer · Douala, Cameroon",
-      title: "I build and ship reliable web products, from data model to production server.",
-      intro:
-        "React and Next.js on the front end. NestJS and Supabase on the back end. PostgreSQL for data. Docker and CI/CD to deliver.",
-      availability: "Open to full-time roles, freelance projects and remote collaboration.",
-      badge: "Available for work",
-      cardLabel: "Portfolio",
+      status: "Available for work · Douala, CM · UTC+1",
+      statusShort: "Available · Douala",
+      clock: "in Douala",
+      lead: "I",
+      ship: "ship",
+      words: ["SaaS.", "APIs.", "pipelines.", "products."],
+      sentence: "I ship SaaS, APIs, pipelines and products.",
+      sub: "Full-Stack & DevOps engineer. From data model to production server.",
+      primary: "See my work",
+      copy: "Copy email",
+      copied: "Copied ✓",
+      copyFailed: "Copy failed. Use the Contact page.",
+      // TODO: confirm "4 team projects" (Stocky, Easy Klin, SmartQueue, Clinique) before publishing.
+      counters: [
+        { value: 7, label: "projects" },
+        { value: 4, label: "team projects" },
+        { value: 2, label: "languages" },
+      ],
+      chips: { ci: "CI passed · main", deploy: "stocky.host · deploying", langs: "EN / FR" },
+      marquee: ["FULL-STACK", "DEVOPS", "SAAS", "API DESIGN", "CI/CD"],
     },
-    // TODO: confirm these stats with Forlan before publishing.
-    stats: [
-      { value: "7", label: "Projects for real clients, teams and businesses" },
-      { value: "EN / FR", label: "Bilingual delivery" },
-      { value: "Full-stack + DevOps", label: "From data model to server" },
-    ],
     focus: {
       title: "How I Work",
       intro: "Simple habits that make software easier to ship and easier to maintain.",
@@ -397,20 +404,26 @@ export const content = {
       mobileNav: "Navigation mobile",
     },
     hero: {
-      eyebrow: "Ingénieur Full-Stack & DevOps · Douala, Cameroun",
-      title: "Je conçois et mets en ligne des produits web fiables, du modèle de données au serveur de production.",
-      intro:
-        "React et Next.js côté front. NestJS et Supabase côté back. PostgreSQL pour les données. Docker et CI/CD pour livrer.",
-      availability: "Ouvert aux postes à temps plein, aux missions freelance et à la collaboration à distance.",
-      badge: "Disponible",
-      cardLabel: "Portfolio",
+      status: "Disponible · Douala, CM · UTC+1",
+      statusShort: "Disponible · Douala",
+      clock: "à Douala",
+      lead: "Je",
+      ship: "déploie",
+      words: ["des SaaS.", "des API.", "des pipelines.", "des produits."],
+      sentence: "Je déploie des SaaS, des API, des pipelines et des produits.",
+      sub: "Ingénieur full-stack et DevOps. Du modèle de données au serveur de production.",
+      primary: "Voir mes projets",
+      copy: "Copier l'email",
+      copied: "Copié ✓",
+      copyFailed: "Copie impossible. Utilisez la page Contact.",
+      counters: [
+        { value: 7, label: "projets" },
+        { value: 4, label: "projets d'équipe" },
+        { value: 2, label: "langues" },
+      ],
+      chips: { ci: "CI réussie · main", deploy: "stocky.host · déploiement", langs: "EN / FR" },
+      marquee: ["FULL-STACK", "DEVOPS", "SAAS", "CONCEPTION D'API", "CI/CD"],
     },
-    // TODO: confirm these stats with Forlan before publishing.
-    stats: [
-      { value: "7", label: "Projets pour de vrais clients, équipes et entreprises" },
-      { value: "EN / FR", label: "Livraison bilingue" },
-      { value: "Full-stack + DevOps", label: "Du modèle de données au serveur" },
-    ],
     focus: {
       title: "Ma façon de travailler",
       intro: "Des habitudes simples qui rendent un logiciel plus facile à livrer et à maintenir.",
@@ -628,3 +641,30 @@ export const content = {
 
 export { projects, type Project, type Localized } from "./projects";
 export { skillGroups, type Skill, type SkillGroup, type SkillLevel } from "./skills";
+
+// Logos for the second marquee row under the hero.
+export const marqueeTech = [
+  { name: "React", icon: "simple-icons:react" },
+  { name: "Next.js", icon: "simple-icons:nextdotjs" },
+  { name: "NestJS", icon: "simple-icons:nestjs" },
+  { name: "PostgreSQL", icon: "simple-icons:postgresql" },
+  { name: "Docker", icon: "simple-icons:docker" },
+  { name: "GitLab CI", icon: "simple-icons:gitlab" },
+  { name: "Cloudflare", icon: "simple-icons:cloudflare" },
+  { name: "Flutter", icon: "simple-icons:flutter" },
+] as const;
+
+/** The hero cut-out as one object (srcset, sizes, biggest file). Null when there is no cutout.png. */
+export function cutoutImage() {
+  const cutout = profile.photos.cutout;
+  if (!cutout || cutout.variants.length === 0) return null;
+  const sorted = [...cutout.variants].sort((a, b) => a.width - b.width);
+  const biggest = sorted[sorted.length - 1];
+  return {
+    src: biggest.src,
+    width: biggest.width,
+    height: biggest.height,
+    srcset: sorted.map((variant) => `${variant.src} ${variant.width}w`).join(", "),
+    sizes: "(min-width: 768px) 40vw, 72vw",
+  };
+}

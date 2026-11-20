@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/home/Hero.astro";
+import RoleMarquee from "../../components/home/RoleMarquee.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
-import CvDownload from "../../components/CvDownload.astro";
 import TechStack from "../../components/TechStack.astro";
 import ProfessionalSkills from "../../components/ProfessionalSkills.astro";
-import { Icon } from "astro-icon/components";
-import { content, locales, profile, projects, whatsappLink, type Locale } from "../../data/content";
+import { content, cutoutImage, locales, projects, type Locale } from "../../data/content";
 
 export function getStaticPaths() {
   return locales.map((lang) => ({ params: { lang } }));
@@ -14,126 +14,43 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Locale;
 const t = content[lang];
-const social =
-  "inline-flex items-center gap-2 rounded-md border border-portfolio-line bg-portfolio-panel px-3.5 py-2 text-sm font-semibold text-portfolio-ink transition hover:-translate-y-0.5 hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel dark:text-slate-100";
 const featuredProjects = projects.filter((project) => project.tier === "main");
+const cutout = cutoutImage();
 ---
 
 <BaseLayout lang={lang}>
-  <section class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.15fr_0.85fr] md:items-center lg:px-8 lg:py-24">
-    <div>
-      <p class="inline-flex items-center gap-2.5 rounded-full border border-portfolio-line bg-portfolio-panel px-3.5 py-1.5 text-xs font-semibold text-portfolio-ink dark:border-portfolio-night-line dark:bg-portfolio-night-panel dark:text-slate-100">
-        <span class="pulse-dot size-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
-        {t.hero.badge}
-      </p>
-      <p class="mt-6 text-sm font-bold uppercase tracking-[0.16em] text-portfolio-accent">{t.hero.eyebrow}</p>
-      <h1 class="mt-4 max-w-4xl text-balance text-4xl font-bold leading-[1.08] text-portfolio-ink dark:text-white sm:text-5xl lg:text-6xl">
-        {t.hero.title}
-      </h1>
-      <p class="mt-6 max-w-2xl text-lg leading-8 text-portfolio-muted dark:text-slate-300">{t.hero.intro}</p>
-      <p class="mt-4 text-sm font-semibold text-portfolio-ink dark:text-slate-100">{t.hero.availability}</p>
-      <div class="mt-8 flex flex-wrap items-center gap-3">
-        <a href={`/${lang}/projects/`} class="rounded-md bg-portfolio-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent-solid dark:bg-slate-100 dark:text-portfolio-night dark:hover:bg-portfolio-accent-solid dark:hover:text-white">
-          {t.actions.viewProjects}
-        </a>
-        <a href={`/${lang}/contact/`} class="rounded-md border border-portfolio-line bg-portfolio-panel px-5 py-3 text-sm font-bold text-portfolio-ink transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel dark:text-slate-100">
-          {t.actions.contactMe}
-        </a>
-        <CvDownload lang={lang} />
-      </div>
-      <ul class="mt-8 flex flex-wrap gap-3">
-        <li>
-          <a href={profile.github} target="_blank" rel="noreferrer" class={social}>
-            <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />{t.actions.github}
-          </a>
-        </li>
-        <li>
-          <a href={`mailto:${profile.publicEmail}`} class={social}>
-            <Icon name="lucide:mail" class="size-4" aria-hidden="true" />{t.actions.emailMe}
-          </a>
-        </li>
-        <li>
-          <a href={whatsappLink(lang)} target="_blank" rel="noreferrer" class={social}>
-            <Icon name="simple-icons:whatsapp" class="size-4" aria-hidden="true" />{t.actions.whatsapp}
-          </a>
-        </li>
-      </ul>
-    </div>
+  {
+    cutout && (
+      <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={cutout.src}
+        imagesrcset={cutout.srcset}
+        imagesizes={cutout.sizes}
+        fetchpriority="high"
+      />
+    )
+  }
 
-    <figure class="relative mx-auto w-full max-w-md overflow-hidden rounded-2xl border border-portfolio-line bg-portfolio-panel p-3 shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel md:max-w-none">
-      <div class="profile-photo-flip relative aspect-[4/5] overflow-hidden rounded-xl bg-portfolio-ink">
-        <div class="profile-photo-flip-card absolute inset-0">
-          <img
-            src={profile.photos.portrait.src}
-            alt={profile.photos.portrait.alt[lang]}
-            width={profile.photos.portrait.width}
-            height={profile.photos.portrait.height}
-            fetchpriority="high"
-            class="profile-photo-face profile-photo-face-front size-full object-cover object-top"
-            decoding="async"
-          />
-          <img
-            src={profile.photos.headshot.src}
-            alt={profile.photos.headshot.alt[lang]}
-            width={profile.photos.headshot.width}
-            height={profile.photos.headshot.height}
-            loading="lazy"
-            class="profile-photo-face profile-photo-face-back size-full object-cover object-top"
-            decoding="async"
-          />
-        </div>
-        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-portfolio-ink/90 via-portfolio-ink/10 to-transparent"></div>
-        <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white">
-          <p class="text-xs font-bold uppercase tracking-[0.16em] text-blue-200">{t.hero.cardLabel}</p>
-          <p class="mt-2 font-display text-xl font-bold">{profile.displayName}</p>
-          <p class="mt-1 text-sm text-slate-200">{profile.title}</p>
-        </figcaption>
-      </div>
-    </figure>
-  </section>
+  <Hero lang={lang} />
+  <RoleMarquee lang={lang} />
 
-  <section class="border-y border-portfolio-line bg-white/70 dark:border-portfolio-night-line dark:bg-portfolio-night-panel/60">
-    <div class="mx-auto grid max-w-6xl gap-4 px-4 py-6 sm:grid-cols-3 sm:px-6 lg:px-8">
-      {
-        t.stats.map((stat) => (
-          <div class="rounded-xl border border-portfolio-line bg-white p-5 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-            <p class="text-2xl font-black text-portfolio-accent">{stat.value}</p>
-            <p class="mt-1 text-sm text-portfolio-muted dark:text-slate-300">{stat.label}</p>
-          </div>
-        ))
-      }
+  <!-- Temporary sections: rebuilt in the next steps (bento, pipeline, skills). -->
+  <section id="work" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading title={t.projects.title} />
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      {featuredProjects.map((project) => <ProjectCard project={project} lang={lang} />)}
     </div>
   </section>
 
-  <section class="bg-white/70 py-16 dark:bg-portfolio-night-panel/60">
-    <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:px-8">
-      <SectionHeading title={t.projects.title} intro={t.projects.intro} />
-      <div class="grid gap-5 md:grid-cols-2">
-        {featuredProjects.map((project) => <ProjectCard project={project} lang={lang} />)}
-      </div>
-    </div>
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
+    <SectionHeading title={t.skills.title} />
+    <div class="mt-8"><TechStack lang={lang} compact /></div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <div class="grid gap-8 md:grid-cols-[0.95fr_1.05fr] md:items-end">
-      <SectionHeading title={t.aboutPreview.title} intro={t.aboutPreview.body} />
-      <div>
-        <a href={`/${lang}/about/`} class="inline-flex rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-          {t.nav.about}
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="bg-white/70 py-16 dark:bg-portfolio-night-panel/60">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <SectionHeading title={t.skills.title} intro={t.skills.intro} />
-      <div class="mt-8"><TechStack lang={lang} compact /></div>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <SectionHeading title={t.proSkills.title} intro={t.proSkills.intro} />
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
+    <SectionHeading title={t.proSkills.title} />
     <div class="mt-8"><ProfessionalSkills lang={lang} short /></div>
   </section>
 </BaseLayout>

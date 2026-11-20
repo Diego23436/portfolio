@@ -1,0 +1,511 @@
+/* Home hero. Tokens come from global.css. All classes start with "hero-". */
+
+.hero {
+  --hero-glow: rgb(248 250 252 / 0.16);
+  --hero-rim: rgb(226 232 240 / 0.5);
+  --hero-rim-soft: rgb(203 213 225 / 0.18);
+  --hero-shadow: rgb(0 0 0 / 0.5);
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 66px);
+  overflow-x: clip;
+}
+
+html:not(.dark) .hero {
+  --hero-glow: rgb(71 85 105 / 0.14);
+  --hero-rim: transparent;
+  --hero-rim-soft: transparent;
+  --hero-shadow: rgb(15 23 42 / 0.28);
+}
+
+/* Option for the art-director checkpoint: a very soft cold tint behind the cut-out only. */
+.hero--tint {
+  --hero-glow: rgb(203 213 225 / 0.26);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(var(--fg) / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--fg) / 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 60% 45%, #000 20%, transparent 78%);
+  mask-image: radial-gradient(ellipse 75% 75% at 60% 45%, #000 20%, transparent 78%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: center;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(32px, 6vh, 72px) clamp(20px, 5vw, 64px);
+}
+
+.hero-copy {
+  grid-column: 1 / 8;
+}
+
+.hero-visual {
+  grid-column: 8 / 13;
+  justify-self: end;
+  width: 100%;
+  max-width: 540px;
+}
+
+/* ---- Status + clock ---- */
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--soft));
+}
+
+.hero-status .short {
+  display: none;
+}
+
+.hero-dot {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: rgb(var(--live));
+}
+
+.hero-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: hero-pulse 2s ease-out infinite;
+}
+
+@keyframes hero-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+.hero-clock {
+  margin-top: 10px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 13px;
+  color: rgb(var(--soft));
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Headline ---- */
+.hero-h1 {
+  margin-top: 28px;
+  font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", sans-serif;
+  font-weight: 700;
+  font-variation-settings: "wdth" 90;
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: rgb(var(--fg));
+}
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+.hero-line-in {
+  display: block;
+}
+
+.hero-ship {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.1em;
+  letter-spacing: -0.02em;
+}
+
+.hero-word-box {
+  position: relative;
+  display: inline-block;
+  height: 1.14em;
+  overflow: hidden;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.hero-word {
+  display: block;
+  white-space: nowrap;
+  background: linear-gradient(180deg, rgb(var(--fg)) 35%, rgb(var(--accent)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-bottom: 0.1em;
+}
+
+.hero-word-box.is-live .hero-word {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.hero-sub {
+  max-width: 34ch;
+  margin-top: 28px;
+  font-size: clamp(1.1rem, 1.4vw, 1.25rem);
+  line-height: 1.5;
+  color: rgb(var(--soft));
+}
+
+/* ---- Buttons ---- */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 28px;
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.hero-btn--primary {
+  background: rgb(var(--fg));
+  color: rgb(var(--base));
+  border: 1px solid rgb(var(--fg));
+}
+
+.hero-btn--ghost {
+  background: transparent;
+  color: rgb(var(--fg));
+  border: 1px solid rgb(var(--edge) / 0.3);
+}
+
+.hero-btn--ghost:hover {
+  border-color: rgb(var(--fg) / 0.7);
+  background: rgb(var(--fg) / 0.06);
+}
+
+/* ---- Counters ---- */
+.hero-counters {
+  display: flex;
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 1px solid rgb(var(--edge) / 0.14);
+}
+
+.hero-counter + .hero-counter {
+  margin-left: clamp(16px, 2.6vw, 40px);
+  padding-left: clamp(16px, 2.6vw, 40px);
+  border-left: 1px solid rgb(var(--edge) / 0.14);
+}
+
+.hero-counter dt {
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1;
+  color: rgb(var(--fg));
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-counter dd {
+  margin-top: 8px;
+  font-size: 13px;
+  color: rgb(var(--soft));
+}
+
+/* ---- Photo stage ---- */
+.hero-stage {
+  position: relative;
+  aspect-ratio: 1 / 1.18;
+}
+
+.hero-tilt {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.hero-glow {
+  position: absolute;
+  inset: -12% -12% 0;
+  background: radial-gradient(circle at 50% 60%, var(--hero-glow), transparent 62%);
+  pointer-events: none;
+}
+
+.hero-circle {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 92%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--edge) / 0.12);
+  background: radial-gradient(circle at 50% 55%, rgb(var(--fg) / 0.05), transparent 70%);
+}
+
+.hero-cutout {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 112%;
+  width: auto;
+  max-width: none;
+  transform: translateX(-50%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  filter: drop-shadow(-1px 0 0 var(--hero-rim)) drop-shadow(-14px 0 24px var(--hero-rim-soft))
+    drop-shadow(0 30px 40px var(--hero-shadow));
+}
+
+/* Fallback when there is no cut-out: a tall framed photo. */
+.hero-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 36px;
+  border: 1px solid rgb(var(--edge) / 0.14);
+}
+
+.hero-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Floating chips (3 layers: parallax > drift > entrance) ---- */
+.hero-chip-pos {
+  position: absolute;
+  z-index: 3;
+}
+
+.hero-chip-a {
+  top: 14%;
+  left: -6%;
+}
+
+.hero-chip-b {
+  top: 48%;
+  right: -6%;
+}
+
+.hero-chip-c {
+  bottom: 10%;
+  left: 2%;
+}
+
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: rgb(var(--fg));
+  background: rgb(var(--surface) / 0.55);
+  border: 1px solid rgb(var(--fg) / 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.hero-chip .ok {
+  color: rgb(var(--live));
+}
+
+.hero-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.hero-dots i {
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: hero-dots 1.2s ease-in-out infinite;
+}
+
+.hero-dots i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hero-dots i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes hero-dots {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ---- Hidden state before the entrance animation. Only on the first page load of a visit: the head script adds
+   .intro to <html> then, and a page change removes it. A failsafe shows everything after 3s if JS fails. ---- */
+.intro .hero:not(.is-ready) [data-in] {
+  opacity: 0;
+  animation: hero-failsafe 0.01s 3s forwards;
+}
+
+.intro .hero:not(.is-ready) .hero-line-in {
+  transform: translateY(110%);
+  animation: hero-failsafe 0.01s 3s forwards;
+}
+
+@keyframes hero-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Phone ---- */
+@media (max-width: 767px) {
+  .hero {
+    min-height: 0;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding-top: 24px;
+    padding-bottom: 40px;
+  }
+
+  .hero-copy {
+    display: contents;
+  }
+
+  .hero-top,
+  .hero-main,
+  .hero-visual {
+    grid-column: 1 / -1;
+  }
+
+  .hero-top {
+    order: 1;
+  }
+
+  .hero-visual {
+    order: 2;
+    width: 72vw;
+    max-width: 320px;
+    justify-self: center;
+    margin: 28px auto 20px;
+  }
+
+  .hero-main {
+    order: 3;
+  }
+
+  .hero-h1 {
+    font-size: clamp(3rem, 14vw, 4.5rem);
+    margin-top: 8px;
+  }
+
+  .hero-status {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-btn {
+    width: 100%;
+  }
+
+  .hero-counter dt {
+    font-size: 28px;
+  }
+
+  .hero-counter dd {
+    font-size: 12px;
+  }
+
+  .hero-chip {
+    font-size: 10px;
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .hero-chip-a {
+    left: -14%;
+    top: 8%;
+  }
+
+  .hero-chip-b {
+    right: -14%;
+    top: 50%;
+  }
+
+  .hero-chip-c {
+    left: -6%;
+    bottom: 6%;
+  }
+}
+
+@media (max-width: 359px) {
+  .hero-status .long {
+    display: none;
+  }
+
+  .hero-status .short {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro .hero:not(.is-ready) [data-in],
+  .intro .hero:not(.is-ready) .hero-line-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .hero-dot::after,
+  .hero-dots i {
+    animation: none;
+  }
+}
