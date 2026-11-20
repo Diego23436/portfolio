@@ -13,7 +13,7 @@ const t = content[lang];
 const href = `/${lang}/projects/${project.slug}/`;
 ---
 
-<article class="group grid h-full overflow-hidden rounded-lg border border-portfolio-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-portfolio-accent hover:shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+<article class="reveal group grid h-full overflow-hidden rounded-xl border border-portfolio-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-portfolio-accent hover:shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
   <div class:list={["relative overflow-hidden bg-portfolio-ink", compact ? "aspect-[21/9]" : "aspect-[16/9]"]}>
     <img
       src={project.image}
@@ -48,7 +48,7 @@ const href = `/${lang}/projects/${project.slug}/`;
     <div class="mt-auto flex flex-wrap gap-2">
       <a
         href={href}
-        class="inline-flex rounded-md bg-portfolio-ink px-4 py-2 text-sm font-bold text-white transition group-hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night dark:group-hover:bg-portfolio-accent dark:group-hover:text-white"
+        class="inline-flex rounded-md bg-portfolio-ink px-4 py-2 text-sm font-bold text-white transition group-hover:bg-portfolio-accent-solid dark:bg-slate-100 dark:text-portfolio-night dark:group-hover:bg-portfolio-accent-solid dark:group-hover:text-white"
       >
         {t.actions.viewCaseStudy}
       </a>

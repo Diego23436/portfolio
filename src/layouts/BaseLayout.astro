@@ -22,10 +22,12 @@ const pageDescription = description ?? t.meta.description;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
-    <meta name="theme-color" content="#0f9f8f" />
+    <meta name="theme-color" content="#2563EB" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{pageTitle}</title>
     <script is:inline>
       (() => {
+        document.documentElement.classList.add("js");
         const saved = localStorage.getItem("theme");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         const dark = saved ? saved === "dark" : prefersDark;
@@ -38,10 +40,31 @@ const pageDescription = description ?? t.meta.description;
   >
     <div class="texture-grid fixed inset-0 -z-10 opacity-80"></div>
     <Header lang={lang} />
-    <main>
+    <main id="main">
       <slot />
     </main>
     <Footer lang={lang} />
+    <script is:inline>
+      (() => {
+        const items = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-visible");
+                  io.unobserve(entry.target);
+                }
+              });
+            },
+            { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+          );
+          items.forEach((el) => io.observe(el));
+        } else {
+          items.forEach((el) => el.classList.add("is-visible"));
+        }
+      })();
+    </script>
     <script is:inline>
       (() => {
         const buttons = document.querySelectorAll("[data-theme-toggle]");

@@ -20,27 +20,43 @@ const navItems = [
   { label: t.nav.projects, href: `/${lang}/projects/` },
   { label: t.nav.services, href: `/${lang}/services/` },
   { label: t.nav.contact, href: `/${lang}/contact/` },
-];
+].map((item) => {
+  const normalized = currentPath.endsWith("/") ? currentPath : `${currentPath}/`;
+  const isHome = item.href === `/${lang}/`;
+  return { ...item, active: isHome ? normalized === item.href : normalized.startsWith(item.href) };
+});
+
+const linkBase = "rounded-md px-3 py-2 text-sm font-medium transition";
+const linkIdle =
+  "text-portfolio-muted hover:bg-portfolio-panel hover:text-portfolio-ink dark:text-slate-300 dark:hover:bg-portfolio-night-panel dark:hover:text-white";
+const linkActive = "bg-portfolio-accent/10 font-semibold text-portfolio-accent";
 ---
 
-<header class="sticky top-0 z-40 border-b border-portfolio-line/80 bg-portfolio-paper/90 backdrop-blur-xl dark:border-portfolio-night-line dark:bg-portfolio-night/88">
+<header class="sticky top-0 z-40 border-b border-portfolio-line/80 bg-portfolio-paper/85 backdrop-blur-xl dark:border-portfolio-night-line dark:bg-portfolio-night/85">
+  <a
+    href="#main"
+    class="sr-only-focusable absolute left-4 top-2 z-50 rounded-md bg-portfolio-accent-solid px-3 py-2 text-sm font-bold text-white focus:static"
+  >
+    {t.actions.skipToContent}
+  </a>
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
     <a href={`/${lang}/`} class="group flex items-center gap-3" aria-label={t.nav.home}>
-      <span class="grid size-10 place-items-center rounded-md bg-portfolio-ink text-sm font-black text-white transition-colors group-hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night">
+      <span class="grid size-10 place-items-center rounded-lg bg-portfolio-ink font-display text-sm font-bold text-white transition-colors group-hover:bg-portfolio-accent-solid dark:bg-slate-100 dark:text-portfolio-night dark:group-hover:text-white">
         {profile.initials}
       </span>
-      <span class="hidden leading-tight sm:block">
+      <span class="leading-tight">
         <span class="block text-sm font-bold">{profile.displayName}</span>
-        <span class="block text-xs text-portfolio-muted dark:text-slate-400">{profile.title}</span>
+        <span class="hidden text-xs text-portfolio-muted sm:block dark:text-slate-400">{profile.title}</span>
       </span>
     </a>
 
-    <nav class="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+    <nav class="hidden items-center gap-1 md:flex" aria-label={t.actions.mainNav}>
       {
         navItems.map((item) => (
           <a
             href={item.href}
-            class="rounded-md px-3 py-2 text-sm font-medium text-portfolio-muted transition hover:bg-white hover:text-portfolio-ink dark:text-slate-300 dark:hover:bg-portfolio-night-panel dark:hover:text-white"
+            aria-current={item.active ? "page" : undefined}
+            class:list={[linkBase, item.active ? linkActive : linkIdle]}
           >
             {item.label}
           </a>
@@ -52,15 +68,16 @@ const navItems = [
       <CvDownload lang={lang} compact />
       <a
         href={otherPath}
-        class="rounded-md border border-portfolio-line bg-white px-3 py-2 text-sm font-bold text-portfolio-ink transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel dark:text-slate-100"
-        aria-label={`Switch to ${localeLabels[otherLang].label}`}
+        class="rounded-md border border-portfolio-line bg-portfolio-panel px-3 py-2 text-sm font-bold text-portfolio-ink transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel dark:text-slate-100"
+        aria-label={localeLabels[otherLang].label}
+        hreflang={otherLang}
       >
         {localeLabels[otherLang].short}
       </a>
       <button
         type="button"
         data-theme-toggle
-        class="theme-toggle flex h-10 w-16 items-center rounded-md border border-portfolio-line bg-white px-2 transition hover:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
+        class="theme-toggle flex h-10 w-16 items-center rounded-md border border-portfolio-line bg-portfolio-panel px-2 transition hover:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
         aria-label={t.actions.theme}
         aria-pressed="false"
       >
@@ -68,17 +85,20 @@ const navItems = [
       </button>
     </div>
 
-    <details class="relative md:hidden">
-      <summary class="cursor-pointer rounded-md border border-portfolio-line bg-white px-3 py-2 text-sm font-bold dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+    <details class="relative md:hidden" data-mobile-menu>
+      <summary
+        class="cursor-pointer rounded-md border border-portfolio-line bg-portfolio-panel px-4 py-2 text-sm font-bold dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
+      >
         {t.actions.menu}
       </summary>
-      <div class="absolute right-0 mt-3 w-72 rounded-lg border border-portfolio-line bg-white p-3 shadow-2xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-        <nav class="grid gap-1" aria-label="Mobile navigation">
+      <div class="absolute right-0 mt-3 w-[min(18rem,calc(100vw-2rem))] rounded-xl border border-portfolio-line bg-portfolio-panel p-3 shadow-2xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        <nav class="grid gap-1" aria-label={t.actions.mobileNav}>
           {
             navItems.map((item) => (
               <a
                 href={item.href}
-                class="rounded-md px-3 py-2 text-sm font-medium text-portfolio-muted hover:bg-portfolio-paper hover:text-portfolio-ink dark:text-slate-300 dark:hover:bg-portfolio-night dark:hover:text-white"
+                aria-current={item.active ? "page" : undefined}
+                class:list={["block", linkBase, item.active ? linkActive : linkIdle]}
               >
                 {item.label}
               </a>
@@ -90,7 +110,8 @@ const navItems = [
           <a
             href={otherPath}
             class="rounded-md border border-portfolio-line px-3 py-2 text-sm font-bold dark:border-portfolio-night-line"
-            aria-label={`Switch to ${localeLabels[otherLang].label}`}
+            aria-label={localeLabels[otherLang].label}
+            hreflang={otherLang}
           >
             {localeLabels[otherLang].short}
           </a>
@@ -108,3 +129,22 @@ const navItems = [
     </details>
   </div>
 </header>
+
+<script>
+  // Close the mobile menu after a tap on a link, a tap outside, or the Escape key.
+  const menu = document.querySelector<HTMLDetailsElement>("[data-mobile-menu]");
+  if (menu) {
+    menu.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("nav a")) menu.open = false;
+    });
+    document.addEventListener("click", (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        menu.querySelector("summary")?.focus();
+      }
+    });
+  }
+</script>

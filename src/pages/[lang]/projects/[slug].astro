@@ -14,12 +14,12 @@ export function getStaticPaths() {
 const { lang, project, next } = Astro.props as { lang: Locale; project: Project; next: Project };
 const t = content[lang];
 const d = t.projectDetail;
-const card = "rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel";
+const card = "rounded-xl border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel";
 ---
 
 <BaseLayout lang={lang} title={project.title} description={project.summary[lang]}>
-  <article class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <a href={`/${lang}/projects/`} class="text-sm font-bold text-portfolio-accent hover:text-portfolio-accent-strong">
+  <article class="reveal mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <a href={`/${lang}/projects/`} class="text-sm font-bold text-portfolio-accent hover:underline">
       {t.actions.backToProjects}
     </a>
 
@@ -70,7 +70,7 @@ const card = "rounded-lg border border-portfolio-line bg-white p-6 dark:border-p
                 href={project.demoUrl}
                 target="_blank"
                 rel="noreferrer"
-                class="rounded-md bg-portfolio-accent px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent-strong"
+                class="rounded-md bg-portfolio-accent-solid px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent-strong"
               >
                 {t.actions.viewLive}
               </a>
@@ -96,7 +96,7 @@ const card = "rounded-lg border border-portfolio-line bg-white p-6 dark:border-p
         </div>
       </div>
 
-      <div class="overflow-hidden rounded-lg border border-portfolio-line bg-white p-3 shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+      <div class="overflow-hidden rounded-xl border border-portfolio-line bg-white p-3 shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
         <img
           src={project.image}
           alt={project.imageAlt[lang]}
@@ -150,7 +150,7 @@ const card = "rounded-lg border border-portfolio-line bg-white p-6 dark:border-p
 
     <a
       href={`/${lang}/projects/${next.slug}/`}
-      class="mt-10 flex items-center justify-between gap-4 rounded-lg border border-portfolio-line bg-white p-6 transition hover:-translate-y-0.5 hover:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
+      class="mt-10 flex items-center justify-between gap-4 rounded-xl border border-portfolio-line bg-white p-6 transition hover:-translate-y-0.5 hover:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
     >
       <span>
         <span class="block text-xs font-bold uppercase tracking-[0.16em] text-portfolio-accent">{d.nextProject}</span>

@@ -15,7 +15,7 @@ const items = content[lang].proSkills.items.filter((item) => !short || item.shor
 <div class:list={["grid gap-4 sm:grid-cols-2", !short && "lg:grid-cols-4"]}>
   {
     items.map((item) => (
-      <article class="reveal rounded-lg border border-portfolio-line bg-white p-5 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+      <article class="reveal rounded-xl border border-portfolio-line bg-white p-5 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
         <span class="grid size-10 place-items-center rounded-md bg-portfolio-paper text-portfolio-accent dark:bg-portfolio-night">
           <Icon name={item.icon} class="size-5" aria-hidden="true" />
         </span>

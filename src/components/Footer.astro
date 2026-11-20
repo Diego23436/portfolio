@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { content, profile, whatsappLink, type Locale } from "../data/content";
 
 type Props = {
@@ -7,23 +8,48 @@ type Props = {
 
 const { lang } = Astro.props;
 const t = content[lang];
+const year = new Date().getFullYear();
+
+const link =
+  "inline-flex items-center gap-2 text-portfolio-muted transition hover:text-portfolio-accent dark:text-slate-400";
 ---
 
-<footer class="border-t border-portfolio-line bg-white/70 dark:border-portfolio-night-line dark:bg-portfolio-night-panel/60">
-  <div class="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:px-6 md:grid-cols-[1fr_auto] lg:px-8">
+<footer class="border-t border-portfolio-line bg-portfolio-panel/70 dark:border-portfolio-night-line dark:bg-portfolio-night-panel/60">
+  <div class="mx-auto grid max-w-6xl gap-6 px-4 py-10 sm:px-6 md:grid-cols-[1fr_auto] lg:px-8">
     <div>
-      <p class="text-sm font-bold">{profile.displayName}</p>
+      <p class="font-display text-base font-bold">{profile.displayName}</p>
       <p class="mt-2 max-w-xl text-sm text-portfolio-muted dark:text-slate-400">{t.footer}</p>
     </div>
-    <div class="flex flex-wrap items-center gap-3 text-sm font-semibold">
-      <a class="text-portfolio-muted transition hover:text-portfolio-accent dark:text-slate-400" href={profile.github}>{t.actions.github}</a>
+    <ul class="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-semibold">
+      <li>
+        <a class={link} href={profile.github} target="_blank" rel="noreferrer">
+          <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />{t.actions.github}
+        </a>
+      </li>
       {
         profile.linkedin && (
-          <a class="text-portfolio-muted transition hover:text-portfolio-accent dark:text-slate-400" href={profile.linkedin}>{t.actions.linkedin}</a>
+          <li>
+            <a class={link} href={profile.linkedin} target="_blank" rel="noreferrer">
+              <Icon name="simple-icons:linkedin" class="size-4" aria-hidden="true" />{t.actions.linkedin}
+            </a>
+          </li>
         )
       }
-      <a class="text-portfolio-muted transition hover:text-portfolio-accent dark:text-slate-400" href={whatsappLink(lang)}>{t.actions.whatsapp}</a>
-      <a class="text-portfolio-muted transition hover:text-portfolio-accent dark:text-slate-400" href={`mailto:${profile.email}`}>{profile.email}</a>
-    </div>
+      <li>
+        <a class={link} href={`mailto:${profile.publicEmail}`}>
+          <Icon name="lucide:mail" class="size-4" aria-hidden="true" />{profile.publicEmail}
+        </a>
+      </li>
+      <li>
+        <a class={link} href={whatsappLink(lang)} target="_blank" rel="noreferrer">
+          <Icon name="simple-icons:whatsapp" class="size-4" aria-hidden="true" />{t.actions.whatsapp}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="border-t border-portfolio-line/70 dark:border-portfolio-night-line">
+    <p class="mx-auto max-w-6xl px-4 py-4 text-xs text-portfolio-muted sm:px-6 lg:px-8 dark:text-slate-400">
+      © {year} {profile.displayName}
+    </p>
   </div>
 </footer>

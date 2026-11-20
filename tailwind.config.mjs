@@ -1,4 +1,9 @@
 /** @type {import('tailwindcss').Config} */
+
+// All colours come from CSS variables in src/styles/global.css.
+// To change the accent colour, edit --accent, --accent-solid and --accent-strong there.
+const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 export default {
   darkMode: "class",
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
@@ -6,6 +11,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
+          "Inter Variable",
           "Inter",
           "ui-sans-serif",
           "system-ui",
@@ -14,19 +20,30 @@ export default {
           "Segoe UI",
           "sans-serif",
         ],
+        display: [
+          "Space Grotesk Variable",
+          "Space Grotesk",
+          "Inter Variable",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       colors: {
         portfolio: {
-          ink: "#172033",
-          muted: "#5f6f89",
-          paper: "#f7f7f2",
-          panel: "#ffffff",
-          line: "#dbe3ef",
-          accent: "#0f9f8f",
-          "accent-strong": "#0a6f64",
-          night: "#0d1117",
-          "night-panel": "#141b24",
-          "night-line": "#263241",
+          ink: token("ink"),
+          muted: token("muted"),
+          paper: token("paper"),
+          panel: token("panel"),
+          line: token("line"),
+          // accent: text, icons, borders (changes in dark mode to stay readable)
+          accent: token("accent"),
+          // accent-solid: button fills that carry white text (same in both modes)
+          "accent-solid": token("accent-solid"),
+          "accent-strong": token("accent-strong"),
+          night: token("night"),
+          "night-panel": token("night-panel"),
+          "night-line": token("night-line"),
         },
       },
     },

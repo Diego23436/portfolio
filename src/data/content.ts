@@ -17,7 +17,10 @@ export const profile = {
     en: "Douala, Cameroon",
     fr: "Douala, Cameroun",
   },
-  email: "nzokouforlan@gmail.com",
+  // Public email: shown on the site, CV and JSON-LD.
+  publicEmail: "contact@nkforlan.tech",
+  // Form email: where FormSubmit delivers messages. Works before email forwarding is active.
+  formEmail: "nzokouforlan@gmail.com",
   phoneDisplay: "+237 690 409 736",
   whatsappNumber: "237690409736",
   whatsappGreeting: {
@@ -98,6 +101,9 @@ export const content = {
       theme: "Theme",
       menu: "Menu",
       letsTalk: "Let's talk",
+      skipToContent: "Skip to content",
+      mainNav: "Main navigation",
+      mobileNav: "Mobile navigation",
     },
     hero: {
       eyebrow: "Full-Stack & DevOps Engineer · Douala, Cameroon",
@@ -362,6 +368,9 @@ export const content = {
       theme: "Thème",
       menu: "Menu",
       letsTalk: "Parlons-en",
+      skipToContent: "Aller au contenu",
+      mainNav: "Navigation principale",
+      mobileNav: "Navigation mobile",
     },
     hero: {
       eyebrow: "Ingénieur Full-Stack & DevOps · Douala, Cameroun",
