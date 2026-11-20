@@ -4,6 +4,7 @@ import Hero from "../../components/home/Hero.astro";
 import RoleMarquee from "../../components/home/RoleMarquee.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import SelectedWork from "../../components/home/SelectedWork.astro";
+import Pipeline from "../../components/home/Pipeline.astro";
 import TechStack from "../../components/TechStack.astro";
 import ProfessionalSkills from "../../components/ProfessionalSkills.astro";
 import { content, cutoutImage, locales, type Locale } from "../../data/content";
@@ -36,8 +37,9 @@ const cutout = cutoutImage();
   <RoleMarquee lang={lang} />
 
   <SelectedWork lang={lang} />
+  <Pipeline lang={lang} />
 
-  <!-- Temporary sections: rebuilt in the next steps (pipeline, skills). -->
+  <!-- Temporary sections: rebuilt in the next step (skills). -->
   <div style="height: clamp(72px, 10vw, 140px);"></div>
   <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
     <SectionHeading title={t.skills.title} />

@@ -1,0 +1,309 @@
+/* "How I ship": pipeline + terminal. Tokens come from global.css. */
+
+.pipe {
+  border-top: 1px solid rgb(var(--edge) / 0.15);
+  margin-top: clamp(72px, 10vw, 140px);
+}
+
+.pipe-stage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(32px, 5vh, 64px);
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(56px, 8vw, 110px) clamp(20px, 5vw, 64px);
+}
+
+.pipe-title {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 90;
+}
+
+/* Desktop: the pinned stage fills the screen under the header */
+@media (min-width: 1024px) {
+  .pipe-stage {
+    min-height: calc(100svh - 66px);
+    justify-content: space-between;
+    padding-block: clamp(40px, 7vh, 80px);
+  }
+}
+
+/* ---------------- Track (desktop: horizontal) ---------------- */
+.pipe-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.pipe-line {
+  position: absolute;
+  left: 7px;
+  top: 41px;
+  width: calc(100% * 6 / 7);
+  height: 2px;
+  background: rgb(var(--edge) / 0.2);
+}
+
+.pipe-fill {
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--fg));
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.pipe-step {
+  position: relative;
+  padding-right: 18px;
+}
+
+.pipe-label {
+  display: block;
+  height: 20px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--soft));
+}
+
+.pipe-label b {
+  font-weight: 500;
+  color: rgb(var(--fg));
+  margin-right: 8px;
+}
+
+.pipe-node {
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin-top: 14px;
+  border-radius: 9999px;
+  background: rgb(var(--fg));
+  box-shadow: 0 0 0 5px rgb(var(--base));
+}
+
+.pipe-step--deploy .pipe-node {
+  background: rgb(var(--live));
+}
+
+.pipe-text {
+  margin-top: 26px;
+}
+
+.pipe-line-text {
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgb(var(--fg));
+}
+
+.pipe-proof {
+  display: block;
+  margin-top: 12px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: rgb(var(--soft));
+}
+
+/* ---------------- Terminal ---------------- */
+.term {
+  width: min(100%, 520px);
+  margin-left: auto;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b1220;
+  border: 1px solid rgb(148 163 184 / 0.22);
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.55);
+  color: #f8fafc;
+}
+
+html:not(.dark) .term {
+  box-shadow: 0 30px 60px -30px rgb(15 23 42 / 0.4);
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 14px;
+  background: #111b30;
+  border-bottom: 1px solid rgb(148 163 184 / 0.18);
+}
+
+.term-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: rgb(148 163 184 / 0.4);
+}
+
+.term-bar i:nth-child(1) {
+  background: rgb(248 250 252 / 0.55);
+}
+
+.term-title {
+  margin-left: 10px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.term-body {
+  margin: 0;
+  padding: 18px 20px 20px;
+  min-height: 150px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 14px;
+  line-height: 1.75;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.term .p {
+  color: #94a3b8;
+}
+
+.term .ok,
+.term .liv {
+  color: #c6f432;
+}
+
+.term .dim {
+  color: #94a3b8;
+}
+
+.term .cur {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: #f8fafc;
+  animation: term-blink 1s steps(1) infinite;
+}
+
+.term .liv.blink {
+  animation: term-blink-live 0.5s steps(1) 4;
+}
+
+@keyframes term-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes term-blink-live {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.term-note {
+  display: block;
+  margin-top: 10px;
+  text-align: right;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: rgb(var(--soft));
+}
+
+/* ---------------- Tablet and phone: vertical timeline ---------------- */
+@media (max-width: 1023px) {
+  .pipe-track {
+    display: block;
+    padding-left: 40px;
+  }
+
+  .pipe-line {
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    height: auto;
+  }
+
+  .pipe-fill {
+    transform: scaleY(var(--p, 0));
+    transform-origin: top;
+  }
+
+  .pipe-step {
+    padding: 0 0 36px;
+  }
+
+  .pipe-step:last-child {
+    padding-bottom: 0;
+  }
+
+  .pipe-label {
+    height: auto;
+    padding-top: 0;
+  }
+
+  .pipe-node {
+    position: absolute;
+    left: -40px;
+    top: 3px;
+    margin: 0;
+    background: rgb(var(--edge) / 0.35);
+    transition: background-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .pipe-step.is-lit .pipe-node {
+    background: rgb(var(--fg));
+    transform: scale(1.25);
+  }
+
+  .pipe-step--deploy.is-lit .pipe-node {
+    background: rgb(var(--live));
+  }
+
+  .pipe-step .pipe-text,
+  .pipe-step .pipe-label {
+    opacity: 0.45;
+    transition: opacity 0.5s ease;
+  }
+
+  .pipe-step.is-lit .pipe-text,
+  .pipe-step.is-lit .pipe-label {
+    opacity: 1;
+  }
+
+  .pipe-text {
+    margin-top: 8px;
+  }
+
+  .term {
+    margin-left: 0;
+    margin-top: 12px;
+  }
+
+  .term-body {
+    font-size: 13px;
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipe-step .pipe-text,
+  .pipe-step .pipe-label {
+    opacity: 1 !important;
+  }
+
+  .pipe-node {
+    transition: none;
+  }
+
+  .term .cur,
+  .term .liv.blink {
+    animation: none;
+  }
+}

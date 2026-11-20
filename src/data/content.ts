@@ -233,6 +233,19 @@ export const content = {
       sections: { overview: "Overview", architecture: "Architecture", highlights: "Highlights", learning: "Learning" },
       diagramLabel: "Architecture diagram",
     },
+    pipeline: {
+      title: "How I ship",
+      stages: [
+        { key: "spec", title: "Spec", line: "I write the spec the client signs off.", proof: "cahier des charges · EN/FR" },
+        { key: "erd", title: "ERD", line: "I model the data before any code.", proof: "8 entities · Oasis-Doc" },
+        { key: "tickets", title: "Tickets", line: "Work is split into small tickets on a board.", proof: "28 tickets · Stocky" },
+        { key: "code", title: "Code", line: "Tests first. Small changes.", proof: "NestJS · Next.js · TypeScript" },
+        { key: "review", title: "Review", line: "Rebase, merge request, review. Nothing lands unread.", proof: "SonarQube gate · Easy Klin" },
+        { key: "ci", title: "CI", line: "The pipeline must be green before merge.", proof: "GitLab CI · Easy Klin" },
+        { key: "deploy", title: "Deploy", line: "Domain, SSL, server. Done means online.", proof: "stocky.host · VPS" },
+      ],
+      terminalLabel: "Example deploy log",
+    },
     education: {
       title: "Education",
       items: [
@@ -508,6 +521,19 @@ export const content = {
       sections: { overview: "Aperçu", architecture: "Architecture", highlights: "Points forts", learning: "Apprentissage" },
       diagramLabel: "Schéma d'architecture",
     },
+    pipeline: {
+      title: "Comment je livre",
+      stages: [
+        { key: "spec", title: "Spec", line: "Je rédige le cahier des charges que le client valide.", proof: "cahier des charges · EN/FR" },
+        { key: "erd", title: "ERD", line: "Je modélise les données avant tout code.", proof: "8 entités · Oasis-Doc" },
+        { key: "tickets", title: "Tickets", line: "Le travail est découpé en petits tickets sur un tableau.", proof: "28 tickets · Stocky" },
+        { key: "code", title: "Code", line: "Les tests d'abord. De petits changements.", proof: "NestJS · Next.js · TypeScript" },
+        { key: "review", title: "Revue", line: "Rebase, merge request, revue. Rien n'est fusionné sans relecture.", proof: "gate SonarQube · Easy Klin" },
+        { key: "ci", title: "CI", line: "Le pipeline doit être au vert avant la fusion.", proof: "GitLab CI · Easy Klin" },
+        { key: "deploy", title: "Déploiement", line: "Domaine, SSL, serveur. Terminé = en ligne.", proof: "stocky.host · VPS" },
+      ],
+      terminalLabel: "Exemple de journal de déploiement",
+    },
     education: {
       title: "Formation",
       items: [
@@ -672,3 +698,19 @@ export function cutoutImage() {
     sizes: "(min-width: 768px) 40vw, 72vw",
   };
 }
+
+/**
+ * Lines of the fake deploy terminal under "How I ship".
+ * TODO: the numbers (12.4s, 48 passed) are illustrative. Replace them with real ones if Forlan gives them.
+ */
+export const deployLog = {
+  title: "forlan@prod: ~/portfolio",
+  illustrative: true,
+  lines: [
+    { kind: "cmd", text: "git push origin main" },
+    { kind: "ok", label: "build", value: "12.4s" },
+    { kind: "ok", label: "test", value: "48 passed" },
+    { kind: "ok", label: "deploy", value: "nkforlan.tech" },
+    { kind: "live", text: "live" },
+  ],
+} as const;

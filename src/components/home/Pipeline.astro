@@ -1,0 +1,57 @@
+---
+import { content, deployLog, type Locale } from "../../data/content";
+import "../../styles/pipeline.css";
+
+type Props = { lang: Locale };
+
+const { lang } = Astro.props;
+const p = content[lang].pipeline;
+
+const logText = deployLog.lines
+  .map((line) => (line.kind === "cmd" ? `$ ${line.text}` : line.kind === "ok" ? `${line.label} ${line.value}` : line.text))
+  .join(". ");
+const logHtml = deployLog.lines
+  .map((line) => {
+    if (line.kind === "cmd") return `<span class="tl" data-kind="cmd"><span class="p">$</span> <span class="tx">${line.text}</span></span>`;
+    if (line.kind === "ok") return `<span class="tl" data-kind="ok"><span class="ok">✓</span> ${line.label.padEnd(8)}<span class="dim">${line.value}</span></span>`;
+    return `<span class="tl" data-kind="live"><span class="liv">●</span> ${line.text}</span>`;
+  })
+  .join("\n");
+---
+
+<section class="pipe" data-pipeline>
+  <div class="pipe-stage" data-pipe-stage>
+    <h2 class="pipe-title" data-pipe-title>{p.title}</h2>
+
+    <ol class="pipe-track" data-pipe-track>
+      <span class="pipe-line" aria-hidden="true"><span class="pipe-fill" data-pipe-fill></span></span>
+      {
+        p.stages.map((stage, index) => (
+          <li class:list={["pipe-step", `pipe-step--${stage.key}`]} data-step>
+            <span class="pipe-label">
+              <b>{String(index + 1).padStart(2, "0")}</b>
+              {stage.title}
+            </span>
+            <span class="pipe-node" data-node aria-hidden="true"></span>
+            <div class="pipe-text" data-text>
+              <p class="pipe-line-text">{stage.line}</p>
+              <span class="pipe-proof">{stage.proof}</span>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <figure class="term" data-term aria-label={`${p.terminalLabel}: ${logText}`}>
+      <div class="term-bar" aria-hidden="true">
+        <i></i><i></i><i></i>
+        <span class="term-title">{deployLog.title}</span>
+      </div>
+      <pre class="term-body" aria-hidden="true" set:html={logHtml} />
+    </figure>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/pipeline";
+</script>
