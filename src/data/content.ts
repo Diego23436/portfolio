@@ -9,53 +9,65 @@ export const localeLabels: Record<Locale, { label: string; short: string }> = {
 };
 
 export const profile = {
-  name: "Kuitchouo Djelakoun James",
-  shortName: "James",
-  initials: "KD",
-  title: "Junior Software Engineer",
-  email: "lewisdjelakoun@gmail.com",
-  phoneDisplay: "+237 674 958 168",
-  whatsappNumber: "237674958168",
-  whatsappUrl:
-    "https://wa.me/237674958168?text=Hello%20James%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20talk.",
-  github: "https://github.com/KD-James-Lewis",
-  linkedin: "https://www.linkedin.com/in/kd-james-lewis-b30029333",
-  currentPortfolio: "https://portfolio-rust-psi-37.vercel.app",
+  name: "Nzokou Kengne Daren Forlan",
+  displayName: "Nk Forlan",
+  initials: "NF",
+  title: "Full-Stack & DevOps Engineer",
+  location: {
+    en: "Douala, Cameroon",
+    fr: "Douala, Cameroun",
+  },
+  email: "nzokouforlan@gmail.com",
+  phoneDisplay: "+237 690 409 736",
+  whatsappNumber: "237690409736",
+  whatsappGreeting: {
+    en: "Hello Forlan, I visited your portfolio and would like to talk.",
+    fr: "Bonjour Forlan, j'ai visité votre portfolio et j'aimerais discuter avec vous.",
+  },
+  github: "https://github.com/Diego23436",
+  // No LinkedIn yet. Components only show the link when this is set.
+  linkedin: null as string | null,
+  // TODO: confirm the final URL once the site is deployed on Cloudflare Pages.
+  siteUrl: "https://nk-forlan.pages.dev",
   resume: {
-    en: "/resume/EN1_CV_KUITCHOUO_DJELAKOUN_JAMES.pdf",
-    fr: "/resume/FR1_CV_KUITCHOUO_DJELAKOUN_JAMES.pdf",
+    en: "/resume/Nk%20Forlan%20CV%20EN.pdf",
+    fr: "/resume/Nk%20Forlan%20CV%20FR.pdf",
   },
   photos: {
     portrait: {
-      src: "/images/profile/james-professional-portrait.jpg",
+      src: "/images/profile/forlan-portrait.jpg",
       alt: {
-        en: "Professional portrait of James in a navy suit",
-        fr: "Portrait professionnel de James en costume bleu marine",
+        en: "Portrait of Nk Forlan in a white shirt, smiling with a thumbs up on a village road",
+        fr: "Portrait de Nk Forlan en chemise blanche, souriant, pouce levé, sur un chemin de terre",
       },
     },
     headshot: {
-      src: "/images/profile/james-event-headshot.jpg",
+      src: "/images/profile/forlan-headshot.jpg",
       alt: {
-        en: "Close portrait of James during a formal event",
-        fr: "Portrait rapproche de James pendant un evenement formel",
+        en: "Close portrait of Nk Forlan in a dark striped polo with a shoulder bag",
+        fr: "Portrait rapproché de Nk Forlan en polo rayé sombre avec une sacoche",
       },
     },
     fullBody: {
-      src: "/images/profile/james-formal-fullbody.jpg",
+      src: "/images/profile/forlan-fullbody.jpg",
       alt: {
-        en: "Full-body formal photo of James",
-        fr: "Photo formelle de James en pied",
+        en: "Nk Forlan standing in front of a green hedge, wearing a knitted sweater",
+        fr: "Nk Forlan debout devant une haie verte, portant un pull en maille",
       },
     },
   },
 };
 
+export function whatsappLink(lang: Locale): string {
+  return `https://wa.me/${profile.whatsappNumber}?text=${encodeURIComponent(profile.whatsappGreeting[lang])}`;
+}
+
 export const content = {
   en: {
     meta: {
-      title: "Kuitchouo Djelakoun James | Software Engineering Portfolio",
+      title: "Nk Forlan | Full-Stack & DevOps Engineer in Douala",
       description:
-        "Bilingual portfolio of Kuitchouo Djelakoun James, a software engineering student focused on backend-oriented web development, Laravel, databases, and practical software projects.",
+        "Portfolio of Nk Forlan, a full-stack and DevOps engineer in Douala, Cameroon. Multi-tenant SaaS, document marketplaces, back-office tools and business websites, from data model to production server.",
     },
     nav: {
       home: "Home",
@@ -86,66 +98,107 @@ export const content = {
       linkedin: "LinkedIn",
       theme: "Theme",
       menu: "Menu",
+      letsTalk: "Let's talk",
     },
     hero: {
-      eyebrow: "Software Engineering Student",
-      title: "Backend-oriented web developer building practical digital products.",
+      eyebrow: "Full-Stack & DevOps Engineer · Douala, Cameroon",
+      title: "I build and ship reliable web products, from data model to production server.",
       intro:
-        "I am growing from a strong PHP and Laravel foundation into a broader software engineering path across APIs, databases, modern JavaScript backends, and future Python frameworks.",
-      availability: "Open to internships, freelance work, and junior opportunities.",
+        "React and Next.js on the front end. NestJS and Supabase on the back end. PostgreSQL for data. Docker and CI/CD to deliver.",
+      availability: "Open to full-time roles, freelance projects and remote collaboration.",
+      badge: "Available for work",
+      cardLabel: "Portfolio",
     },
+    // TODO: confirm these stats with Forlan before publishing.
     stats: [
-      { value: "2025", label: "Academic internship experience" },
-      { value: "EN / FR", label: "Bilingual communication" },
-      { value: "Laravel", label: "Current backend focus" },
+      { value: "4", label: "Main products built and shipped" },
+      { value: "EN / FR", label: "Bilingual delivery" },
+      { value: "Full-stack + DevOps", label: "From data model to server" },
     ],
     focus: {
-      title: "Engineering Direction",
-      intro:
-        "The portfolio presents where I am strong today while leaving space for the stack I am actively building toward.",
+      title: "How I Work",
+      intro: "Simple habits that make software easier to ship and easier to maintain.",
       items: [
         {
-          title: "Backend foundations",
-          body: "PHP, Laravel, MySQL, MVC architecture, authentication flows, and database-backed applications.",
+          title: "Data first",
+          body: "I model the data with an ERD (entity-relationship diagram) before I write code. Clean architecture starts there.",
         },
         {
-          title: "Full-stack growth",
-          body: "Frontend fundamentals with HTML, CSS, JavaScript, React basics, Bootstrap, and UI thinking with Figma.",
+          title: "Team discipline",
+          body: "Tickets, merge requests, CI pipelines and code review. Small changes, clear definitions of done.",
         },
         {
-          title: "Next learning path",
-          body: "Modern JavaScript backend stacks, NoSQL databases, Python frameworks, and stronger API design.",
+          title: "Done means online",
+          body: "I take a product from the spec to a server with a domain. A project is finished when people can use it.",
         },
       ],
     },
     aboutPreview: {
-      title: "A student engineer with a practical builder mindset.",
+      title: "I design and ship real products for real businesses.",
       body:
-        "I study software engineering and use projects to sharpen how I solve real problems. My goal is to become a professional engineer who can understand requirements, build maintainable systems, and communicate clearly with teams and clients.",
+        "I am a full-stack and DevOps engineer from Douala. I build multi-tenant SaaS, document marketplaces, back-office tools and business websites, and I explain the tech in simple words.",
+    },
+    about: {
+      title: "About me",
+      paragraphs: [
+        "I am a full-stack and DevOps engineer from Douala. I design and ship real products for real businesses: multi-tenant SaaS, document marketplaces, back-office tools and business websites.",
+        "I like clean architecture, and I model the data before I code. I work with tickets, merge requests, CI pipelines and code review. I take a product from the specification to deployment on a server with its own domain.",
+        "Outside code, I am an experienced mathematics tutor. Teaching makes me better at explaining hard things simply.",
+      ],
+      location: "Based in Douala, Cameroon. Open to remote work.",
+      languages: "Languages: English (first language) and French, fully bilingual.",
     },
     skills: {
-      title: "Skills Snapshot",
+      // Interim list. Phase 5 replaces it with icons and levels.
+      title: "Tech Stack",
       groups: [
         {
-          title: "Backend",
-          items: ["PHP", "Laravel", "Vanilla PHP", "MySQL", "MVC", "REST basics"],
-        },
-        {
           title: "Frontend",
-          items: ["HTML", "CSS", "JavaScript", "React JSX", "Bootstrap", "Responsive UI"],
+          items: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Vite", "HTML/CSS"],
         },
         {
-          title: "Tools",
-          items: ["Git", "GitHub", "Figma", "Firebase", "VS Code"],
-        },
-        {
-          title: "Soft Skills",
+          title: "Backend",
           items: [
-            "Critical thinking",
-            "Problem solving",
-            "Communication",
-            "Time management",
-            "Adaptability",
+            "NestJS",
+            "Node.js",
+            "REST API design",
+            "Prisma ORM",
+            "Supabase",
+            "FastAPI",
+            "Auth & role-based access",
+            "Mobile Money integration (CinetPay)",
+          ],
+        },
+        { title: "Mobile", items: ["Flutter / Dart"] },
+        {
+          title: "Data",
+          items: ["PostgreSQL", "Data modelling / ERD", "Row-Level Security & triggers", "MinIO object storage"],
+        },
+        {
+          title: "DevOps & Cloud",
+          items: [
+            "Docker",
+            "Git & Git workflows",
+            "GitLab CI/CD",
+            "SonarQube",
+            "Linux VPS",
+            "Domains, DNS & SSL",
+            "Cloudflare Pages",
+            "Kubernetes",
+            "Networking & monitoring",
+          ],
+        },
+        {
+          title: "AI & Productivity",
+          items: ["AI-assisted development with Claude Code", "Multi-agent workflows", "Prompt engineering"],
+        },
+        {
+          title: "Creative & Docs",
+          items: [
+            "Motion design with GSAP",
+            "Video narration with ElevenLabs",
+            "Technical writing: specs, ERD, docs",
+            "LaTeX",
           ],
         },
       ],
@@ -153,10 +206,11 @@ export const content = {
     projects: {
       title: "Featured Projects",
       intro:
-        "Some repositories are private for now, so the portfolio uses case studies, screenshots, and demo notes to show the problem, stack, and engineering decisions.",
+        "Four main products, from SaaS to DevOps. Some client code is private, so each project has a case study that explains the problem, the stack and my role.",
       allTitle: "Project Case Studies",
       allIntro:
-        "Each project page is structured to explain what the project does, how it was built, and what I learned from it.",
+        "Each project page explains the problem, the solution, my role and what I learned.",
+      moreTitle: "More projects",
     },
     projectDetail: {
       visualLabel: "Case study",
@@ -166,40 +220,93 @@ export const content = {
       highlights: "Highlights",
       learning: "Learning",
     },
-    journey: {
-      title: "Education and Experience",
+    education: {
+      title: "Education",
       items: [
         {
-          period: "2025 - Present",
-          title: "Software Engineering - Level Two",
-          place: "Institut Universitaire de la Côte (IUC)",
-          body: "Continuing software engineering studies with a stronger focus on building practical systems.",
+          period: "2024 – 2027 (expected)",
+          title: "Bachelor of Technology (BTech) in Computer Science Engineering",
+          place: "Institut Universitaire de la Côte (IUC), Douala",
+          body: "Now in year 3 (2026-27). Courses are taught in English, including DevOps & Kubernetes and Network Management & Monitoring.",
         },
         {
-          period: "June - September 2025",
-          title: "Academic Intern as Junior Software Engineer",
-          place: "AlloTraining",
-          body: "Worked on basic management software, supported software development tasks, and collaborated with other interns.",
+          // TODO: add the years for GCE A-Level and O-Level.
+          period: "",
+          title: "GCE Advanced Level and GCE Ordinary Level",
+          place: "GBHS Bobongo Petit Paris",
+          body: "",
+        },
+      ],
+    },
+    experience: {
+      title: "Experience",
+      items: [
+        {
+          period: "24 Aug 2026 – 10 Oct 2026",
+          title: "Software Engineering Intern",
+          place: "Fast and Sure Travel SARL, Douala",
+          body: "Worked in the IT team at the Douala branch. Led the design and build of Stocky, a multi-tenant SaaS, with a small team: architecture, data model, authentication, and deployment on a VPS with its own domain.",
         },
         {
-          period: "2024 - 2025",
-          title: "Part-time Teacher",
-          place: "Evening school",
-          body: "Taught computer science, ICT, and mathematics while strengthening communication and organization skills.",
+          // TODO: add the dates of the Easy Klin project.
+          period: "",
+          title: "Backend Developer (team project)",
+          place: "Easy Klin",
+          body: "Backend developer on the NestJS API of a multi-agency laundry platform. Self-hosted GitLab, ticket-based sprints, rebase before merge request, CI pipelines, SonarQube quality gate and test-first work. Delivered several tickets (customer profile with addresses, catalogue service-combination logic, sales counting) with their tests.",
+        },
+        {
+          // TODO: add the start year of freelance work.
+          period: "Ongoing",
+          title: "Freelance Full-Stack Developer",
+          place: "Independent",
+          body: "Web apps and websites for local businesses and institutions: document services, an immigration agency back office, an education quiz platform and a clinic website.",
         },
       ],
     },
     services: {
-      title: "What I Can Help With",
+      title: "What I Can Build For You",
       intro:
-        "Focused, practical support for web projects, backend workflows, and small software tools.",
+        "Three ways I can help: a product, a website, or the delivery pipeline behind them.",
+      whatYouGet: "What you get",
       items: [
-        "Laravel web applications",
-        "Database-backed dashboards",
-        "Website development",
-        "Bug fixing and feature implementation",
-        "Academic and small business software tools",
+        {
+          icon: "lucide:layers",
+          title: "SaaS & Web Applications",
+          pitch: "Multi-tenant platforms and back-office tools that handle real business data.",
+          bullets: [
+            "Multi-tenant platforms with separate data per customer",
+            "Dashboards and admin tools",
+            "REST APIs with clean documentation",
+            "Roles and permissions",
+          ],
+        },
+        {
+          icon: "lucide:globe",
+          title: "Business Websites",
+          pitch: "Fast, bilingual showcase websites for clinics, agencies and shops.",
+          bullets: [
+            "French and English versions",
+            "Fast and mobile-friendly pages",
+            "Ready for search engines (SEO)",
+            "Contact form and WhatsApp link",
+          ],
+        },
+        {
+          icon: "lucide:server",
+          title: "DevOps & Deployment",
+          pitch: "From code on a laptop to a secure site online, with automatic delivery.",
+          bullets: [
+            "Docker containers",
+            "CI/CD pipelines",
+            "VPS setup and hardening",
+            "Domains, DNS and SSL",
+          ],
+        },
       ],
+      cta: {
+        title: "Have a project? Let's talk",
+        body: "Tell me what you need. I will reply with the next steps and a realistic plan.",
+      },
     },
     resumePage: {
       title: "Resume",
@@ -210,8 +317,8 @@ export const content = {
     contactPage: {
       title: "Contact",
       intro:
-        "For internships, freelance projects, collaboration, or junior software engineering opportunities, email or WhatsApp is the fastest way to reach me.",
-      responseNote: "I usually respond with context about availability, project fit, and next steps.",
+        "For full-time roles, freelance projects or remote collaboration, email or WhatsApp is the fastest way to reach me.",
+      responseNote: "I usually reply with my availability, how I can help and the next steps.",
       form: {
         title: "Send a Message",
         intro:
@@ -221,7 +328,7 @@ export const content = {
         email: "Your Email",
         emailPlaceholder: "you@example.com",
         subject: "Subject",
-        subjectPlaceholder: "Internship, freelance project, collaboration...",
+        subjectPlaceholder: "Job offer, freelance project, collaboration...",
         message: "Message",
         messagePlaceholder: "Tell me what you would like to discuss.",
         submit: "Send Message",
@@ -239,20 +346,21 @@ export const content = {
         messagePlaceholder: "Tell me what you would like to discuss on WhatsApp.",
         submit: "Open WhatsApp",
         feedback: "WhatsApp should open with your message ready.",
+        greeting: "Hello Forlan, my name is {name}.",
       },
     },
     footer:
-      "Software engineering student building practical software with a backend-first mindset.",
+      "Full-stack and DevOps engineer in Douala. I build and ship reliable web products.",
   },
   fr: {
     meta: {
-      title: "Kuitchouo Djelakoun James | Portfolio Génie Logiciel",
+      title: "Nk Forlan | Ingénieur Full-Stack & DevOps à Douala",
       description:
-        "Portfolio bilingue de Kuitchouo Djelakoun James, étudiant en génie logiciel orienté backend, Laravel, bases de données et projets logiciels pratiques.",
+        "Portfolio de Nk Forlan, ingénieur full-stack et DevOps à Douala, au Cameroun. SaaS multi-tenant, marketplaces de documents, outils de back-office et sites vitrines, du modèle de données au serveur de production.",
     },
     nav: {
       home: "Accueil",
-      about: "A propos",
+      about: "À propos",
       projects: "Projets",
       services: "Services",
       resume: "CV",
@@ -265,7 +373,7 @@ export const content = {
       englishCv: "CV anglais",
       frenchCv: "CV français",
       unavailable: "Bientôt disponible",
-      viewCaseStudy: "Voir l'étude",
+      viewCaseStudy: "Voir l'étude de cas",
       viewLive: "Démo en ligne",
       viewRepo: "Dépôt",
       backToProjects: "Retour aux projets",
@@ -273,72 +381,121 @@ export const content = {
       openMailApp: "Ouvrir l'app mail",
       openGmail: "Ouvrir Gmail",
       copyEmail: "Copier l'email",
-      copiedEmail: "Email copie.",
+      copiedEmail: "Email copié.",
       whatsapp: "WhatsApp",
       github: "GitHub",
       linkedin: "LinkedIn",
       theme: "Thème",
       menu: "Menu",
+      letsTalk: "Parlons-en",
     },
     hero: {
-      eyebrow: "Étudiant en génie logiciel",
-      title: "Développeur web orienté backend qui construit des produits utiles.",
+      eyebrow: "Ingénieur Full-Stack & DevOps · Douala, Cameroun",
+      title: "Je conçois et mets en ligne des produits web fiables, du modèle de données au serveur de production.",
       intro:
-        "Je développe actuellement une base solide en PHP et Laravel, tout en avançant vers un profil plus large en APIs, bases de données, backends JavaScript modernes et frameworks Python.",
-      availability: "Ouvert aux stages, missions freelance et opportunités junior.",
+        "React et Next.js côté front. NestJS et Supabase côté back. PostgreSQL pour les données. Docker et CI/CD pour livrer.",
+      availability: "Ouvert aux postes à temps plein, aux missions freelance et à la collaboration à distance.",
+      badge: "Disponible",
+      cardLabel: "Portfolio",
     },
+    // TODO: confirm these stats with Forlan before publishing.
     stats: [
-      { value: "2025", label: "Expérience de stage académique" },
-      { value: "EN / FR", label: "Communication bilingue" },
-      { value: "Laravel", label: "Focus backend actuel" },
+      { value: "4", label: "Produits principaux conçus et livrés" },
+      { value: "EN / FR", label: "Livraison bilingue" },
+      { value: "Full-stack + DevOps", label: "Du modèle de données au serveur" },
     ],
     focus: {
-      title: "Direction technique",
-      intro:
-        "Le portfolio montre mes forces actuelles tout en gardant de la place pour les stacks que je suis en train d'apprendre.",
+      title: "Ma façon de travailler",
+      intro: "Des habitudes simples qui rendent un logiciel plus facile à livrer et à maintenir.",
       items: [
         {
-          title: "Bases backend",
-          body: "PHP, Laravel, MySQL, architecture MVC, authentification et applications liées aux bases de données.",
+          title: "Les données d'abord",
+          body: "Je modélise les données avec un MCD/ERD (schéma entité-relation) avant d'écrire du code. Une bonne architecture commence là.",
         },
         {
-          title: "Progression full-stack",
-          body: "HTML, CSS, JavaScript, bases de React, Bootstrap et réflexion UI avec Figma.",
+          title: "Rigueur d'équipe",
+          body: "Tickets, merge requests, pipelines CI et revue de code. Des changements courts et des critères de fin clairs.",
         },
         {
-          title: "Prochaine étape",
-          body: "Backends JavaScript modernes, bases NoSQL, frameworks Python et meilleure conception d'API.",
+          title: "Terminé = en ligne",
+          body: "Je mène un produit de la spécification jusqu'à un serveur avec un nom de domaine. Un projet est fini quand on peut l'utiliser.",
         },
       ],
     },
     aboutPreview: {
-      title: "Un étudiant ingénieur avec une mentalité de constructeur.",
+      title: "Je conçois et livre de vrais produits pour de vraies entreprises.",
       body:
-        "J'étudie le génie logiciel et j'utilise les projets pour améliorer ma manière de résoudre des problèmes réels. Mon objectif est de devenir un ingénieur capable de comprendre les besoins, construire des systèmes maintenables et communiquer clairement.",
+        "Je suis ingénieur full-stack et DevOps, basé à Douala. Je construis des SaaS multi-tenant, des marketplaces de documents, des outils de back-office et des sites vitrines, et j'explique la technique avec des mots simples.",
+    },
+    about: {
+      title: "À propos de moi",
+      paragraphs: [
+        "Je suis ingénieur full-stack et DevOps, basé à Douala. Je conçois et livre de vrais produits pour de vraies entreprises : SaaS multi-tenant, marketplaces de documents, outils de back-office et sites vitrines.",
+        "J'aime les architectures propres et je modélise les données avant de coder. Je travaille avec des tickets, des merge requests, des pipelines CI et de la revue de code. Je mène un produit de la spécification jusqu'au déploiement sur un serveur avec son propre domaine.",
+        "En dehors du code, je suis un répétiteur de mathématiques expérimenté. Enseigner m'aide à expliquer simplement les choses difficiles.",
+      ],
+      location: "Basé à Douala, au Cameroun. Ouvert au travail à distance.",
+      languages: "Langues : anglais (langue maternelle) et français, bilingue complet.",
     },
     skills: {
-      title: "Résumé des compétences",
+      title: "Stack technique",
       groups: [
         {
-          title: "Backend",
-          items: ["PHP", "Laravel", "PHP natif", "MySQL", "MVC", "Bases REST"],
-        },
-        {
           title: "Frontend",
-          items: ["HTML", "CSS", "JavaScript", "React JSX", "Bootstrap", "UI responsive"],
+          items: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Vite", "HTML/CSS"],
         },
         {
-          title: "Outils",
-          items: ["Git", "GitHub", "Figma", "Firebase", "VS Code"],
-        },
-        {
-          title: "Soft skills",
+          title: "Backend",
           items: [
-            "Pensée critique",
-            "Résolution de problèmes",
-            "Communication",
-            "Gestion du temps",
-            "Adaptabilité",
+            "NestJS",
+            "Node.js",
+            "Conception d'API REST",
+            "Prisma ORM",
+            "Supabase",
+            "FastAPI",
+            "Authentification & accès par rôles",
+            "Intégration Mobile Money (CinetPay)",
+          ],
+        },
+        { title: "Mobile", items: ["Flutter / Dart"] },
+        {
+          title: "Données",
+          items: [
+            "PostgreSQL",
+            "Modélisation de données / ERD",
+            "Row-Level Security & triggers",
+            "Stockage objet MinIO",
+          ],
+        },
+        {
+          title: "DevOps & Cloud",
+          items: [
+            "Docker",
+            "Git & workflows Git",
+            "GitLab CI/CD",
+            "SonarQube",
+            "VPS Linux",
+            "Domaines, DNS & SSL",
+            "Cloudflare Pages",
+            "Kubernetes",
+            "Réseaux & supervision",
+          ],
+        },
+        {
+          title: "IA & productivité",
+          items: [
+            "Développement assisté par IA avec Claude Code",
+            "Workflows multi-agents",
+            "Prompt engineering",
+          ],
+        },
+        {
+          title: "Création & documentation",
+          items: [
+            "Motion design avec GSAP",
+            "Narration vidéo avec ElevenLabs",
+            "Rédaction technique : cahiers des charges, ERD, docs",
+            "LaTeX",
           ],
         },
       ],
@@ -346,10 +503,11 @@ export const content = {
     projects: {
       title: "Projets en avant",
       intro:
-        "Certains dépôts sont privés pour le moment. Le portfolio utilise donc des études de cas, des captures et des notes de démo pour montrer le problème, la stack et les choix techniques.",
+        "Quatre produits principaux, du SaaS au DevOps. Une partie du code client est privée : chaque projet a donc une étude de cas qui explique le problème, la stack et mon rôle.",
       allTitle: "Études de cas",
       allIntro:
-        "Chaque page projet explique ce que le projet fait, comment il a été construit et ce que j'ai appris.",
+        "Chaque page projet explique le problème, la solution, mon rôle et ce que j'ai appris.",
+      moreTitle: "Autres projets",
     },
     projectDetail: {
       visualLabel: "Étude de cas",
@@ -359,40 +517,93 @@ export const content = {
       highlights: "Points forts",
       learning: "Apprentissage",
     },
-    journey: {
-      title: "Formation et expérience",
+    education: {
+      title: "Formation",
       items: [
         {
-          period: "2025 - Présent",
-          title: "Génie logiciel - Niveau deux",
-          place: "Parcours universitaire",
-          body: "Poursuite des études en génie logiciel avec un accent plus fort sur les systèmes pratiques.",
+          period: "2024 – 2027 (prévu)",
+          title: "Bachelor of Technology (BTech) en Ingénierie Informatique",
+          place: "Institut Universitaire de la Côte (IUC), Douala",
+          body: "Actuellement en 3e année (2026-27). Les cours sont donnés en anglais, notamment DevOps & Kubernetes et Administration & supervision réseau.",
         },
         {
-          period: "Juin - Septembre 2025",
-          title: "Stagiaire académique Junior Software Engineer",
-          place: "AlloTraining",
-          body: "Développement de logiciels de gestion de base, suivi de tâches de développement et collaboration avec d'autres stagiaires.",
+          // TODO: add the years for GCE A-Level and O-Level.
+          period: "",
+          title: "GCE Advanced Level et GCE Ordinary Level",
+          place: "GBHS Bobongo Petit Paris",
+          body: "",
+        },
+      ],
+    },
+    experience: {
+      title: "Expérience",
+      items: [
+        {
+          period: "24 août 2026 – 10 oct. 2026",
+          title: "Stagiaire en ingénierie logicielle",
+          place: "Fast and Sure Travel SARL, Douala",
+          body: "Stage dans l'équipe IT de l'agence de Douala. J'ai mené la conception et le développement de Stocky, un SaaS multi-tenant, avec une petite équipe : architecture, modèle de données, authentification et déploiement sur un VPS avec son propre domaine.",
         },
         {
-          period: "2024 - 2025",
-          title: "Enseignant à temps partiel",
-          place: "Cours du soir",
-          body: "Enseignement de l'informatique, des TIC et des mathématiques, avec renforcement de la communication et de l'organisation.",
+          // TODO: add the dates of the Easy Klin project.
+          period: "",
+          title: "Développeur backend (projet d'équipe)",
+          place: "Easy Klin",
+          body: "Développeur backend sur l'API NestJS d'une plateforme de pressing multi-agences. GitLab auto-hébergé, sprints par tickets, rebase avant merge request, pipelines CI, quality gate SonarQube et développement guidé par les tests. Plusieurs tickets livrés (profil client avec adresses, logique de combinaison de services du catalogue, comptage des ventes) avec leurs tests.",
+        },
+        {
+          // TODO: add the start year of freelance work.
+          period: "En cours",
+          title: "Développeur full-stack freelance",
+          place: "Indépendant",
+          body: "Applications et sites web pour des entreprises et institutions locales : services de documents, back-office d'une agence d'immigration, plateforme de quiz éducative et site de clinique.",
         },
       ],
     },
     services: {
-      title: "Ce que je peux apporter",
+      title: "Ce que je peux construire pour vous",
       intro:
-        "Un accompagnement pratique pour les projets web, les workflows backend et les petits outils logiciels.",
+        "Trois façons de vous aider : un produit, un site web, ou la chaîne de livraison qui les met en ligne.",
+      whatYouGet: "Ce que vous obtenez",
       items: [
-        "Applications web Laravel",
-        "Tableaux de bord avec base de données",
-        "Développement de sites web",
-        "Correction de bugs et ajout de fonctionnalités",
-        "Outils logiciels pour études et petites entreprises",
+        {
+          icon: "lucide:layers",
+          title: "SaaS & applications web",
+          pitch: "Des plateformes multi-tenant et des outils de back-office qui gèrent de vraies données métier.",
+          bullets: [
+            "Plateformes multi-tenant avec données séparées par client",
+            "Tableaux de bord et outils d'administration",
+            "APIs REST bien documentées",
+            "Rôles et permissions",
+          ],
+        },
+        {
+          icon: "lucide:globe",
+          title: "Sites web d'entreprise",
+          pitch: "Des sites vitrines rapides et bilingues pour cliniques, agences et boutiques.",
+          bullets: [
+            "Versions française et anglaise",
+            "Pages rapides et adaptées au mobile",
+            "Prêt pour le référencement (SEO)",
+            "Formulaire de contact et lien WhatsApp",
+          ],
+        },
+        {
+          icon: "lucide:server",
+          title: "DevOps & déploiement",
+          pitch: "Du code sur un ordinateur à un site sécurisé en ligne, avec livraison automatique.",
+          bullets: [
+            "Conteneurs Docker",
+            "Pipelines CI/CD",
+            "Mise en place et sécurisation de VPS",
+            "Domaines, DNS et SSL",
+          ],
+        },
       ],
+      cta: {
+        title: "Un projet ? Parlons-en",
+        body: "Dites-moi ce dont vous avez besoin. Je vous répondrai avec les prochaines étapes et un plan réaliste.",
+      },
     },
     resumePage: {
       title: "CV",
@@ -403,43 +614,45 @@ export const content = {
     contactPage: {
       title: "Contact",
       intro:
-        "Pour un stage, une mission freelance, une collaboration ou une opportunité junior, l'email et WhatsApp sont les moyens les plus rapides pour me joindre.",
+        "Pour un poste à temps plein, une mission freelance ou une collaboration à distance, l'email et WhatsApp sont les moyens les plus rapides pour me joindre.",
       responseNote:
-        "Je réponds généralement avec des précisions sur ma disponibilité, le besoin et les prochaines étapes.",
+        "Je réponds généralement avec ma disponibilité, la façon dont je peux aider et les prochaines étapes.",
       form: {
         title: "Envoyer un message",
         intro:
-          "Ecrivez le message ici et envoyez-le directement depuis le portfolio.",
+          "Écrivez le message ici et envoyez-le directement depuis le portfolio.",
         name: "Nom",
         namePlaceholder: "Votre nom complet",
         email: "Votre email",
         emailPlaceholder: "vous@example.com",
         subject: "Sujet",
-        subjectPlaceholder: "Stage, mission freelance, collaboration...",
+        subjectPlaceholder: "Offre d'emploi, mission freelance, collaboration...",
         message: "Message",
         messagePlaceholder: "Expliquez ce que vous souhaitez discuter.",
         submit: "Envoyer le message",
         sending: "Envoi...",
-        feedback: "Message envoye. Merci pour votre prise de contact.",
-        error: "Le message n'a pas pu etre envoye. Veuillez reessayer ou utiliser le bouton email ci-dessus.",
+        feedback: "Message envoyé. Merci pour votre prise de contact.",
+        error: "Le message n'a pas pu être envoyé. Veuillez réessayer ou utiliser le bouton email ci-dessus.",
       },
       whatsappForm: {
-        title: "Preparer un message WhatsApp",
+        title: "Préparer un message WhatsApp",
         intro:
-          "Ecrivez votre message WhatsApp ici et ouvrez-le pret a envoyer.",
+          "Écrivez votre message WhatsApp ici et ouvrez-le prêt à envoyer.",
         name: "Nom",
         namePlaceholder: "Votre nom complet",
         message: "Message",
         messagePlaceholder: "Expliquez ce que vous souhaitez discuter sur WhatsApp.",
         submit: "Ouvrir WhatsApp",
-        feedback: "WhatsApp devrait s'ouvrir avec votre message pret.",
+        feedback: "WhatsApp devrait s'ouvrir avec votre message prêt.",
+        greeting: "Bonjour Forlan, je m'appelle {name}.",
       },
     },
     footer:
-      "Étudiant en génie logiciel qui construit des logiciels pratiques avec une approche orientée backend.",
+      "Ingénieur full-stack et DevOps à Douala. Je conçois et mets en ligne des produits web fiables.",
   },
 } as const;
 
+// NOTE: placeholder projects from the starter. Phase 4 replaces this array.
 export const projects = [
   {
     slug: "mrbhms-hospital-management-system",

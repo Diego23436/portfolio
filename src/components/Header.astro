@@ -1,6 +1,6 @@
 ---
 import CvDownload from "./CvDownload.astro";
-import { content, localeLabels, type Locale } from "../data/content";
+import { content, localeLabels, profile, type Locale } from "../data/content";
 
 type Props = {
   lang: Locale;
@@ -25,13 +25,13 @@ const navItems = [
 
 <header class="sticky top-0 z-40 border-b border-portfolio-line/80 bg-portfolio-paper/90 backdrop-blur-xl dark:border-portfolio-night-line dark:bg-portfolio-night/88">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-    <a href={`/${lang}/`} class="group flex items-center gap-3" aria-label="Home">
+    <a href={`/${lang}/`} class="group flex items-center gap-3" aria-label={t.nav.home}>
       <span class="grid size-10 place-items-center rounded-md bg-portfolio-ink text-sm font-black text-white transition-colors group-hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night">
-        KD
+        {profile.initials}
       </span>
       <span class="hidden leading-tight sm:block">
-        <span class="block text-sm font-bold">James</span>
-        <span class="block text-xs text-portfolio-muted dark:text-slate-400">Software Engineering</span>
+        <span class="block text-sm font-bold">{profile.displayName}</span>
+        <span class="block text-xs text-portfolio-muted dark:text-slate-400">{profile.title}</span>
       </span>
     </a>
 

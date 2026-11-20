@@ -12,7 +12,7 @@ type Props = {
 
 const { lang, title, description } = Astro.props;
 const t = content[lang];
-const pageTitle = title ? `${title} | ${profile.name}` : t.meta.title;
+const pageTitle = title ? `${title} | ${profile.displayName}` : t.meta.title;
 const pageDescription = description ?? t.meta.description;
 ---
 

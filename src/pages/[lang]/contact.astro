@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
-import { content, locales, profile, type Locale } from "../../data/content";
+import { content, locales, profile, whatsappLink, type Locale } from "../../data/content";
 
 export function getStaticPaths() {
   return locales.map((lang) => ({ params: { lang } }));
@@ -16,7 +16,7 @@ const t = content[lang];
     <SectionHeading title={t.contactPage.title} intro={t.contactPage.intro} />
 
     <div class="mt-10 grid gap-5 md:grid-cols-2">
-      <a href={profile.whatsappUrl} class="rounded-lg border border-portfolio-line bg-white p-6 transition hover:-translate-y-1 hover:border-portfolio-accent hover:shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+      <a href={whatsappLink(lang)} class="rounded-lg border border-portfolio-line bg-white p-6 transition hover:-translate-y-1 hover:border-portfolio-accent hover:shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
         <p class="text-sm font-bold uppercase tracking-[0.16em] text-portfolio-accent">{t.actions.whatsapp}</p>
         <h2 class="mt-3 text-2xl font-black">{profile.phoneDisplay}</h2>
         <p class="mt-3 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{t.contactPage.responseNote}</p>
@@ -42,7 +42,11 @@ const t = content[lang];
 
     <div class="mt-5 flex flex-wrap gap-3">
       <a href={profile.github} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">{t.actions.github}</a>
-      <a href={profile.linkedin} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">{t.actions.linkedin}</a>
+      {
+        profile.linkedin && (
+          <a href={profile.linkedin} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">{t.actions.linkedin}</a>
+        )
+      }
     </div>
 
     <section class="mt-12 rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
@@ -55,6 +59,7 @@ const t = content[lang];
         class="mt-8 grid gap-5"
         data-whatsapp-form
         data-whatsapp-number={profile.whatsappNumber}
+        data-greeting={t.contactPage.whatsappForm.greeting}
       >
         <label class="grid gap-2 text-sm font-bold">
           {t.contactPage.whatsappForm.name}
@@ -196,7 +201,7 @@ const t = content[lang];
           const name = String(data.get("name") || "").trim();
           const message = String(data.get("message") || "").trim();
           const text = [
-            `Hello James, my name is ${name}.`,
+            (form.getAttribute("data-greeting") || "").replace("{name}", name),,
             "",
             message,
           ].join("\n");

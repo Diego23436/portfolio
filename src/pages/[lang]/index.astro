@@ -11,7 +11,7 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Locale;
 const t = content[lang];
-const featuredProjects = projects.slice(0, 2);
+const featuredProjects = projects.slice(0, 4);
 ---
 
 <BaseLayout lang={lang}>
@@ -52,8 +52,8 @@ const featuredProjects = projects.slice(0, 2);
         </div>
         <div class="absolute inset-0 bg-gradient-to-t from-portfolio-ink/85 via-portfolio-ink/10 to-transparent"></div>
         <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white">
-          <p class="text-xs font-bold uppercase tracking-[0.16em] text-teal-200">Portfolio 2026</p>
-          <p class="mt-2 text-xl font-black">{profile.name}</p>
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-teal-200">{t.hero.cardLabel}</p>
+          <p class="mt-2 text-xl font-black">{profile.displayName}</p>
           <p class="mt-1 text-sm text-slate-200">{profile.title}</p>
         </figcaption>
       </div>

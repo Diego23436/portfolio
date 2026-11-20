@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
-import { content, locales, type Locale } from "../../data/content";
+import { Icon } from "astro-icon/components";
+import { content, locales, whatsappLink, type Locale } from "../../data/content";
 
 export function getStaticPaths() {
   return locales.map((lang) => ({ params: { lang } }));
@@ -15,23 +16,42 @@ const t = content[lang];
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
     <SectionHeading title={t.services.title} intro={t.services.intro} />
 
-    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-10 grid gap-5 lg:grid-cols-3">
       {
         t.services.items.map((item) => (
-          <article class="rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-            <h2 class="text-lg font-black">{item}</h2>
+          <article class="flex h-full flex-col rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+            <span class="grid size-11 place-items-center rounded-md bg-portfolio-paper text-portfolio-accent dark:bg-portfolio-night">
+              <Icon name={item.icon} class="size-6" aria-hidden="true" />
+            </span>
+            <h2 class="mt-5 text-xl font-black">{item.title}</h2>
+            <p class="mt-2 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{item.pitch}</p>
+            <p class="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-portfolio-accent">{t.services.whatYouGet}</p>
+            <ul class="mt-3 grid gap-2 text-sm text-portfolio-ink dark:text-slate-200">
+              {
+                item.bullets.map((bullet) => (
+                  <li class="flex gap-2">
+                    <Icon name="lucide:check" class="mt-0.5 size-4 shrink-0 text-portfolio-accent" aria-hidden="true" />
+                    <span>{bullet}</span>
+                  </li>
+                ))
+              }
+            </ul>
           </article>
         ))
       }
     </div>
 
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a href={`/${lang}/contact/`} class="rounded-md bg-portfolio-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night dark:hover:bg-portfolio-accent dark:hover:text-white">
-        {t.actions.contactMe}
-      </a>
-      <a href={`/${lang}/projects/`} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-        {t.actions.viewProjects}
-      </a>
+    <div class="mt-10 rounded-lg border border-portfolio-line bg-white p-8 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+      <h2 class="text-2xl font-black">{t.services.cta.title}</h2>
+      <p class="mt-2 max-w-2xl text-sm leading-6 text-portfolio-muted dark:text-slate-300">{t.services.cta.body}</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={`/${lang}/contact/`} class="rounded-md bg-portfolio-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent dark:bg-slate-100 dark:text-portfolio-night dark:hover:bg-portfolio-accent dark:hover:text-white">
+          {t.actions.contactMe}
+        </a>
+        <a href={whatsappLink(lang)} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+          {t.actions.whatsapp}
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
