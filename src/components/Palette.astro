@@ -1,0 +1,86 @@
+---
+import { content, profile, projects, whatsappLink, type Locale } from "../data/content";
+import "../styles/palette.css";
+
+type Props = { lang: Locale };
+
+const { lang } = Astro.props;
+const t = content[lang];
+const p = t.palette;
+const other: Locale = lang === "en" ? "fr" : "en";
+
+type Item = {
+  id: string;
+  group: "navigate" | "projects" | "actions";
+  label: string;
+  /** Extra search words, not shown. */
+  keywords?: string;
+  href?: string;
+  external?: boolean;
+  download?: boolean;
+  action?: "copy-email" | "theme" | "lang";
+};
+
+const items: Item[] = [
+  { id: "home", group: "navigate", label: t.nav.home, href: `/${lang}/`, keywords: "start accueil" },
+  { id: "about", group: "navigate", label: t.nav.about, href: `/${lang}/about/`, keywords: "me forlan stack skills" },
+  { id: "projects", group: "navigate", label: t.nav.projects, href: `/${lang}/projects/`, keywords: "work projets" },
+  { id: "services", group: "navigate", label: t.nav.services, href: `/${lang}/services/`, keywords: "hire offer" },
+  { id: "contact", group: "navigate", label: t.nav.contact, href: `/${lang}/contact/`, keywords: "mail form message" },
+  ...projects.map((project): Item => ({
+    id: `project-${project.slug}`,
+    group: "projects",
+    label: project.title,
+    keywords: `${project.tag[lang]} ${project.kind[lang]}`,
+    href: `/${lang}/projects/${project.slug}/`,
+  })),
+  { id: "copy-email", group: "actions", label: p.actions.copyEmail, keywords: "mail copy contact", action: "copy-email" },
+  { id: "whatsapp", group: "actions", label: p.actions.whatsapp, keywords: "chat message phone", href: whatsappLink(lang), external: true },
+  { id: "cv-en", group: "actions", label: p.actions.cvEn, keywords: "resume pdf", href: profile.resume.en, download: true },
+  { id: "cv-fr", group: "actions", label: p.actions.cvFr, keywords: "resume pdf", href: profile.resume.fr, download: true },
+  { id: "theme", group: "actions", label: p.actions.theme, keywords: "dark light mode", action: "theme" },
+  { id: "lang", group: "actions", label: p.actions.lang, keywords: "language english french", action: "lang" },
+];
+
+const data = {
+  items,
+  groups: p.groups,
+  empty: p.empty,
+  results: p.results,
+  copied: t.hero.copied,
+  copyFailed: t.hero.copyFailed,
+  email: profile.publicEmail,
+  whatsapp: whatsappLink(lang),
+  other,
+  egg: p.egg,
+};
+---
+
+<dialog class="palette" data-palette aria-label={p.open}>
+  <div class="palette-box">
+    <div class="palette-top">
+      <input
+        type="text"
+        class="palette-input"
+        data-palette-input
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="palette-list"
+        aria-autocomplete="list"
+        aria-label={p.placeholder}
+        placeholder={p.placeholder}
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+      <button type="button" class="palette-x" data-palette-close aria-label={p.close}>esc</button>
+    </div>
+    <ul class="palette-list" id="palette-list" role="listbox" data-palette-list></ul>
+    <p class="palette-foot mono"><span>{p.hint}</span></p>
+    <p class="sr-only" role="status" aria-live="polite" data-palette-status></p>
+  </div>
+  <script type="application/json" data-palette-data set:html={JSON.stringify(data)} />
+</dialog>
+
+<div class="egg" data-egg hidden aria-live="polite"></div>
+<canvas class="confetti" data-confetti aria-hidden="true" hidden></canvas>

@@ -1,0 +1,227 @@
+/* Command palette (native <dialog>) and the "sudo hire forlan" easter egg. */
+
+.palette {
+  position: fixed;
+  top: 14vh;
+  left: 50%;
+  margin: 0;
+  padding: 0;
+  width: min(560px, calc(100vw - 24px));
+  max-height: 72vh;
+  transform: translateX(-50%);
+  border: 1px solid rgb(var(--edge) / 0.25);
+  border-radius: 18px;
+  color: rgb(var(--fg));
+  background: rgb(var(--surface) / 0.92);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.65);
+  overflow: hidden;
+}
+
+.palette::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
+
+.palette[open] {
+  animation: palette-in 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes palette-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.palette-box {
+  display: flex;
+  flex-direction: column;
+  max-height: 72vh;
+}
+
+.palette-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgb(var(--edge) / 0.15);
+}
+
+.palette-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 17px;
+  outline: none;
+}
+
+.palette-input:focus-visible {
+  outline: none;
+}
+
+.palette-input::placeholder {
+  color: rgb(var(--soft));
+}
+
+.palette-x {
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid rgb(var(--edge) / 0.25);
+  background: transparent;
+  color: rgb(var(--soft));
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.palette-list {
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.pal-group {
+  padding: 12px 10px 6px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--soft));
+}
+
+.pal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.pal-item[aria-selected="true"] {
+  background: rgb(var(--fg) / 0.09);
+}
+
+.pal-item b {
+  font-weight: 700;
+  color: rgb(var(--fg));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(var(--accent));
+}
+
+.pal-enter {
+  display: none;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: rgb(var(--soft));
+}
+
+.pal-item[aria-selected="true"] .pal-enter {
+  display: inline;
+}
+
+.pal-empty {
+  padding: 28px 12px;
+  text-align: center;
+  color: rgb(var(--soft));
+}
+
+.palette-foot {
+  margin: 0;
+  padding: 10px 16px;
+  border-top: 1px solid rgb(var(--edge) / 0.15);
+  color: rgb(var(--soft));
+  font-size: 11px;
+}
+
+/* Header trigger */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 9px;
+  border: 1px solid rgb(var(--edge) / 0.25);
+  background: transparent;
+  color: rgb(var(--soft));
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.kbd:hover {
+  color: rgb(var(--fg));
+  border-color: rgb(var(--fg) / 0.6);
+}
+
+/* ---------------- Easter egg ---------------- */
+.egg {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 95;
+  width: min(380px, calc(100vw - 40px));
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgb(148 163 184 / 0.3);
+  background: #0b1220;
+  color: #f8fafc;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.6);
+}
+
+.egg[hidden] {
+  display: none;
+}
+
+.egg .ok {
+  color: #c6f432;
+}
+
+.egg .dim {
+  color: #94a3b8;
+}
+
+.egg a {
+  color: #f8fafc;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 94;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.confetti[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .palette[open] {
+    animation: none;
+  }
+}
