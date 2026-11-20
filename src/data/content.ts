@@ -37,21 +37,28 @@ export const profile = {
   },
   photos: {
     portrait: {
-      src: "/images/profile/forlan-portrait.jpg",
+      // Made by "npm run photos" from forlan-portrait.jpg (4:5 crop, face in the upper third).
+      src: "/images/profile/hero-front.webp",
+      width: 720,
+      height: 900,
       alt: {
         en: "Portrait of Nk Forlan in a white shirt, smiling with a thumbs up on a village road",
         fr: "Portrait de Nk Forlan en chemise blanche, souriant, pouce levé, sur un chemin de terre",
       },
     },
     headshot: {
-      src: "/images/profile/forlan-headshot.jpg",
+      src: "/images/profile/hero-back.webp",
+      width: 960,
+      height: 1200,
       alt: {
         en: "Close portrait of Nk Forlan in a dark striped polo with a shoulder bag",
         fr: "Portrait rapproché de Nk Forlan en polo rayé sombre avec une sacoche",
       },
     },
     fullBody: {
-      src: "/images/profile/forlan-fullbody.jpg",
+      src: "/images/profile/about.webp",
+      width: 560,
+      height: 700,
       alt: {
         en: "Nk Forlan standing in front of a green hedge, wearing a knitted sweater",
         fr: "Nk Forlan debout devant une haie verte, portant un pull en maille",

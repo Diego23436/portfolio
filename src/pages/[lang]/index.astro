@@ -66,8 +66,8 @@ const featuredProjects = projects.filter((project) => project.tier === "main");
           <img
             src={profile.photos.portrait.src}
             alt={profile.photos.portrait.alt[lang]}
-            width="918"
-            height="1280"
+            width={profile.photos.portrait.width}
+            height={profile.photos.portrait.height}
             fetchpriority="high"
             class="profile-photo-face profile-photo-face-front size-full object-cover object-top"
             decoding="async"
@@ -75,8 +75,8 @@ const featuredProjects = projects.filter((project) => project.tier === "main");
           <img
             src={profile.photos.headshot.src}
             alt={profile.photos.headshot.alt[lang]}
-            width="960"
-            height="1280"
+            width={profile.photos.headshot.width}
+            height={profile.photos.headshot.height}
             loading="lazy"
             class="profile-photo-face profile-photo-face-back size-full object-cover object-top"
             decoding="async"

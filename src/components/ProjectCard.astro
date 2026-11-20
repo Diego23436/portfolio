@@ -13,8 +13,8 @@ const t = content[lang];
 const href = `/${lang}/projects/${project.slug}/`;
 ---
 
-<article class="reveal group grid h-full overflow-hidden rounded-xl border border-portfolio-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-portfolio-accent hover:shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-  <div class:list={["relative overflow-hidden bg-portfolio-ink", compact ? "aspect-[21/9]" : "aspect-[16/9]"]}>
+<article class="reveal group flex h-full flex-col overflow-hidden rounded-xl border border-portfolio-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-portfolio-accent hover:shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+  <div class:list={["relative shrink-0 overflow-hidden bg-portfolio-ink", compact ? "aspect-[21/9]" : "aspect-[16/9]"]}>
     <img
       src={project.image}
       alt={project.imageAlt[lang]}
@@ -25,7 +25,7 @@ const href = `/${lang}/projects/${project.slug}/`;
       class="size-full object-cover transition duration-500 group-hover:scale-105"
     />
   </div>
-  <div class="grid gap-4 p-5">
+  <div class="flex flex-1 flex-col gap-4 p-5">
     <div>
       <p class="text-xs font-bold uppercase tracking-[0.14em] text-portfolio-accent">{project.kind[lang]}</p>
       <h3 class="mt-2 text-xl font-black">{project.title}</h3>

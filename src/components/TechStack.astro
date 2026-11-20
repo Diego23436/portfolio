@@ -38,10 +38,10 @@ const groups = (compact ? skillGroups.filter((group) => group.featured) : skillG
     }
   </ul>
 
-  <div class:list={["mt-6 grid gap-4", compact ? "sm:grid-cols-2" : "md:grid-cols-2 xl:grid-cols-3"]}>
+  <div class:list={["mt-6 grid grid-cols-1 gap-4", compact ? "sm:grid-cols-2" : "md:grid-cols-2 xl:grid-cols-3"]}>
     {
       groups.map((group) => (
-        <section class="reveal rounded-xl border border-portfolio-line bg-white p-5 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        <section class="reveal min-w-0 rounded-xl border border-portfolio-line bg-white p-5 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
           <h3 class="text-sm font-black uppercase tracking-[0.12em] text-portfolio-accent">{group.title[lang]}</h3>
           <ul class:list={["mt-4 grid gap-2", compact && "grid-cols-1"]}>
             {
@@ -49,7 +49,7 @@ const groups = (compact ? skillGroups.filter((group) => group.featured) : skillG
                 <li class="flex items-center justify-between gap-3">
                   <span class="flex min-w-0 items-center gap-2.5 text-sm font-semibold">
                     <Icon name={item.icon} class="size-4 shrink-0 text-portfolio-muted dark:text-slate-300" aria-hidden="true" />
-                    <span class="truncate" title={lang === "fr" ? (item.nameFr ?? item.name) : item.name}>{lang === "fr" ? (item.nameFr ?? item.name) : item.name}</span>
+                    <span class="min-w-0 leading-snug">{lang === "fr" ? (item.nameFr ?? item.name) : item.name}</span>
                   </span>
                   <span class="flex shrink-0 items-center gap-2">
                     {!compact && <span class="hidden text-xs text-portfolio-muted sm:inline dark:text-slate-400">{s.levels[item.level].label}</span>}
