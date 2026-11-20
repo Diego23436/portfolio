@@ -3,6 +3,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import CvDownload from "../../components/CvDownload.astro";
+import TechStack from "../../components/TechStack.astro";
+import ProfessionalSkills from "../../components/ProfessionalSkills.astro";
 import { content, locales, profile, projects, type Locale } from "../../data/content";
 
 export function getStaticPaths() {
@@ -82,24 +84,26 @@ const featuredProjects = projects.filter((project) => project.tier === "main");
     </div>
   </section>
 
-  <section class="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-[0.95fr_1.05fr] lg:px-8">
-    <div>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-8 md:grid-cols-[0.95fr_1.05fr] md:items-end">
       <SectionHeading title={t.aboutPreview.title} intro={t.aboutPreview.body} />
-      <a href={`/${lang}/about/`} class="mt-6 inline-flex rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-        {t.nav.about}
-      </a>
+      <div>
+        <a href={`/${lang}/about/`} class="inline-flex rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+          {t.nav.about}
+        </a>
+      </div>
     </div>
-    <div class="grid gap-4 sm:grid-cols-2">
-      {
-        t.skills.groups.map((group) => (
-          <article class="rounded-lg border border-portfolio-line bg-white p-5 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-            <h3 class="font-black">{group.title}</h3>
-            <div class="mt-4 flex flex-wrap gap-2">
-              {group.items.map((item) => <span class="rounded-md bg-portfolio-paper px-2.5 py-1 text-xs font-bold text-portfolio-muted dark:bg-portfolio-night dark:text-slate-300">{item}</span>)}
-            </div>
-          </article>
-        ))
-      }
+  </section>
+
+  <section class="bg-white/70 py-16 dark:bg-portfolio-night-panel/60">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <SectionHeading title={t.skills.title} intro={t.skills.intro} />
+      <div class="mt-8"><TechStack lang={lang} compact /></div>
     </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <SectionHeading title={t.proSkills.title} intro={t.proSkills.intro} />
+    <div class="mt-8"><ProfessionalSkills lang={lang} short /></div>
   </section>
 </BaseLayout>

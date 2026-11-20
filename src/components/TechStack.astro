@@ -1,0 +1,71 @@
+---
+import { Icon } from "astro-icon/components";
+import { content, skillGroups, type Locale, type SkillLevel } from "../data/content";
+
+type Props = {
+  lang: Locale;
+  /** Compact view (home): featured groups only, no "working knowledge" items. */
+  compact?: boolean;
+};
+
+const { lang, compact = false } = Astro.props;
+const s = content[lang].skills;
+
+const dots: Record<SkillLevel, number> = { expert: 3, advanced: 2, working: 1 };
+const levels: SkillLevel[] = ["expert", "advanced", "working"];
+
+const groups = (compact ? skillGroups.filter((group) => group.featured) : skillGroups)
+  .map((group) => ({
+    ...group,
+    items: compact ? group.items.filter((item) => item.level !== "working") : group.items,
+  }))
+  .filter((group) => group.items.length > 0);
+---
+
+<div>
+  <ul class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-portfolio-muted dark:text-slate-400" aria-label={s.legendTitle}>
+    {
+      levels.map((level) => (
+        <li class="flex items-center gap-2">
+          <span class="flex gap-1" aria-hidden="true">
+            {[1, 2, 3].map((n) => (
+              <span class:list={["size-2 rounded-full", n <= dots[level] ? "bg-portfolio-accent" : "bg-portfolio-line dark:bg-portfolio-night-line"]} />
+            ))}
+          </span>
+          <span><strong class="font-bold text-portfolio-ink dark:text-slate-100">{s.levels[level].label}</strong>: {s.levels[level].hint}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class:list={["mt-6 grid gap-4", compact ? "sm:grid-cols-2" : "md:grid-cols-2 xl:grid-cols-3"]}>
+    {
+      groups.map((group) => (
+        <section class="reveal rounded-lg border border-portfolio-line bg-white p-5 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+          <h3 class="text-sm font-black uppercase tracking-[0.12em] text-portfolio-accent">{group.title[lang]}</h3>
+          <ul class:list={["mt-4 grid gap-2", compact && "grid-cols-1"]}>
+            {
+              group.items.map((item) => (
+                <li class="flex items-center justify-between gap-3">
+                  <span class="flex min-w-0 items-center gap-2.5 text-sm font-semibold">
+                    <Icon name={item.icon} class="size-4 shrink-0 text-portfolio-muted dark:text-slate-300" aria-hidden="true" />
+                    <span class="truncate" title={lang === "fr" ? (item.nameFr ?? item.name) : item.name}>{lang === "fr" ? (item.nameFr ?? item.name) : item.name}</span>
+                  </span>
+                  <span class="flex shrink-0 items-center gap-2">
+                    {!compact && <span class="hidden text-xs text-portfolio-muted sm:inline dark:text-slate-400">{s.levels[item.level].label}</span>}
+                    <span class="flex gap-1" aria-hidden="true">
+                      {[1, 2, 3].map((n) => (
+                        <span class:list={["size-1.5 rounded-full", n <= dots[item.level] ? "bg-portfolio-accent" : "bg-portfolio-line dark:bg-portfolio-night-line"]} />
+                      ))}
+                    </span>
+                    <span class="sr-only">{s.levels[item.level].label}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</div>

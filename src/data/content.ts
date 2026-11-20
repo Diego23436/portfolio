@@ -110,7 +110,7 @@ export const content = {
     },
     // TODO: confirm these stats with Forlan before publishing.
     stats: [
-      { value: "4", label: "Main products built and shipped" },
+      { value: "7", label: "Projects for real clients, teams and businesses" },
       { value: "EN / FR", label: "Bilingual delivery" },
       { value: "Full-stack + DevOps", label: "From data model to server" },
     ],
@@ -148,58 +148,27 @@ export const content = {
       languages: "Languages: English (first language) and French, fully bilingual.",
     },
     skills: {
-      // Interim list. Phase 5 replaces it with icons and levels.
       title: "Tech Stack",
-      groups: [
-        {
-          title: "Frontend",
-          items: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Vite", "HTML/CSS"],
-        },
-        {
-          title: "Backend",
-          items: [
-            "NestJS",
-            "Node.js",
-            "REST API design",
-            "Prisma ORM",
-            "Supabase",
-            "FastAPI",
-            "Auth & role-based access",
-            "Mobile Money integration (CinetPay)",
-          ],
-        },
-        { title: "Mobile", items: ["Flutter / Dart"] },
-        {
-          title: "Data",
-          items: ["PostgreSQL", "Data modelling / ERD", "Row-Level Security & triggers", "MinIO object storage"],
-        },
-        {
-          title: "DevOps & Cloud",
-          items: [
-            "Docker",
-            "Git & Git workflows",
-            "GitLab CI/CD",
-            "SonarQube",
-            "Linux VPS",
-            "Domains, DNS & SSL",
-            "Cloudflare Pages",
-            "Kubernetes",
-            "Networking & monitoring",
-          ],
-        },
-        {
-          title: "AI & Productivity",
-          items: ["AI-assisted development with Claude Code", "Multi-agent workflows", "Prompt engineering"],
-        },
-        {
-          title: "Creative & Docs",
-          items: [
-            "Motion design with GSAP",
-            "Video narration with ElevenLabs",
-            "Technical writing: specs, ERD, docs",
-            "LaTeX",
-          ],
-        },
+      intro: "The tools I use to build and ship. Levels are honest labels, not percentages.",
+      legendTitle: "Level legend",
+      levels: {
+        expert: { label: "Expert", hint: "daily use in production" },
+        advanced: { label: "Advanced", hint: "shipped real projects with it" },
+        working: { label: "Working knowledge", hint: "used in course or side projects" },
+      },
+    },
+    proSkills: {
+      title: "Professional Skills",
+      intro: "How I work with teams and clients, with proof from real projects.",
+      items: [
+        { icon: "lucide:blocks", short: true, title: "Software architecture & system design", proof: "Multi-tenant SaaS, microservices and data-first design." },
+        { icon: "lucide:file-text", short: false, title: "Requirements & specifications", proof: "I write specifications (cahiers des charges) and ERDs that clients approve before coding." },
+        { icon: "lucide:layout-dashboard", short: false, title: "Agile, ticket-based delivery", proof: "Sprints, boards, small merge requests and clear definitions of done." },
+        { icon: "lucide:git-pull-request", short: true, title: "Code review & Git discipline", proof: "Rebase before merge, CI must pass, quality gates." },
+        { icon: "lucide:flask-conical", short: false, title: "Test-first development", proof: "Tests written with or before the feature." },
+        { icon: "lucide:users", short: true, title: "Technical leadership", proof: "I lead small teams, split work and unblock teammates (Stocky, Devops003, the clinic website)." },
+        { icon: "lucide:languages", short: false, title: "Client communication (EN/FR)", proof: "I turn business needs into working software and explain the tech in simple words." },
+        { icon: "lucide:rocket", short: true, title: "Production mindset", proof: "Deployment, domains, servers and monitoring. A project is done when it is online." },
       ],
     },
     projects: {
@@ -405,7 +374,7 @@ export const content = {
     },
     // TODO: confirm these stats with Forlan before publishing.
     stats: [
-      { value: "4", label: "Produits principaux conçus et livrés" },
+      { value: "7", label: "Projets pour de vrais clients, équipes et entreprises" },
       { value: "EN / FR", label: "Livraison bilingue" },
       { value: "Full-stack + DevOps", label: "Du modèle de données au serveur" },
     ],
@@ -444,65 +413,26 @@ export const content = {
     },
     skills: {
       title: "Stack technique",
-      groups: [
-        {
-          title: "Frontend",
-          items: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Vite", "HTML/CSS"],
-        },
-        {
-          title: "Backend",
-          items: [
-            "NestJS",
-            "Node.js",
-            "Conception d'API REST",
-            "Prisma ORM",
-            "Supabase",
-            "FastAPI",
-            "Authentification & accès par rôles",
-            "Intégration Mobile Money (CinetPay)",
-          ],
-        },
-        { title: "Mobile", items: ["Flutter / Dart"] },
-        {
-          title: "Données",
-          items: [
-            "PostgreSQL",
-            "Modélisation de données / ERD",
-            "Row-Level Security & triggers",
-            "Stockage objet MinIO",
-          ],
-        },
-        {
-          title: "DevOps & Cloud",
-          items: [
-            "Docker",
-            "Git & workflows Git",
-            "GitLab CI/CD",
-            "SonarQube",
-            "VPS Linux",
-            "Domaines, DNS & SSL",
-            "Cloudflare Pages",
-            "Kubernetes",
-            "Réseaux & supervision",
-          ],
-        },
-        {
-          title: "IA & productivité",
-          items: [
-            "Développement assisté par IA avec Claude Code",
-            "Workflows multi-agents",
-            "Prompt engineering",
-          ],
-        },
-        {
-          title: "Création & documentation",
-          items: [
-            "Motion design avec GSAP",
-            "Narration vidéo avec ElevenLabs",
-            "Rédaction technique : cahiers des charges, ERD, docs",
-            "LaTeX",
-          ],
-        },
+      intro: "Les outils que j'utilise pour construire et livrer. Les niveaux sont des étiquettes honnêtes, pas des pourcentages.",
+      legendTitle: "Légende des niveaux",
+      levels: {
+        expert: { label: "Expert", hint: "usage quotidien en production" },
+        advanced: { label: "Avancé", hint: "projets réels livrés avec" },
+        working: { label: "Notions pratiques", hint: "utilisé en cours ou en projets perso" },
+      },
+    },
+    proSkills: {
+      title: "Compétences professionnelles",
+      intro: "Ma façon de travailler avec des équipes et des clients, avec des preuves issues de projets réels.",
+      items: [
+        { icon: "lucide:blocks", short: true, title: "Architecture logicielle & conception de systèmes", proof: "SaaS multi-tenant, microservices et conception centrée sur les données." },
+        { icon: "lucide:file-text", short: false, title: "Besoins & spécifications", proof: "Je rédige des cahiers des charges et des ERD que les clients valident avant le code." },
+        { icon: "lucide:layout-dashboard", short: false, title: "Livraison agile par tickets", proof: "Sprints, tableaux, petites merge requests et critères de fin clairs." },
+        { icon: "lucide:git-pull-request", short: true, title: "Revue de code & rigueur Git", proof: "Rebase avant merge, CI au vert obligatoire, quality gates." },
+        { icon: "lucide:flask-conical", short: false, title: "Développement test-first", proof: "Tests écrits avec la fonctionnalité, ou avant." },
+        { icon: "lucide:users", short: true, title: "Leadership technique", proof: "Je dirige de petites équipes, découpe le travail et débloque mes coéquipiers (Stocky, Devops003, site de la clinique)." },
+        { icon: "lucide:languages", short: false, title: "Communication client (EN/FR)", proof: "Je transforme un besoin métier en logiciel qui fonctionne et j'explique la technique avec des mots simples." },
+        { icon: "lucide:rocket", short: true, title: "Esprit production", proof: "Déploiement, domaines, serveurs et supervision. Un projet est terminé quand il est en ligne." },
       ],
     },
     projects: {
@@ -664,3 +594,4 @@ export const content = {
 } as const;
 
 export { projects, type Project, type Localized } from "./projects";
+export { skillGroups, type Skill, type SkillGroup, type SkillLevel } from "./skills";

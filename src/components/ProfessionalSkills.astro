@@ -1,0 +1,27 @@
+---
+import { Icon } from "astro-icon/components";
+import { content, type Locale } from "../data/content";
+
+type Props = {
+  lang: Locale;
+  /** Short version (home): only the items marked `short`. */
+  short?: boolean;
+};
+
+const { lang, short = false } = Astro.props;
+const items = content[lang].proSkills.items.filter((item) => !short || item.short);
+---
+
+<div class:list={["grid gap-4 sm:grid-cols-2", !short && "lg:grid-cols-4"]}>
+  {
+    items.map((item) => (
+      <article class="reveal rounded-lg border border-portfolio-line bg-white p-5 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        <span class="grid size-10 place-items-center rounded-md bg-portfolio-paper text-portfolio-accent dark:bg-portfolio-night">
+          <Icon name={item.icon} class="size-5" aria-hidden="true" />
+        </span>
+        <h3 class="mt-4 font-black leading-snug">{item.title}</h3>
+        <p class="mt-2 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{item.proof}</p>
+      </article>
+    ))
+  }
+</div>
