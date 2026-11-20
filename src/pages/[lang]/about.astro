@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import ResumeCards from "../../components/ResumeCards.astro";
-import TechStack from "../../components/TechStack.astro";
+import SkillsConstellation from "../../components/skills/SkillsConstellation.astro";
 import ProfessionalSkills from "../../components/ProfessionalSkills.astro";
 import { content, locales, profile, type Locale } from "../../data/content";
 
@@ -76,12 +76,12 @@ const t = content[lang];
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-    <SectionHeading title={t.skills.title} intro={t.skills.intro} />
-    <div class="mt-8"><TechStack lang={lang} /></div>
+    <SectionHeading title={t.skills.title} />
+    <div class="mt-8"><SkillsConstellation lang={lang} /></div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-    <SectionHeading title={t.proSkills.title} intro={t.proSkills.intro} />
+    <SectionHeading title={t.proSkills.title} />
     <div class="mt-8"><ProfessionalSkills lang={lang} /></div>
   </section>
 

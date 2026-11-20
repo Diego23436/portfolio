@@ -2,10 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Hero from "../../components/home/Hero.astro";
 import RoleMarquee from "../../components/home/RoleMarquee.astro";
-import SectionHeading from "../../components/SectionHeading.astro";
 import SelectedWork from "../../components/home/SelectedWork.astro";
 import Pipeline from "../../components/home/Pipeline.astro";
-import TechStack from "../../components/TechStack.astro";
+import SkillsConstellation from "../../components/skills/SkillsConstellation.astro";
 import ProfessionalSkills from "../../components/ProfessionalSkills.astro";
 import { content, cutoutImage, locales, type Locale } from "../../data/content";
 
@@ -39,15 +38,13 @@ const cutout = cutoutImage();
   <SelectedWork lang={lang} />
   <Pipeline lang={lang} />
 
-  <!-- Temporary sections: rebuilt in the next step (skills). -->
-  <div style="height: clamp(72px, 10vw, 140px);"></div>
-  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-    <SectionHeading title={t.skills.title} />
-    <div class="mt-8"><TechStack lang={lang} compact /></div>
+  <section class="wrap" style="padding-top: clamp(72px, 10vw, 140px);">
+    <div class="sec-head reveal"><h2 class="sec-title">{t.skills.title}</h2></div>
+    <div style="margin-top: clamp(28px, 4vw, 48px);"><SkillsConstellation lang={lang} compact /></div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-    <SectionHeading title={t.proSkills.title} />
-    <div class="mt-8"><ProfessionalSkills lang={lang} short /></div>
+  <section class="wrap" style="padding-block: clamp(72px, 10vw, 140px);">
+    <div class="sec-head reveal"><h2 class="sec-title">{t.proSkills.title}</h2></div>
+    <div style="margin-top: clamp(28px, 4vw, 48px);"><ProfessionalSkills lang={lang} short /></div>
   </section>
 </BaseLayout>

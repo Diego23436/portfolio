@@ -305,3 +305,30 @@ html.has-spotlight .spotlight {
   position: absolute;
   inset: 0;
 }
+
+/* ---- Shared buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid rgb(var(--fg));
+  background: rgb(var(--fg));
+  color: rgb(var(--base));
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: rgb(var(--fg));
+  border-color: rgb(var(--edge) / 0.3);
+}
+
+.btn--ghost:hover {
+  border-color: rgb(var(--fg) / 0.7);
+}

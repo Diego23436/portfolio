@@ -47,23 +47,27 @@ let revealObserver: IntersectionObserver | null = null;
 
 function initReveal() {
   revealObserver?.disconnect();
-  const items = document.querySelectorAll<HTMLElement>(".reveal:not(.is-visible)");
+  const items = document.querySelectorAll<HTMLElement>(".reveal:not(.is-visible), .wipe:not(.is-visible)");
   if (!("IntersectionObserver" in window)) {
     items.forEach((el) => el.classList.add("is-visible"));
     return;
   }
+  // A clip-path wipe hides the element itself, and browsers may then report it as not visible.
+  // So a .wipe element is watched through its parent, and the class is added to the .wipe element.
+  const targets = new Map<Element, HTMLElement>();
+  items.forEach((el) => targets.set(el.classList.contains("wipe") ? (el.parentElement ?? el) : el, el));
   revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
+          targets.get(entry.target)?.classList.add("is-visible");
           revealObserver?.unobserve(entry.target);
         }
       });
     },
     { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
   );
-  items.forEach((el) => revealObserver?.observe(el));
+  targets.forEach((_, target) => revealObserver?.observe(target));
 }
 
 /* ---------------- Cursor spotlight (fine pointer only) ---------------- */

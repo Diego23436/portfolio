@@ -1,0 +1,450 @@
+/* Stack constellation + professional skills list. Tokens come from global.css. */
+
+.skills {
+  position: relative;
+}
+
+/* ---------------- Legend + filters ---------------- */
+.skills-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+}
+
+.skills-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: rgb(var(--soft));
+}
+
+.skills-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgb(var(--edge) / 0.3);
+}
+
+.dots i.on {
+  background: rgb(var(--fg));
+}
+
+.skills-filters {
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.js .skills-filters {
+  display: flex;
+}
+
+.skills-filters .chip {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+/* ---------------- Constellation (desktop) ---------------- */
+.skills-canvas {
+  position: relative;
+  display: none;
+  margin-top: 28px;
+  width: 100%;
+  aspect-ratio: var(--ratio, 1200 / 780);
+  border-radius: 24px;
+  border: 1px solid rgb(var(--edge) / 0.12);
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 45%, rgb(var(--fg) / 0.04), transparent 70%),
+    rgb(var(--surface));
+}
+
+@media (min-width: 1024px) {
+  .skills-canvas {
+    display: block;
+  }
+
+  .skills-grid {
+    display: none !important;
+  }
+}
+
+.skills-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.skills-lines [data-lines] line {
+  stroke: rgb(var(--fg));
+  stroke-opacity: 0.6;
+  stroke-width: 1.2;
+}
+
+/* Faint lines inside each cluster: the "constellation" */
+.skills-links line {
+  stroke: rgb(var(--accent));
+  stroke-opacity: 0.22;
+  stroke-width: 1;
+}
+
+.skills.is-focus .skills-links,
+.skills.is-filter .skills-links {
+  opacity: 0.4;
+}
+
+.cluster-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--fg) / 0.75);
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.skill-chip {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: var(--s, 44px);
+  height: var(--s, 44px);
+  margin: calc(var(--s, 44px) / -2) 0 0 calc(var(--s, 44px) / -2);
+  padding: 0;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--edge) / 0.4);
+  background: rgb(var(--base));
+  color: rgb(var(--fg));
+  cursor: pointer;
+  transition:
+    opacity 0.35s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    scale 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-chip svg {
+  width: 45%;
+  height: 45%;
+}
+
+.skill-chip-in {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  animation: skill-float var(--d, 6s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes skill-float {
+  from {
+    transform: translateY(-4px);
+  }
+  to {
+    transform: translateY(4px);
+  }
+}
+
+.skill-chip:hover,
+.skill-chip:focus-visible,
+.skill-chip.is-on {
+  border-color: rgb(var(--fg));
+  background: rgb(var(--fg));
+  color: rgb(var(--base));
+  scale: 1.12;
+  z-index: 5;
+}
+
+/* Entrance: chips pop in one after another (only with JS) */
+.js .skills:not(.is-in) .skill-chip {
+  opacity: 0;
+  scale: 0.5;
+}
+
+.js .skills.is-in .skill-chip {
+  transition-delay: calc(var(--i, 0) * 16ms), 0s, 0s, calc(var(--i, 0) * 16ms);
+}
+
+/* Dim everything except the focused skill or the chosen group */
+.skills.is-focus .skill-chip:not(.is-on),
+.skills.is-focus .cluster-label,
+.skills.is-filter .skill-chip.is-dim,
+.skills.is-filter .cluster-label.is-dim {
+  opacity: 0.22;
+}
+
+/* Project pills at the bottom edge */
+.skill-pill {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 6px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--edge) / 0.2);
+  background: rgb(var(--base));
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: rgb(var(--soft));
+  transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.skills.is-focus .skill-pill:not(.is-on) {
+  opacity: 0.4;
+}
+
+.skill-pill.is-on {
+  color: rgb(var(--base));
+  background: rgb(var(--fg));
+  border-color: rgb(var(--fg));
+}
+
+/* Tooltip card */
+.skill-tip {
+  position: absolute;
+  z-index: 10;
+  width: 260px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgb(var(--edge) / 0.25);
+  background: rgb(var(--surface) / 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.5);
+}
+
+.skill-tip[hidden] {
+  display: none;
+}
+
+.tip-name {
+  font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.tip-level {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: rgb(var(--soft));
+}
+
+.tip-used {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgb(var(--edge) / 0.15);
+  font-size: 13px;
+  color: rgb(var(--soft));
+}
+
+.tip-used a {
+  color: rgb(var(--fg));
+  border-bottom: 1px solid rgb(var(--edge) / 0.4);
+}
+
+.tip-used a:hover {
+  border-color: rgb(var(--fg));
+}
+
+/* ---------------- Grid (tablet and phone) ---------------- */
+.skills-grid {
+  display: grid;
+  gap: 28px;
+  margin-top: 28px;
+}
+
+.skills-group h3 {
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgb(var(--soft));
+}
+
+.skills-group ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgb(var(--edge) / 0.15);
+  background: rgb(var(--surface));
+  color: rgb(var(--fg));
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.skill-row svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.skill-row .dots {
+  margin-left: auto;
+}
+
+/* ---------------- Bottom sheet ---------------- */
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: flex-end;
+  background: rgb(0 0 0 / 0.5);
+}
+
+.sheet[hidden] {
+  display: none;
+}
+
+.sheet-card {
+  width: 100%;
+  padding: 24px 20px 32px;
+  border-radius: 20px 20px 0 0;
+  border: 1px solid rgb(var(--edge) / 0.2);
+  background: rgb(var(--surface));
+}
+
+.sheet-close {
+  margin-top: 20px;
+}
+
+/* ---------------- Professional skills list ---------------- */
+.pro {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgb(var(--edge) / 0.15);
+}
+
+.pro-row {
+  border-bottom: 1px solid rgb(var(--edge) / 0.15);
+}
+
+.pro-in {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 24px;
+  padding: clamp(20px, 3vw, 32px) 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pro-num {
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-size: 13px;
+  color: rgb(var(--soft));
+  transition: color 0.3s ease;
+}
+
+.pro-title {
+  font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", sans-serif;
+  font-weight: 600;
+  font-variation-settings: "wdth" 92;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.pro-proof {
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgb(var(--soft));
+}
+
+@media (hover: hover) {
+  .pro-row:hover .pro-in {
+    transform: translateX(8px);
+  }
+
+  .pro-row:hover .pro-num {
+    color: rgb(var(--fg));
+  }
+}
+
+/* Clip-path wipe on scroll (only with JS) */
+.js .wipe {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js .wipe.is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (max-width: 767px) {
+  .pro-in {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 4px 12px;
+  }
+
+  .pro-proof {
+    grid-column: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-chip-in {
+    animation: none;
+  }
+
+  .js .skills:not(.is-in) .skill-chip {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .js .wipe {
+    clip-path: none;
+    transition: none;
+  }
+
+  .pro-in,
+  .skill-chip,
+  .cluster-label {
+    transition: none;
+  }
+}

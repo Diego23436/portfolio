@@ -15,6 +15,8 @@ export type Skill = {
   /** "simple-icons:..." for brand logos, "lucide:..." for general icons. */
   icon: string;
   level: SkillLevel;
+  /** Slugs of the projects where it was used (from projects.ts). Empty = unknown, nothing is invented. */
+  usedIn: readonly string[];
 };
 
 export type SkillGroup = {
@@ -31,13 +33,13 @@ export const skillGroups: readonly SkillGroup[] = [
     title: { en: "Frontend", fr: "Frontend" },
     featured: true,
     items: [
-      { name: "React", icon: "simple-icons:react", level: "expert" },
-      { name: "Next.js", icon: "simple-icons:nextdotjs", level: "advanced" },
-      { name: "TypeScript", icon: "simple-icons:typescript", level: "advanced" },
-      { name: "JavaScript", icon: "simple-icons:javascript", level: "expert" },
-      { name: "Tailwind CSS", icon: "simple-icons:tailwindcss", level: "expert" },
-      { name: "Vite", icon: "simple-icons:vite", level: "advanced" },
-      { name: "HTML/CSS", icon: "simple-icons:html5", level: "expert" },
+      { name: "React", icon: "simple-icons:react", level: "expert", usedIn: ["oasis-doc","clinique-la-bienveillance"] },
+      { name: "Next.js", icon: "simple-icons:nextdotjs", level: "advanced", usedIn: ["stocky","easy-klin"] },
+      { name: "TypeScript", icon: "simple-icons:typescript", level: "advanced", usedIn: ["stocky"] },
+      { name: "JavaScript", icon: "simple-icons:javascript", level: "expert", usedIn: [] },
+      { name: "Tailwind CSS", icon: "simple-icons:tailwindcss", level: "expert", usedIn: ["oasis-doc"] },
+      { name: "Vite", icon: "simple-icons:vite", level: "advanced", usedIn: ["oasis-doc","clinique-la-bienveillance"] },
+      { name: "HTML/CSS", icon: "simple-icons:html5", level: "expert", usedIn: ["clinique-la-bienveillance"] },
     ],
   },
   {
@@ -45,23 +47,23 @@ export const skillGroups: readonly SkillGroup[] = [
     title: { en: "Backend", fr: "Backend" },
     featured: true,
     items: [
-      { name: "NestJS", icon: "simple-icons:nestjs", level: "advanced" },
-      { name: "Node.js", icon: "simple-icons:nodedotjs", level: "advanced" },
-      { name: "REST API design", nameFr: "Conception d'API REST", icon: "lucide:webhook", level: "advanced" },
-      { name: "Prisma ORM", icon: "simple-icons:prisma", level: "advanced" },
-      { name: "Supabase", icon: "simple-icons:supabase", level: "advanced" },
-      { name: "FastAPI", icon: "simple-icons:fastapi", level: "working" },
+      { name: "NestJS", icon: "simple-icons:nestjs", level: "advanced", usedIn: ["stocky","easy-klin"] },
+      { name: "Node.js", icon: "simple-icons:nodedotjs", level: "advanced", usedIn: ["stocky","easy-klin"] },
+      { name: "REST API design", nameFr: "Conception d'API REST", icon: "lucide:webhook", level: "advanced", usedIn: ["stocky","easy-klin"] },
+      { name: "Prisma ORM", icon: "simple-icons:prisma", level: "advanced", usedIn: ["stocky"] },
+      { name: "Supabase", icon: "simple-icons:supabase", level: "advanced", usedIn: ["oasis-doc"] },
+      { name: "FastAPI", icon: "simple-icons:fastapi", level: "working", usedIn: [] },
       {
         name: "Auth & role-based access",
         nameFr: "Authentification & accès par rôles",
         icon: "lucide:shield-check",
-        level: "advanced",
+        level: "advanced", usedIn: ["stocky","easy-klin","pdv-leadex-quiz"],
       },
       {
         name: "Mobile Money integration (CinetPay)",
         nameFr: "Intégration Mobile Money (CinetPay)",
         icon: "lucide:smartphone",
-        level: "working",
+        level: "working", usedIn: [],
       },
     ],
   },
@@ -69,17 +71,17 @@ export const skillGroups: readonly SkillGroup[] = [
     id: "mobile",
     title: { en: "Mobile", fr: "Mobile" },
     featured: false,
-    items: [{ name: "Flutter / Dart", icon: "simple-icons:flutter", level: "working" }],
+    items: [{ name: "Flutter / Dart", icon: "simple-icons:flutter", level: "working", usedIn: ["easy-klin"] }],
   },
   {
     id: "data",
     title: { en: "Data", fr: "Données" },
     featured: true,
     items: [
-      { name: "PostgreSQL", icon: "simple-icons:postgresql", level: "advanced" },
-      { name: "Data modelling / ERD", nameFr: "Modélisation de données / ERD", icon: "lucide:network", level: "expert" },
-      { name: "Row-Level Security & triggers", icon: "lucide:lock", level: "advanced" },
-      { name: "MinIO object storage", nameFr: "Stockage objet MinIO", icon: "simple-icons:minio", level: "working" },
+      { name: "PostgreSQL", icon: "simple-icons:postgresql", level: "advanced", usedIn: ["stocky","oasis-doc"] },
+      { name: "Data modelling / ERD", nameFr: "Modélisation de données / ERD", icon: "lucide:network", level: "expert", usedIn: ["stocky","oasis-doc"] },
+      { name: "Row-Level Security & triggers", icon: "lucide:lock", level: "advanced", usedIn: ["oasis-doc"] },
+      { name: "MinIO object storage", nameFr: "Stockage objet MinIO", icon: "simple-icons:minio", level: "working", usedIn: [] },
     ],
   },
   {
@@ -87,15 +89,15 @@ export const skillGroups: readonly SkillGroup[] = [
     title: { en: "DevOps & Cloud", fr: "DevOps & Cloud" },
     featured: true,
     items: [
-      { name: "Docker", icon: "simple-icons:docker", level: "advanced" },
-      { name: "Git & Git workflows", nameFr: "Git & workflows Git", icon: "simple-icons:git", level: "expert" },
-      { name: "GitLab CI/CD", icon: "simple-icons:gitlab", level: "advanced" },
-      { name: "SonarQube", icon: "simple-icons:sonarqubeserver", level: "working" },
-      { name: "Linux VPS", nameFr: "VPS Linux", icon: "simple-icons:linux", level: "advanced" },
-      { name: "Domains, DNS & SSL", nameFr: "Domaines, DNS & SSL", icon: "lucide:globe", level: "advanced" },
-      { name: "Cloudflare Pages", icon: "simple-icons:cloudflarepages", level: "advanced" },
-      { name: "Kubernetes", icon: "simple-icons:kubernetes", level: "working" },
-      { name: "Networking & monitoring", nameFr: "Réseaux & supervision", icon: "lucide:activity", level: "working" },
+      { name: "Docker", icon: "simple-icons:docker", level: "advanced", usedIn: ["smartqueue"] },
+      { name: "Git & Git workflows", nameFr: "Git & workflows Git", icon: "simple-icons:git", level: "expert", usedIn: ["stocky","easy-klin","smartqueue","clinique-la-bienveillance"] },
+      { name: "GitLab CI/CD", icon: "simple-icons:gitlab", level: "advanced", usedIn: ["easy-klin"] },
+      { name: "SonarQube", icon: "simple-icons:sonarqubeserver", level: "working", usedIn: ["easy-klin"] },
+      { name: "Linux VPS", nameFr: "VPS Linux", icon: "simple-icons:linux", level: "advanced", usedIn: ["stocky"] },
+      { name: "Domains, DNS & SSL", nameFr: "Domaines, DNS & SSL", icon: "lucide:globe", level: "advanced", usedIn: ["stocky"] },
+      { name: "Cloudflare Pages", icon: "simple-icons:cloudflarepages", level: "advanced", usedIn: ["oasis-doc"] },
+      { name: "Kubernetes", icon: "simple-icons:kubernetes", level: "working", usedIn: [] },
+      { name: "Networking & monitoring", nameFr: "Réseaux & supervision", icon: "lucide:activity", level: "working", usedIn: [] },
     ],
   },
   {
@@ -107,10 +109,10 @@ export const skillGroups: readonly SkillGroup[] = [
         name: "AI-assisted development with Claude Code",
         nameFr: "Développement assisté par IA avec Claude Code",
         icon: "simple-icons:claude",
-        level: "expert",
+        level: "expert", usedIn: ["stocky"],
       },
-      { name: "Multi-agent workflows", nameFr: "Workflows multi-agents", icon: "lucide:workflow", level: "advanced" },
-      { name: "Prompt engineering", icon: "lucide:message-square-text", level: "expert" },
+      { name: "Multi-agent workflows", nameFr: "Workflows multi-agents", icon: "lucide:workflow", level: "advanced", usedIn: ["stocky"] },
+      { name: "Prompt engineering", icon: "lucide:message-square-text", level: "expert", usedIn: [] },
     ],
   },
   {
@@ -118,20 +120,20 @@ export const skillGroups: readonly SkillGroup[] = [
     title: { en: "Creative & Docs", fr: "Création & documentation" },
     featured: false,
     items: [
-      { name: "Motion design with GSAP", nameFr: "Motion design avec GSAP", icon: "simple-icons:greensock", level: "advanced" },
+      { name: "Motion design with GSAP", nameFr: "Motion design avec GSAP", icon: "simple-icons:greensock", level: "advanced", usedIn: ["oasis-doc"] },
       {
         name: "Video narration with ElevenLabs",
         nameFr: "Narration vidéo avec ElevenLabs",
         icon: "simple-icons:elevenlabs",
-        level: "working",
+        level: "working", usedIn: [],
       },
       {
         name: "Technical writing: specs, ERD, docs",
         nameFr: "Rédaction technique : cahiers des charges, ERD, docs",
         icon: "lucide:file-text",
-        level: "expert",
+        level: "expert", usedIn: ["oasis-doc","pdv-leadex-quiz","clinique-la-bienveillance"],
       },
-      { name: "LaTeX", icon: "simple-icons:latex", level: "advanced" },
+      { name: "LaTeX", icon: "simple-icons:latex", level: "advanced", usedIn: [] },
     ],
   },
 ];

@@ -297,7 +297,8 @@ export const projects: readonly Project[] = [
         { id: "mobile", label: { en: "Flutter app", fr: "App Flutter" }, icon: "simple-icons:flutter", x: 0, y: 15 },
         { id: "admin", label: { en: "Next.js admin", fr: "Admin Next.js" }, icon: "simple-icons:nextdotjs", x: 0, y: 55 },
         { id: "api", label: same("NestJS API"), icon: "simple-icons:nestjs", x: 50, y: 35 },
-        { id: "db", label: same("PostgreSQL"), icon: "simple-icons:postgresql", x: 100, y: 35 },
+        // TODO: ask Forlan which database Easy Klin uses. Generic until then.
+        { id: "db", label: { en: "Database", fr: "Base de données" }, icon: "lucide:database", x: 100, y: 35 },
         { id: "ci", label: same("GitLab CI"), icon: "simple-icons:gitlab", x: 50, y: 85 },
         { id: "sonar", label: same("SonarQube"), icon: "simple-icons:sonarqubeserver", x: 100, y: 85 },
       ],
