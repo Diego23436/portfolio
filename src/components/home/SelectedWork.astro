@@ -1,0 +1,22 @@
+---
+import ProjectTile from "../projects/ProjectTile.astro";
+import { content, projects, type Locale } from "../../data/content";
+import "../../styles/projects.css";
+
+type Props = { lang: Locale };
+
+const { lang } = Astro.props;
+const t = content[lang];
+const main = projects.filter((project) => project.tier === "main");
+const variants = ["feature", "card", "card", "wide"] as const;
+---
+
+<section id="work" class="wrap" style="padding-block: clamp(72px, 10vw, 140px) 0;">
+  <div class="sec-head reveal">
+    <h2 class="sec-title">{t.projects.title}</h2>
+    <a class="sec-link" href={`/${lang}/projects/`}>{t.projects.all} →</a>
+  </div>
+  <div class="bento">
+    {main.map((project, index) => <ProjectTile project={project} lang={lang} variant={variants[index] ?? "card"} />)}
+  </div>
+</section>

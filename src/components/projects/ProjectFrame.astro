@@ -1,0 +1,44 @@
+---
+import { Icon } from "astro-icon/components";
+import type { Locale, Project } from "../../data/content";
+
+type Props = {
+  project: Project;
+  lang: Locale;
+  eager?: boolean;
+  /** Show the stack strip that slides up on hover (tiles only). */
+  stack?: boolean;
+};
+
+const { project, lang, eager = false, stack = false } = Astro.props;
+const frameUrl = project.frameUrl ?? `nkforlan.tech/projects/${project.slug}`;
+---
+
+<div class="frame" transition:name={`project-cover-${project.slug}`}>
+  <div class="frame-bar" aria-hidden="true">
+    <i></i><i></i><i></i>
+    <span class="frame-url">{frameUrl}</span>
+  </div>
+  <div class="frame-shot">
+    <img
+      src={project.image}
+      alt={project.imageAlt[lang]}
+      width="1200"
+      height="675"
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+      fetchpriority={eager ? "high" : undefined}
+    />
+    {
+      stack && project.stackIcons.length > 0 && (
+        <ul class="frame-stack" aria-hidden="true">
+          {project.stackIcons.map((icon) => (
+            <li>
+              <Icon name={icon} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</div>

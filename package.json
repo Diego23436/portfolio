@@ -7,7 +7,8 @@
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1",
-    "photos": "node scripts/prepare-photos.mjs"
+    "photos": "node scripts/prepare-photos.mjs",
+    "covers": "node scripts/make-covers.mjs"
   },
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",

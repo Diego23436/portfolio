@@ -19,11 +19,6 @@ html:not(.dark) .hero {
   --hero-shadow: rgb(15 23 42 / 0.28);
 }
 
-/* Option for the art-director checkpoint: a very soft cold tint behind the cut-out only. */
-.hero--tint {
-  --hero-glow: rgb(203 213 225 / 0.26);
-}
-
 .hero-grid {
   position: absolute;
   inset: 0;

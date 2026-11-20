@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ProjectFrame from "../../../components/projects/ProjectFrame.astro";
+import ArchitectureDiagram from "../../../components/projects/ArchitectureDiagram.astro";
 import { content, locales, projects, type Locale, type Project } from "../../../data/content";
+import "../../../styles/projects.css";
 
 export function getStaticPaths() {
   return locales.flatMap((lang) =>
@@ -14,149 +17,161 @@ export function getStaticPaths() {
 const { lang, project, next } = Astro.props as { lang: Locale; project: Project; next: Project };
 const t = content[lang];
 const d = t.projectDetail;
-const card = "rounded-xl border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel";
+
+// Values only, in this order: role · team · year · status. Unknown ones are left out.
+const meta = [
+  project.roleShort[lang],
+  project.team ? project.team[lang] : null,
+  project.year,
+  project.status ? project.status[lang] : null,
+].filter(Boolean) as string[];
+
+const overviewRows = [
+  { label: d.role, text: project.role[lang] },
+  project.problem && { label: d.problem, text: project.problem[lang] },
+  project.solution && { label: d.solution, text: project.solution[lang] },
+  project.result && { label: d.result, text: project.result[lang] },
+].filter(Boolean) as { label: string; text: string }[];
+
+const sections = [
+  { id: "overview", label: d.sections.overview },
+  project.architecture && { id: "architecture", label: d.sections.architecture },
+  { id: "highlights", label: d.sections.highlights },
+  project.learning && { id: "learning", label: d.sections.learning },
+].filter(Boolean) as { id: string; label: string }[];
 ---
 
-<BaseLayout lang={lang} title={project.title} description={project.summary[lang]}>
-  <article class="reveal mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <a href={`/${lang}/projects/`} class="text-sm font-bold text-portfolio-accent hover:underline">
-      {t.actions.backToProjects}
-    </a>
+<BaseLayout lang={lang} title={project.title} description={project.hook[lang]}>
+  <div class="progress" data-progress aria-hidden="true"></div>
 
-    <div class="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-      <div>
-        <div class="flex flex-wrap items-center gap-3">
-          <p class="text-sm font-black uppercase tracking-[0.16em] text-portfolio-accent">{project.kind[lang]}</p>
-          {
-            project.status && (
-              <span class="rounded-full bg-portfolio-accent/10 px-3 py-1 text-xs font-bold text-portfolio-accent">{project.status[lang]}</span>
-            )
-          }
-        </div>
-        <h1 class="mt-4 text-balance text-4xl font-black leading-tight text-portfolio-ink dark:text-white sm:text-5xl">
-          {project.title}
-        </h1>
-        <p class="mt-5 text-lg leading-8 text-portfolio-muted dark:text-slate-300">{project.summary[lang]}</p>
+  <article class="wrap" data-case>
+    <header class="cs-hero">
+      <a class="cs-back mono" href={`/${lang}/projects/`}>← {d.back}</a>
+      <p class="mono" style="margin-top: 36px; color: rgb(var(--soft));">{project.tag[lang]}</p>
+      <h1 class="cs-title" transition:name={`project-title-${project.slug}`}>{project.title}</h1>
+      <p class="cs-hook">{project.hook[lang]}</p>
 
-        <dl class="mt-6 grid gap-4 text-sm">
-          <div>
-            <dt class="font-bold text-portfolio-ink dark:text-white">{d.role}</dt>
-            <dd class="mt-1 leading-6 text-portfolio-muted dark:text-slate-300">{project.role[lang]}</dd>
-          </div>
-          {
-            project.team && (
-              <div>
-                <dt class="font-bold text-portfolio-ink dark:text-white">{d.team}</dt>
-                <dd class="mt-1 text-portfolio-muted dark:text-slate-300">{project.team[lang]}</dd>
+      <p class="cs-meta mono">
+        {
+          meta.map((item) => (
+            <span>
+              <b>{item}</b>
+            </span>
+          ))
+        }
+      </p>
+
+      <div class="cs-actions">
+        {
+          project.demoUrl && (
+            <a class="btn" href={project.demoUrl} target="_blank" rel="noreferrer">
+              {t.actions.viewLive} ↗
+            </a>
+          )
+        }
+        {
+          !project.confidential && project.repoUrl && (
+            <a class="btn btn--ghost" href={project.repoUrl} target="_blank" rel="noreferrer">
+              {t.actions.viewRepo} ↗
+            </a>
+          )
+        }
+        {project.confidential && <span class="cs-private">{d.confidential}</span>}
+      </div>
+
+      <div class="cs-cover">
+        <ProjectFrame project={project} lang={lang} eager />
+      </div>
+
+      {
+        project.metrics.length > 0 && (
+          <dl class="cs-metrics">
+            {project.metrics.map((metric) => (
+              <div class="cs-metric">
+                <dt>{metric.value}</dt>
+                <dd>{metric.label[lang]}</dd>
               </div>
-            )
-          }
-        </dl>
+            ))}
+          </dl>
+        )
+      }
+    </header>
+
+    <div class="cs-body">
+      <nav class="cs-nav" data-nav aria-label={d.onThisPage}>
+        <p class="mono" style="color: rgb(var(--soft));">{d.onThisPage}</p>
+        <ul>
+          {sections.map((section) => <li><a href={`#${section.id}`}>{section.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <div class="cs-main">
+        <section class="cs-section" id="overview" data-section>
+          <h2 class="cs-h2">{d.sections.overview}</h2>
+          <div class="cs-rows">
+            {
+              overviewRows.map((row) => (
+                <div class="cs-row">
+                  <span class="mono">{row.label}</span>
+                  <p>{row.text}</p>
+                </div>
+              ))
+            }
+            {
+              project.stack.length > 0 && (
+                <div class="cs-row">
+                  <span class="mono">{d.stack}</span>
+                  <div class="cs-stack">{project.stack.map((item) => <span>{item}</span>)}</div>
+                </div>
+              )
+            }
+          </div>
+        </section>
 
         {
-          project.stack.length > 0 && (
-            <div class="mt-6 flex flex-wrap gap-2" aria-label={d.stack}>
-              {project.stack.map((item) => (
-                <span class="rounded-md bg-white px-3 py-1.5 text-xs font-bold text-portfolio-muted ring-1 ring-portfolio-line dark:bg-portfolio-night-panel dark:text-slate-300 dark:ring-portfolio-night-line">{item}</span>
-              ))}
-            </div>
+          project.architecture && (
+            <section class="cs-section cs-section--wide" id="architecture" data-section>
+              <h2 class="cs-h2">{d.sections.architecture}</h2>
+              <ArchitectureDiagram architecture={project.architecture} lang={lang} label={`${d.diagramLabel}: ${project.title}`} />
+            </section>
           )
         }
 
-        <div class="mt-8 flex flex-wrap items-center gap-3">
-          {
-            project.demoUrl && (
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noreferrer"
-                class="rounded-md bg-portfolio-accent-solid px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent-strong"
-              >
-                {t.actions.viewLive}
-              </a>
-            )
-          }
-          {
-            !project.confidential && project.repoUrl && (
-              <a
-                href={project.repoUrl}
-                target="_blank"
-                rel="noreferrer"
-                class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
-              >
-                {t.actions.viewRepo}
-              </a>
-            )
-          }
-          {
-            project.confidential && (
-              <span class="rounded-md border border-dashed border-portfolio-line px-4 py-2 text-xs font-bold text-portfolio-muted dark:border-portfolio-night-line dark:text-slate-400">{d.confidential}</span>
-            )
-          }
-        </div>
-      </div>
+        <section class="cs-section" id="highlights" data-section>
+          <h2 class="cs-h2">{d.sections.highlights}</h2>
+          <ol class="cs-list">
+            {
+              project.highlights[lang].map((item, index) => (
+                <li>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {item}
+                </li>
+              ))
+            }
+          </ol>
+        </section>
 
-      <div class="overflow-hidden rounded-xl border border-portfolio-line bg-white p-3 shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-        <img
-          src={project.image}
-          alt={project.imageAlt[lang]}
-          width="1200"
-          height="675"
-          class="aspect-[16/9] w-full rounded-md object-cover"
-          loading="eager"
-          decoding="async"
-        />
+        {
+          project.learning && (
+            <section class="cs-section" id="learning" data-section>
+              <h2 class="cs-h2">{d.sections.learning}</h2>
+              <p class="cs-learning">{project.learning[lang]}</p>
+            </section>
+          )
+        }
       </div>
     </div>
 
-    {
-      (project.problem || project.solution) && (
-        <div class="mt-12 grid gap-5 md:grid-cols-2">
-          {project.problem && (
-            <section class={card}>
-              <h2 class="text-xl font-black">{d.problem}</h2>
-              <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.problem[lang]}</p>
-            </section>
-          )}
-          {project.solution && (
-            <section class={card}>
-              <h2 class="text-xl font-black">{d.solution}</h2>
-              <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.solution[lang]}</p>
-            </section>
-          )}
-        </div>
-      )
-    }
-
-    <section class:list={[card, "mt-5"]}>
-      <h2 class="text-xl font-black">{d.highlights}</h2>
-      <div class="mt-5 grid gap-3 sm:grid-cols-2">
-        {
-          project.highlights[lang].map((item) => (
-            <div class="rounded-md bg-portfolio-paper p-4 text-sm font-semibold text-portfolio-muted dark:bg-portfolio-night dark:text-slate-300">{item}</div>
-          ))
-        }
-      </div>
-    </section>
-
-    {
-      project.learning && (
-        <section class:list={[card, "mt-5"]}>
-          <h2 class="text-xl font-black">{d.learning}</h2>
-          <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.learning[lang]}</p>
-        </section>
-      )
-    }
-
-    <a
-      href={`/${lang}/projects/${next.slug}/`}
-      class="mt-10 flex items-center justify-between gap-4 rounded-xl border border-portfolio-line bg-white p-6 transition hover:-translate-y-0.5 hover:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
-    >
-      <span>
-        <span class="block text-xs font-bold uppercase tracking-[0.16em] text-portfolio-accent">{d.nextProject}</span>
-        <span class="mt-1 block text-xl font-black">{next.title}</span>
-      </span>
-      <span aria-hidden="true" class="text-2xl text-portfolio-accent">→</span>
+    <a class="next" href={`/${lang}/projects/${next.slug}/`} data-next>
+      <span class="mono" style="color: rgb(var(--soft));">{d.nextProject}</span>
+      <span class="next-title" transition:name={`project-title-${next.slug}`}>{next.title}</span>
     </a>
+    <div class="next-preview" data-next-preview aria-hidden="true">
+      <img src={next.image} alt="" width="1200" height="675" loading="lazy" decoding="async" />
+    </div>
   </article>
 </BaseLayout>
+
+<script>
+  import "../../../scripts/case-study";
+</script>

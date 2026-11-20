@@ -1,0 +1,117 @@
+---
+import { Icon } from "astro-icon/components";
+import type { Architecture, Locale } from "../../data/content";
+
+type Props = { architecture: Architecture; lang: Locale; label: string };
+
+const { architecture, lang, label } = Astro.props;
+
+// Positions are on a 0-100 grid. The drawing is 1000 x 560.
+const W = 1000;
+const H = 560;
+const NODE_H = 76;
+
+const parts = architecture.nodes.map((node) => {
+  const [main, sub] = node.label[lang].split(" · ");
+  return { ...node, main, sub };
+});
+
+// Node width follows the longest label, so text never spills out of the box.
+const textWidth = Math.max(...parts.map((n) => Math.max(n.main.length * 8.0, (n.sub?.length ?? 0) * 6.8)));
+let NODE_W = Math.round(Math.min(264, Math.max(150, textWidth + 86)));
+
+// ...but arrows need room: keep at least 44px between neighbouring boxes of the same row.
+// (After mapping, centre spacing = share/100 * (W - NODE_W - 12), so solve for NODE_W.)
+let rowShare = Infinity;
+for (const a of parts) {
+  for (const b of parts) {
+    if (a.id !== b.id && Math.abs(a.y - b.y) < 12) rowShare = Math.min(rowShare, Math.abs(a.x - b.x));
+  }
+}
+if (Number.isFinite(rowShare)) {
+  const share = rowShare / 100;
+  NODE_W = Math.round(Math.min(NODE_W, (share * (W - 12) - 44) / (1 + share)));
+}
+
+// Keep every box inside the drawing: map the 0-100 grid to the space left after half a box on each side.
+const pad = NODE_W / 2 + 6;
+const nodes = parts.map((node) => ({
+  ...node,
+  cx: pad + (node.x / 100) * (W - 2 * pad),
+  cy: 50 + (node.y / 100) * (H - 100),
+}));
+
+const byId = new Map(nodes.map((node) => [node.id, node]));
+
+const edges = architecture.edges.map(([fromId, toId]) => {
+  const a = byId.get(fromId)!;
+  const b = byId.get(toId)!;
+  const dx = b.cx - a.cx;
+  const dy = b.cy - a.cy;
+  let d: string;
+  if (Math.abs(dx) >= 150) {
+    const sx = a.cx + Math.sign(dx) * (NODE_W / 2);
+    const ex = b.cx - Math.sign(dx) * (NODE_W / 2);
+    const mid = (sx + ex) / 2;
+    d = `M ${sx} ${a.cy} C ${mid} ${a.cy}, ${mid} ${b.cy}, ${ex} ${b.cy}`;
+  } else {
+    const sy = a.cy + Math.sign(dy) * (NODE_H / 2);
+    const ey = b.cy - Math.sign(dy) * (NODE_H / 2);
+    const mid = (sy + ey) / 2;
+    d = `M ${a.cx} ${sy} C ${a.cx} ${mid}, ${b.cx} ${mid}, ${b.cx} ${ey}`;
+  }
+  return { d, key: `${fromId}-${toId}` };
+});
+---
+
+<div class="arch" data-arch>
+  <svg
+    class="arch-svg"
+    viewBox={`0 0 ${W} ${H}`}
+    role="img"
+    aria-label={label}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <marker id="arch-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+        <path class="arch-arrow" d="M 0 1 L 9 5 L 0 9 z" />
+      </marker>
+    </defs>
+    {edges.map((edge) => <path class="arch-edge" d={edge.d} pathLength="1" marker-end="url(#arch-head)" data-edge />)}
+    {
+      nodes.map((node) => (
+        <g class="arch-node" data-node>
+          <rect x={node.cx - NODE_W / 2} y={node.cy - NODE_H / 2} width={NODE_W} height={NODE_H} rx="16" />
+          <Icon
+            class="arch-icon"
+            name={node.icon}
+            x={node.cx - NODE_W / 2 + 20}
+            y={node.cy - 14}
+            width="28"
+            height="28"
+            aria-hidden="true"
+          />
+          <text class="arch-label" x={node.cx - NODE_W / 2 + 62} y={node.sub ? node.cy - 3 : node.cy + 6}>
+            {node.main}
+          </text>
+          {node.sub && (
+            <text class="arch-sub" x={node.cx - NODE_W / 2 + 62} y={node.cy + 20}>
+              {node.sub}
+            </text>
+          )}
+        </g>
+      ))
+    }
+  </svg>
+
+  <ol class="arch-list">
+    {
+      nodes.map((node) => (
+        <li>
+          <Icon name={node.icon} aria-hidden="true" />
+          <span>{node.sub ? `${node.main} · ${node.sub}` : node.main}</span>
+        </li>
+      ))
+    }
+  </ol>
+</div>

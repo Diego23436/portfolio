@@ -1,0 +1,35 @@
+---
+import type { Locale, Project } from "../../data/content";
+import ProjectFrame from "./ProjectFrame.astro";
+import "../../styles/projects.css";
+
+type Props = {
+  project: Project;
+  lang: Locale;
+  variant?: "feature" | "wide" | "card";
+  eager?: boolean;
+};
+
+const { project, lang, variant = "card", eager = false } = Astro.props;
+const href = `/${lang}/projects/${project.slug}/`;
+---
+
+<article
+  class:list={["tile", `tile--${variant}`]}
+  data-tile
+  data-slug={project.slug}
+  data-tier={project.tier}
+  data-categories={project.categories.join(" ")}
+>
+  <div class="tile-media">
+    <ProjectFrame project={project} lang={lang} eager={eager} stack />
+  </div>
+  <div class="tile-body">
+    <p class="tile-tag mono">{project.tag[lang]}</p>
+    <h3 class="tile-title" transition:name={`project-title-${project.slug}`}>
+      <a href={href}>{project.title}</a>
+    </h3>
+    <p class="tile-hook">{project.hook[lang]}</p>
+  </div>
+  <span class="tile-arrow" aria-hidden="true">↗</span>
+</article>
