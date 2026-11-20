@@ -10,13 +10,22 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Locale;
 const t = content[lang];
+const mainProjects = projects.filter((project) => project.tier === "main");
+const moreProjects = projects.filter((project) => project.tier === "more");
 ---
 
 <BaseLayout lang={lang} title={t.nav.projects}>
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
     <SectionHeading title={t.projects.allTitle} intro={t.projects.allIntro} />
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      {mainProjects.map((project, index) => <ProjectCard project={project} lang={lang} eager={index < 2} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
+    <SectionHeading title={t.projects.moreTitle} intro={t.projects.moreIntro} />
     <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-      {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
+      {moreProjects.map((project) => <ProjectCard project={project} lang={lang} compact />)}
     </div>
   </section>
 </BaseLayout>

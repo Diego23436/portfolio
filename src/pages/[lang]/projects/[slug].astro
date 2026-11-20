@@ -1,24 +1,23 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { content, locales, projects, type Locale } from "../../../data/content";
+import { content, locales, projects, type Locale, type Project } from "../../../data/content";
 
 export function getStaticPaths() {
   return locales.flatMap((lang) =>
-    projects.map((project) => ({
+    projects.map((project, index) => ({
       params: { lang, slug: project.slug },
-      props: { lang, project },
+      props: { lang, project, next: projects[(index + 1) % projects.length] },
     })),
   );
 }
 
-const { lang, project } = Astro.props as {
-  lang: Locale;
-  project: (typeof projects)[number];
-};
+const { lang, project, next } = Astro.props as { lang: Locale; project: Project; next: Project };
 const t = content[lang];
+const d = t.projectDetail;
+const card = "rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel";
 ---
 
-<BaseLayout lang={lang} title={project.title[lang]} description={project.summary[lang]}>
+<BaseLayout lang={lang} title={project.title} description={project.summary[lang]}>
   <article class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
     <a href={`/${lang}/projects/`} class="text-sm font-bold text-portfolio-accent hover:text-portfolio-accent-strong">
       {t.actions.backToProjects}
@@ -26,70 +25,111 @@ const t = content[lang];
 
     <div class="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
       <div>
-        <p class="text-sm font-black uppercase tracking-[0.16em] text-portfolio-accent">{project.repositoryStatus[lang]}</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <p class="text-sm font-black uppercase tracking-[0.16em] text-portfolio-accent">{project.kind[lang]}</p>
+          {
+            project.status && (
+              <span class="rounded-full bg-portfolio-accent/10 px-3 py-1 text-xs font-bold text-portfolio-accent">{project.status[lang]}</span>
+            )
+          }
+        </div>
         <h1 class="mt-4 text-balance text-4xl font-black leading-tight text-portfolio-ink dark:text-white sm:text-5xl">
-          {project.title[lang]}
+          {project.title}
         </h1>
         <p class="mt-5 text-lg leading-8 text-portfolio-muted dark:text-slate-300">{project.summary[lang]}</p>
-        <div class="mt-6 flex flex-wrap gap-2">
-          {project.stack.map((item) => <span class="rounded-md bg-white px-3 py-1.5 text-xs font-bold text-portfolio-muted ring-1 ring-portfolio-line dark:bg-portfolio-night-panel dark:text-slate-300 dark:ring-portfolio-night-line">{item}</span>)}
-        </div>
-      </div>
 
-      <div class="rounded-lg border border-portfolio-line bg-white p-4 shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-        <div class="relative overflow-hidden rounded-md bg-portfolio-ink text-white dark:bg-slate-950">
-          <img
-            src={project.image}
-            alt={project.imageAlt[lang]}
-            class="aspect-[16/10] w-full object-cover opacity-75"
-            loading="eager"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-portfolio-ink via-portfolio-ink/40 to-transparent"></div>
-          <div class="absolute inset-x-0 bottom-0 p-6">
-            <p class="text-sm font-bold uppercase tracking-[0.16em] text-teal-200">{t.projectDetail.visualLabel}</p>
-            <p class="mt-3 text-2xl font-black">{project.title[lang]}</p>
-            <p class="mt-3 max-w-md text-sm text-slate-300">{t.projectDetail.visualNote}</p>
+        <dl class="mt-6 grid gap-4 text-sm">
+          <div>
+            <dt class="font-bold text-portfolio-ink dark:text-white">{d.role}</dt>
+            <dd class="mt-1 leading-6 text-portfolio-muted dark:text-slate-300">{project.role[lang]}</dd>
           </div>
+          {
+            project.team && (
+              <div>
+                <dt class="font-bold text-portfolio-ink dark:text-white">{d.team}</dt>
+                <dd class="mt-1 text-portfolio-muted dark:text-slate-300">{project.team[lang]}</dd>
+              </div>
+            )
+          }
+        </dl>
+
+        {
+          project.stack.length > 0 && (
+            <div class="mt-6 flex flex-wrap gap-2" aria-label={d.stack}>
+              {project.stack.map((item) => (
+                <span class="rounded-md bg-white px-3 py-1.5 text-xs font-bold text-portfolio-muted ring-1 ring-portfolio-line dark:bg-portfolio-night-panel dark:text-slate-300 dark:ring-portfolio-night-line">{item}</span>
+              ))}
+            </div>
+          )
+        }
+
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          {
+            project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noreferrer"
+                class="rounded-md bg-portfolio-accent px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent-strong"
+              >
+                {t.actions.viewLive}
+              </a>
+            )
+          }
+          {
+            !project.confidential && project.repoUrl && (
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noreferrer"
+                class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
+              >
+                {t.actions.viewRepo}
+              </a>
+            )
+          }
+          {
+            project.confidential && (
+              <span class="rounded-md border border-dashed border-portfolio-line px-4 py-2 text-xs font-bold text-portfolio-muted dark:border-portfolio-night-line dark:text-slate-400">{d.confidential}</span>
+            )
+          }
         </div>
+      </div>
+
+      <div class="overflow-hidden rounded-lg border border-portfolio-line bg-white p-3 shadow-xl dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
+        <img
+          src={project.image}
+          alt={project.imageAlt[lang]}
+          width="1200"
+          height="675"
+          class="aspect-[16/9] w-full rounded-md object-cover"
+          loading="eager"
+          decoding="async"
+        />
       </div>
     </div>
 
-    <div class="mt-8 flex flex-wrap gap-3">
-      {
-        "demoUrl" in project && project.demoUrl && (
-          <a
-            href={project.demoUrl}
-            target="_blank"
-            rel="noreferrer"
-            class="rounded-md bg-portfolio-accent px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent-strong"
-          >
-            {t.actions.viewLive}
-          </a>
-        )
-      }
-      <a
-        href={project.repoUrl}
-        target="_blank"
-        rel="noreferrer"
-        class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
-      >
-        {t.actions.viewRepo}
-      </a>
-    </div>
+    {
+      (project.problem || project.solution) && (
+        <div class="mt-12 grid gap-5 md:grid-cols-2">
+          {project.problem && (
+            <section class={card}>
+              <h2 class="text-xl font-black">{d.problem}</h2>
+              <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.problem[lang]}</p>
+            </section>
+          )}
+          {project.solution && (
+            <section class={card}>
+              <h2 class="text-xl font-black">{d.solution}</h2>
+              <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.solution[lang]}</p>
+            </section>
+          )}
+        </div>
+      )
+    }
 
-    <div class="mt-12 grid gap-5 md:grid-cols-2">
-      <section class="rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-        <h2 class="text-xl font-black">{t.projectDetail.problem}</h2>
-        <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.problem[lang]}</p>
-      </section>
-      <section class="rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-        <h2 class="text-xl font-black">{t.projectDetail.solution}</h2>
-        <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.solution[lang]}</p>
-      </section>
-    </div>
-
-    <section class="mt-5 rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-      <h2 class="text-xl font-black">{t.projectDetail.highlights}</h2>
+    <section class:list={[card, "mt-5"]}>
+      <h2 class="text-xl font-black">{d.highlights}</h2>
       <div class="mt-5 grid gap-3 sm:grid-cols-2">
         {
           project.highlights[lang].map((item) => (
@@ -99,9 +139,24 @@ const t = content[lang];
       </div>
     </section>
 
-    <section class="mt-5 rounded-lg border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-      <h2 class="text-xl font-black">{t.projectDetail.learning}</h2>
-      <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.learning[lang]}</p>
-    </section>
+    {
+      project.learning && (
+        <section class:list={[card, "mt-5"]}>
+          <h2 class="text-xl font-black">{d.learning}</h2>
+          <p class="mt-3 text-sm leading-7 text-portfolio-muted dark:text-slate-300">{project.learning[lang]}</p>
+        </section>
+      )
+    }
+
+    <a
+      href={`/${lang}/projects/${next.slug}/`}
+      class="mt-10 flex items-center justify-between gap-4 rounded-lg border border-portfolio-line bg-white p-6 transition hover:-translate-y-0.5 hover:border-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel"
+    >
+      <span>
+        <span class="block text-xs font-bold uppercase tracking-[0.16em] text-portfolio-accent">{d.nextProject}</span>
+        <span class="mt-1 block text-xl font-black">{next.title}</span>
+      </span>
+      <span aria-hidden="true" class="text-2xl text-portfolio-accent">→</span>
+    </a>
   </article>
 </BaseLayout>

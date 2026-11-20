@@ -27,8 +27,7 @@ export const profile = {
   github: "https://github.com/Diego23436",
   // No LinkedIn yet. Components only show the link when this is set.
   linkedin: null as string | null,
-  // TODO: confirm the final URL once the site is deployed on Cloudflare Pages.
-  siteUrl: "https://nk-forlan.pages.dev",
+  siteUrl: "https://nkforlan.tech",
   resume: {
     en: "/resume/Nk%20Forlan%20CV%20EN.pdf",
     fr: "/resume/Nk%20Forlan%20CV%20FR.pdf",
@@ -211,10 +210,16 @@ export const content = {
       allIntro:
         "Each project page explains the problem, the solution, my role and what I learned.",
       moreTitle: "More projects",
+      moreIntro: "Smaller projects and client work.",
     },
     projectDetail: {
-      visualLabel: "Case study",
-      visualNote: "Architecture, features, and outcomes presented as a concise engineering story.",
+      role: "My role",
+      team: "Team",
+      status: "Status",
+      stack: "Stack",
+      confidential: "Client project, code private",
+      nextProject: "Next project",
+      caseStudy: "Case study",
       problem: "Problem",
       solution: "Solution",
       highlights: "Highlights",
@@ -508,10 +513,16 @@ export const content = {
       allIntro:
         "Chaque page projet explique le problème, la solution, mon rôle et ce que j'ai appris.",
       moreTitle: "Autres projets",
+      moreIntro: "Des projets plus petits et du travail pour des clients.",
     },
     projectDetail: {
-      visualLabel: "Étude de cas",
-      visualNote: "Architecture, fonctionnalités et résultats présentés comme une histoire technique concise.",
+      role: "Mon rôle",
+      team: "Équipe",
+      status: "Statut",
+      stack: "Stack",
+      confidential: "Projet client, code privé",
+      nextProject: "Projet suivant",
+      caseStudy: "Étude de cas",
       problem: "Problème",
       solution: "Solution",
       highlights: "Points forts",
@@ -652,202 +663,4 @@ export const content = {
   },
 } as const;
 
-// NOTE: placeholder projects from the starter. Phase 4 replaces this array.
-export const projects = [
-  {
-    slug: "mrbhms-hospital-management-system",
-    stack: ["PHP", "Laravel 12", "MySQL", "Bootstrap", "Vite", "Railway"],
-    repoUrl: "https://github.com/KD-James-Lewis/MRBHMS_INTERNSHIP_PROJECT",
-    demoUrl: "https://mrbhmsinternshipproject-production.up.railway.app/",
-    image: "/images/projects/mrbhms-logo.png",
-    imageAlt: {
-      en: "MRBHMS hospital management logo",
-      fr: "Logo du système de gestion hospitalière MRBHMS",
-    },
-    repositoryStatus: {
-      en: "Laravel internship project",
-      fr: "Projet de stage Laravel",
-    },
-    title: {
-      en: "MRBHMS Hospital Management System",
-      fr: "Système de gestion hospitalière MRBHMS",
-    },
-    summary: {
-      en: "A role-based hospital management system for staff, patients, medical records, documents, vitals, and lab test workflows.",
-      fr: "Un système hospitalier par rôles pour gérer le personnel, les patients, les dossiers médicaux, les documents, les constantes et les examens de laboratoire.",
-    },
-    problem: {
-      en: "Hospitals and small clinics can lose time when patient records, staff roles, lab requests, and documents are handled with scattered manual processes.",
-      fr: "Les hôpitaux et petites cliniques perdent du temps lorsque les dossiers patients, rôles du personnel, demandes de laboratoire et documents sont gérés manuellement.",
-    },
-    solution: {
-      en: "The application centralizes users, departments, dashboards, patient records, vital signs, medical documents, feedback, and lab test requests in a Laravel web system.",
-      fr: "L'application centralise utilisateurs, départements, tableaux de bord, dossiers patients, constantes, documents médicaux, feedback et examens de laboratoire dans Laravel.",
-    },
-    highlights: {
-      en: [
-        "Role-based dashboards for admin, doctor, nurse, receptionist, patient, lab technician, and pharmacist",
-        "Staff, patient, and department management workflows",
-        "Medical records with vitals, diagnoses, consultations, prescriptions, and file downloads",
-        "Lab test request, upload, pending-status, and result-download flow",
-      ],
-      fr: [
-        "Tableaux de bord par rôles : admin, médecin, infirmier, réceptionniste, patient, laborantin et pharmacien",
-        "Gestion du personnel, des patients et des départements",
-        "Dossiers médicaux avec constantes, diagnostics, consultations, prescriptions et téléchargements",
-        "Flux de demande, dépôt, statut et téléchargement des résultats de laboratoire",
-      ],
-    },
-    learning: {
-      en: "This project strengthened my Laravel MVC practice, role-based authorization thinking, database modeling, and deployment workflow for a real management system.",
-      fr: "Ce projet a renforcé ma pratique de Laravel MVC, la gestion des rôles, la modélisation de base de données et le déploiement d'un vrai système de gestion.",
-    },
-  },
-  {
-    slug: "hnd-mentorship-registration",
-    stack: ["HTML", "CSS", "JavaScript", "Firebase Firestore", "QRCode.js", "html2canvas"],
-    repoUrl: "https://github.com/KD-James-Lewis/HND-MENTORSHIP",
-    demoUrl: "https://hnd-mentorship.vercel.app/",
-    image: "/images/projects/hnd-mentorship.webp",
-    imageAlt: {
-      en: "HND Mentorship event registration visual",
-      fr: "Visuel d'inscription HND Mentorship",
-    },
-    repositoryStatus: {
-      en: "Firebase registration tool",
-      fr: "Outil d'inscription Firebase",
-    },
-    title: {
-      en: "HND Mentorship Registration",
-      fr: "Inscription HND Mentorship",
-    },
-    summary: {
-      en: "A web registration form that stores participant data in Firestore and generates a downloadable QR-code entrance ticket.",
-      fr: "Un formulaire web qui enregistre les participants dans Firestore et génère un ticket d'entrée téléchargeable avec QR code.",
-    },
-    problem: {
-      en: "Manual event registration makes it difficult to avoid duplicate entries and produce simple proof of registration for attendees.",
-      fr: "L'inscription manuelle à un événement rend difficile l'évitement des doublons et la génération d'une preuve d'inscription simple.",
-    },
-    solution: {
-      en: "The form validates required fields, checks existing emails in Firestore, saves registration data, and generates a ticket with a QR code and download option.",
-      fr: "Le formulaire valide les champs, vérifie les emails existants dans Firestore, enregistre les données et génère un ticket avec QR code téléchargeable.",
-    },
-    highlights: {
-      en: [
-        "Participant form with speciality and level selection",
-        "Duplicate email check before saving",
-        "Firestore-backed registration storage",
-        "QR-code ticket generation and image download",
-      ],
-      fr: [
-        "Formulaire participant avec spécialité et niveau",
-        "Vérification des emails déjà inscrits",
-        "Stockage des inscriptions avec Firestore",
-        "Génération de ticket QR code et téléchargement en image",
-      ],
-    },
-    learning: {
-      en: "This project helped me connect frontend form behavior with a cloud database and think through the event-registration experience from submission to ticket delivery.",
-      fr: "Ce projet m'a aidé à relier un formulaire frontend à une base cloud et à penser l'expérience d'inscription depuis l'envoi jusqu'au ticket.",
-    },
-  },
-  {
-    slug: "collisways-luggage-sharing-platform",
-    stack: ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP", "PDO", "MySQL"],
-    repoUrl: "https://github.com/KD-James-Lewis/PROJECT_Z",
-    demoUrl: "https://project-z-rmqa.vercel.app/",
-    image: "/images/projects/collisways-logo.png",
-    imageAlt: {
-      en: "CollisWays luggage sharing logo",
-      fr: "Logo CollisWays de partage de bagages",
-    },
-    repositoryStatus: {
-      en: "Travel logistics prototype",
-      fr: "Prototype logistique voyage",
-    },
-    title: {
-      en: "CollisWays Luggage Sharing Platform",
-      fr: "Plateforme de partage de bagages CollisWays",
-    },
-    summary: {
-      en: "A prototype platform connecting travelers with unused luggage capacity to people who need to send packages to a destination.",
-      fr: "Un prototype qui connecte les voyageurs ayant des kilos libres avec des personnes voulant envoyer des colis vers une destination.",
-    },
-    problem: {
-      en: "Sending small packages across destinations can be expensive, while many travelers have unused luggage space during their trips.",
-      fr: "L'envoi de petits colis peut coûter cher alors que beaucoup de voyageurs disposent encore d'espace libre dans leurs bagages.",
-    },
-    solution: {
-      en: "The project presents a marketplace-style experience with landing pages, traveler discovery, authentication, registration, and dashboard screens.",
-      fr: "Le projet propose une expérience de type marketplace avec pages de présentation, recherche de voyageurs, authentification, inscription et tableaux de bord.",
-    },
-    highlights: {
-      en: [
-        "Multi-page landing experience with about, contact, how-it-works, and traveler pages",
-        "PHP/PDO authentication and registration flow",
-        "Dashboard screens for profile, messages, notifications, and home",
-        "Bootstrap-based responsive UI with travel-focused visual direction",
-      ],
-      fr: [
-        "Expérience multipage avec à propos, contact, fonctionnement et voyageurs",
-        "Flux d'authentification et d'inscription en PHP/PDO",
-        "Écrans de tableau de bord : profil, messages, notifications et accueil",
-        "Interface responsive avec Bootstrap et direction visuelle orientée voyage",
-      ],
-    },
-    learning: {
-      en: "This prototype helped me think through platform flows, user onboarding, database-backed authentication, and how landing pages support a product idea.",
-      fr: "Ce prototype m'a aidé à réfléchir aux parcours plateforme, à l'onboarding, à l'authentification liée à une base et au rôle des pages marketing.",
-    },
-  },
-  {
-    slug: "car-rental-website-prototype",
-    stack: ["HTML", "CSS", "JavaScript", "Boxicons", "Responsive Design"],
-    repoUrl: "https://github.com/KD-James-Lewis/CAR-WEBSITE-PROTO-2",
-    demoUrl: "https://car-website-proto-2.vercel.app/",
-    image: "/images/projects/car-rental-hero.png",
-    imageAlt: {
-      en: "Car rental website hero visual",
-      fr: "Visuel hero du site de location de voitures",
-    },
-    repositoryStatus: {
-      en: "Frontend prototype",
-      fr: "Prototype frontend",
-    },
-    title: {
-      en: "Car Rental Website Prototype",
-      fr: "Prototype de site de location de voitures",
-    },
-    summary: {
-      en: "A responsive car-rental landing page prototype with booking inputs, service cards, sign-in/sign-up pages, reviews, and newsletter sections.",
-      fr: "Un prototype responsive de location de voitures avec formulaire de réservation, cartes services, pages connexion/inscription, avis et newsletter.",
-    },
-    problem: {
-      en: "A car-rental business needs a clear first-page experience that presents the offer, guides booking intent, and builds trust quickly.",
-      fr: "Une entreprise de location automobile a besoin d'une page claire qui présente l'offre, guide la réservation et crée rapidement la confiance.",
-    },
-    solution: {
-      en: "The prototype organizes the experience into a hero booking form, three-step rental flow, featured cars, about section, testimonials, and authentication pages.",
-      fr: "Le prototype organise l'expérience avec un formulaire hero, un parcours en trois étapes, des voitures en avant, une section à propos, des avis et des pages d'authentification.",
-    },
-    highlights: {
-      en: [
-        "Responsive landing-page structure",
-        "Booking-oriented hero form",
-        "Vehicle service cards and testimonials",
-        "Separate sign-in and sign-up page prototypes",
-      ],
-      fr: [
-        "Structure responsive de landing page",
-        "Formulaire hero orienté réservation",
-        "Cartes véhicules et témoignages",
-        "Prototypes de pages connexion et inscription",
-      ],
-    },
-    learning: {
-      en: "This project strengthened my frontend layout skills, section planning, responsive CSS practice, and early interaction design.",
-      fr: "Ce projet a renforcé mes compétences en mise en page frontend, organisation de sections, CSS responsive et premières interactions.",
-    },
-  },
-] as const;
+export { projects, type Project, type Localized } from "./projects";
