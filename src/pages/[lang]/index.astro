@@ -38,12 +38,12 @@ const cutout = cutoutImage();
   <SelectedWork lang={lang} />
   <Pipeline lang={lang} />
 
-  <section class="wrap" style="padding-top: clamp(72px, 10vw, 140px);">
+  <section class="wrap defer-render" style="padding-top: clamp(72px, 10vw, 140px);">
     <div class="sec-head reveal"><h2 class="sec-title">{t.skills.title}</h2></div>
     <div style="margin-top: clamp(28px, 4vw, 48px);"><SkillsConstellation lang={lang} compact /></div>
   </section>
 
-  <section class="wrap" style="padding-block: clamp(72px, 10vw, 140px);">
+  <section class="wrap defer-render" style="padding-block: clamp(72px, 10vw, 140px);">
     <div class="sec-head reveal"><h2 class="sec-title">{t.proSkills.title}</h2></div>
     <div style="margin-top: clamp(28px, 4vw, 48px);"><ProfessionalSkills lang={lang} short /></div>
   </section>

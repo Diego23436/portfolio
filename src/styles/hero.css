@@ -335,10 +335,16 @@ html:not(.dark) .hero {
   font-size: 12px;
   letter-spacing: 0.04em;
   color: rgb(var(--fg));
-  background: rgb(var(--surface) / 0.55);
+  background: rgb(var(--surface) / 0.88);
   border: 1px solid rgb(var(--fg) / 0.1);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-chip {
+    background: rgb(var(--surface) / 0.55);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
 }
 
 .hero-chip .ok {
@@ -376,27 +382,90 @@ html:not(.dark) .hero {
   }
 }
 
-/* ---- Hidden state before the entrance animation. Only on the first page load of a visit: the head script adds
-   .intro to <html> then, and a page change removes it. A failsafe shows everything after 3s if JS fails. ---- */
-.intro .hero:not(.is-ready) [data-in] {
+/* ---- Entrance. Pure CSS, so the headline never waits for JavaScript (good for the first paint).
+   Only on the first page load of a visit: the head script adds .intro to <html>, and a page change removes it.
+   Each element gets its start delay from an inline --d (see Hero.astro). ---- */
+.intro .hero [data-in] {
   opacity: 0;
-  animation: hero-failsafe 0.01s 3s forwards;
+  animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) forwards;
 }
 
-.intro .hero:not(.is-ready) .hero-line-in {
+.intro .hero [data-in="top"],
+.intro .hero [data-in="glow"] {
+  animation-name: hero-fade;
+  animation-timing-function: ease-out;
+  animation-duration: 0.6s;
+}
+
+.intro .hero [data-in="glow"] {
+  animation-duration: 1.2s;
+}
+
+.intro .hero [data-in="photo"] {
+  animation-name: hero-photo;
+  animation-duration: 1s;
+}
+
+.intro .hero .hero-line-in {
   transform: translateY(110%);
-  animation: hero-failsafe 0.01s 3s forwards;
+  animation: hero-line 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) forwards;
 }
 
-@keyframes hero-failsafe {
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
   to {
     opacity: 1;
     transform: none;
   }
 }
 
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-photo {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-line {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
 /* ---- Phone ---- */
 @media (max-width: 767px) {
+  /* Cheaper to paint on a phone: no mask on the grid, one soft shadow on the photo instead of three filters + a mask. */
+  .hero-grid {
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: 0.5;
+  }
+
+  .hero-cutout {
+    -webkit-mask-image: none;
+    mask-image: none;
+    filter: drop-shadow(0 24px 30px var(--hero-shadow));
+  }
+
   .hero {
     min-height: 0;
   }
@@ -492,13 +561,6 @@ html:not(.dark) .hero {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro .hero:not(.is-ready) [data-in],
-  .intro .hero:not(.is-ready) .hero-line-in {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-
   .hero-dot::after,
   .hero-dots i {
     animation: none;

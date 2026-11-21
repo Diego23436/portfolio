@@ -5,6 +5,8 @@ import Footer from "../components/Footer.astro";
 import Palette from "../components/Palette.astro";
 import { content, profile, type Locale } from "../data/content";
 import "../styles/global.css";
+import bricolageFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wdth-normal.woff2?url";
+import interFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 
 type Props = {
   lang: Locale;
@@ -16,6 +18,28 @@ const { lang, title, description } = Astro.props;
 const t = content[lang];
 const pageTitle = title ? `${title} | ${profile.displayName}` : t.meta.title;
 const pageDescription = description ?? t.meta.description;
+
+// ---- SEO: canonical, language alternates, social tags, structured data
+const site = (Astro.site ?? new URL(profile.siteUrl)).origin;
+const path = Astro.url.pathname;
+const langMatch = path.match(/^\/(en|fr)(\/.*)?$/);
+const rest = langMatch ? (langMatch[2] ?? "/") : null;
+const canonical = site + path;
+const ogImage = `${site}/og.png`;
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  alternateName: profile.displayName,
+  jobTitle: profile.title,
+  url: site,
+  email: profile.publicEmail,
+  image: `${site}/images/profile/about.webp`,
+  address: { "@type": "PostalAddress", addressLocality: "Douala", addressCountry: "CM" },
+  knowsLanguage: ["en", "fr"],
+  sameAs: [profile.github, ...(profile.linkedin ? [profile.linkedin] : [])],
+};
+const website = { "@context": "https://schema.org", "@type": "WebSite", name: profile.displayName, url: site, inLanguage: lang };
 ---
 
 <!doctype html>
@@ -27,6 +51,33 @@ const pageDescription = description ?? t.meta.description;
     <meta name="theme-color" content="#070B14" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#F6F8FC" media="(prefers-color-scheme: light)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="font" type="font/woff2" href={bricolageFont} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={interFont} crossorigin />
+    <link rel="canonical" href={canonical} />
+    {
+      rest && (
+        <>
+          <link rel="alternate" hreflang="en" href={`${site}/en${rest}`} />
+          <link rel="alternate" hreflang="fr" href={`${site}/fr${rest}`} />
+          <link rel="alternate" hreflang="x-default" href={`${site}/en${rest}`} />
+        </>
+      )
+    }
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={profile.displayName} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_US"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    <script type="application/ld+json" set:html={JSON.stringify(website)} />
     <title>{pageTitle}</title>
     <slot name="head" />
     <ClientRouter />

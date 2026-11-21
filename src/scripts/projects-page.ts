@@ -60,10 +60,19 @@ onPage<HTMLElement>("[data-projects-page]", (root) => {
   const initial = new URL(window.location.href).searchParams.get("filter") ?? "all";
   apply(valid.includes(initial) ? initial : "all", false);
 
-  // Load Flip after the first paint; the filter already works without it (no animation).
-  void loadGsap({ flip: true }).then((lib) => {
-    if (!disposed) flipLib = lib;
-  });
+  // The filter works without the animation library. Flip is loaded when the browser is idle, or on first interest.
+  let loadingFlip = false;
+  const loadFlip = () => {
+    if (loadingFlip) return;
+    loadingFlip = true;
+    void loadGsap({ flip: true }).then((lib) => {
+      if (!disposed) flipLib = lib;
+    });
+  };
+  filters.addEventListener("pointerenter", loadFlip, { once: true });
+  filters.addEventListener("focusin", loadFlip, { once: true });
+  const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1500));
+  idle(loadFlip);
 
   return () => {
     disposed = true;

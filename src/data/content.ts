@@ -151,29 +151,6 @@ export const content = {
       chips: { ci: "CI passed · main", deploy: "stocky.host · deploying", langs: "EN / FR" },
       marquee: ["FULL-STACK", "DEVOPS", "SAAS", "API DESIGN", "CI/CD"],
     },
-    focus: {
-      title: "How I Work",
-      intro: "Simple habits that make software easier to ship and easier to maintain.",
-      items: [
-        {
-          title: "Data first",
-          body: "I model the data with an ERD (entity-relationship diagram) before I write code. Clean architecture starts there.",
-        },
-        {
-          title: "Team discipline",
-          body: "Tickets, merge requests, CI pipelines and code review. Small changes, clear definitions of done.",
-        },
-        {
-          title: "Done means online",
-          body: "I take a product from the spec to a server with a domain. A project is finished when people can use it.",
-        },
-      ],
-    },
-    aboutPreview: {
-      title: "I design and ship real products for real businesses.",
-      body:
-        "I am a full-stack and DevOps engineer from Douala. I build multi-tenant SaaS, document marketplaces, back-office tools and business websites, and I explain the tech in simple words.",
-    },
     about: {
       intro: "I design and ship real products, for real businesses.",
       paragraphs: [
@@ -196,7 +173,6 @@ export const content = {
     },
     skills: {
       title: "Tech Stack",
-      intro: "The tools I use to build and ship. Levels are honest labels, not percentages.",
       legendTitle: "Level legend",
       filterLabel: "Filter by group",
       filterAll: "All",
@@ -212,7 +188,6 @@ export const content = {
     },
     proSkills: {
       title: "Professional Skills",
-      intro: "How I work with teams and clients, with proof from real projects.",
       items: [
         { icon: "lucide:blocks", short: true, title: "Software architecture & system design", proof: "Multi-tenant SaaS, microservices and data-first design." },
         { icon: "lucide:file-text", short: false, title: "Requirements & specifications", proof: "Specs and ERDs the client approves before I code." },
@@ -316,9 +291,7 @@ export const content = {
       ],
     },
     services: {
-      title: "What I Can Build For You",
-      intro:
-        "Three ways I can help: a product, a website, or the delivery pipeline behind them.",
+      title: "What I build",
       whatYouGet: "What you get",
       items: [
         {
@@ -357,14 +330,8 @@ export const content = {
       ],
       cta: {
         title: "Have a project? Let's talk",
-        body: "Tell me what you need. I will reply with the next steps and a realistic plan.",
+        body: "Tell me what you need. I reply with next steps and a realistic plan.",
       },
-    },
-    resumePage: {
-      title: "Resume",
-      intro:
-        "Download the CV version that matches your language preference. English and French versions are available.",
-      ready: "PDF ready for download.",
     },
     contactPage: {
       title: "Contact",
@@ -479,29 +446,6 @@ export const content = {
       chips: { ci: "CI réussie · main", deploy: "stocky.host · déploiement", langs: "EN / FR" },
       marquee: ["FULL-STACK", "DEVOPS", "SAAS", "CONCEPTION D'API", "CI/CD"],
     },
-    focus: {
-      title: "Ma façon de travailler",
-      intro: "Des habitudes simples qui rendent un logiciel plus facile à livrer et à maintenir.",
-      items: [
-        {
-          title: "Les données d'abord",
-          body: "Je modélise les données avec un MCD/ERD (schéma entité-relation) avant d'écrire du code. Une bonne architecture commence là.",
-        },
-        {
-          title: "Rigueur d'équipe",
-          body: "Tickets, merge requests, pipelines CI et revue de code. Des changements courts et des critères de fin clairs.",
-        },
-        {
-          title: "Terminé = en ligne",
-          body: "Je mène un produit de la spécification jusqu'à un serveur avec un nom de domaine. Un projet est fini quand on peut l'utiliser.",
-        },
-      ],
-    },
-    aboutPreview: {
-      title: "Je conçois et livre de vrais produits pour de vraies entreprises.",
-      body:
-        "Je suis ingénieur full-stack et DevOps, basé à Douala. Je construis des SaaS multi-tenant, des marketplaces de documents, des outils de back-office et des sites vitrines, et j'explique la technique avec des mots simples.",
-    },
     about: {
       intro: "Je conçois et livre de vrais produits, pour de vraies entreprises.",
       paragraphs: [
@@ -524,7 +468,6 @@ export const content = {
     },
     skills: {
       title: "Stack technique",
-      intro: "Les outils que j'utilise pour construire et livrer. Les niveaux sont des étiquettes honnêtes, pas des pourcentages.",
       legendTitle: "Légende des niveaux",
       filterLabel: "Filtrer par groupe",
       filterAll: "Tous",
@@ -540,14 +483,13 @@ export const content = {
     },
     proSkills: {
       title: "Compétences professionnelles",
-      intro: "Ma façon de travailler avec des équipes et des clients, avec des preuves issues de projets réels.",
       items: [
         { icon: "lucide:blocks", short: true, title: "Architecture logicielle & conception de systèmes", proof: "SaaS multi-tenant, microservices et conception centrée sur les données." },
         { icon: "lucide:file-text", short: false, title: "Besoins & spécifications", proof: "Cahiers des charges et ERD validés par le client avant le code." },
         { icon: "lucide:layout-dashboard", short: false, title: "Livraison agile par tickets", proof: "Sprints, tableaux, petites merge requests et critères de fin clairs." },
         { icon: "lucide:git-pull-request", short: true, title: "Revue de code & rigueur Git", proof: "Rebase avant merge, CI au vert obligatoire, quality gates." },
         { icon: "lucide:flask-conical", short: false, title: "Développement test-first", proof: "Tests écrits avec la fonctionnalité, ou avant." },
-        { icon: "lucide:users", short: true, title: "Leadership technique", proof: "Je dirige de petites équipes : Stocky, SmartQueue, le site de la clinique." },
+        { icon: "lucide:users", short: true, title: "Leadership technique", proof: "Je dirige de petites équipes : Stocky, SmartQueue, la clinique." },
         { icon: "lucide:languages", short: false, title: "Communication client (EN/FR)", proof: "Je transforme un besoin métier en logiciel et je l'explique simplement." },
         { icon: "lucide:rocket", short: true, title: "Esprit production", proof: "Serveurs, domaines, supervision. Un projet est fini quand il est en ligne." },
       ],
@@ -644,9 +586,7 @@ export const content = {
       ],
     },
     services: {
-      title: "Ce que je peux construire pour vous",
-      intro:
-        "Trois façons de vous aider : un produit, un site web, ou la chaîne de livraison qui les met en ligne.",
+      title: "Ce que je construis",
       whatYouGet: "Ce que vous obtenez",
       items: [
         {
@@ -685,14 +625,8 @@ export const content = {
       ],
       cta: {
         title: "Un projet ? Parlons-en",
-        body: "Dites-moi ce dont vous avez besoin. Je vous répondrai avec les prochaines étapes et un plan réaliste.",
+        body: "Dites-moi votre besoin. Je réponds avec les prochaines étapes et un plan réaliste.",
       },
-    },
-    resumePage: {
-      title: "CV",
-      intro:
-        "Téléchargez la version du CV qui correspond à votre préférence linguistique. Les versions anglaise et française sont disponibles.",
-      ready: "PDF prêt au téléchargement.",
     },
     contactPage: {
       title: "Contact",

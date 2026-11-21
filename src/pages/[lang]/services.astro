@@ -1,8 +1,9 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import SectionHeading from "../../components/SectionHeading.astro";
 import { Icon } from "astro-icon/components";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { content, locales, whatsappLink, type Locale } from "../../data/content";
+import "../../styles/pages.css";
+import "../../styles/skills.css";
 
 export function getStaticPaths() {
   return locales.map((lang) => ({ params: { lang } }));
@@ -10,48 +11,43 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Locale;
 const t = content[lang];
+const s = t.services;
 ---
 
-<BaseLayout lang={lang} title={t.nav.services}>
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <SectionHeading title={t.services.title} intro={t.services.intro} />
+<BaseLayout lang={lang} title={t.nav.services} description={s.items.map((item) => item.title).join(", ")}>
+  <section class="wrap" style="padding-top: clamp(40px, 7vw, 96px);">
+    <h1 class="sec-title">{s.title}</h1>
 
-    <div class="mt-10 grid gap-5 lg:grid-cols-3">
+    <ol class="svc">
       {
-        t.services.items.map((item) => (
-          <article class="reveal flex h-full flex-col rounded-xl border border-portfolio-line bg-white p-6 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-            <span class="grid size-11 place-items-center rounded-md bg-portfolio-paper text-portfolio-accent dark:bg-portfolio-night">
-              <Icon name={item.icon} class="size-6" aria-hidden="true" />
-            </span>
-            <h2 class="mt-5 text-xl font-black">{item.title}</h2>
-            <p class="mt-2 text-sm leading-6 text-portfolio-muted dark:text-slate-300">{item.pitch}</p>
-            <p class="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-portfolio-accent">{t.services.whatYouGet}</p>
-            <ul class="mt-3 grid gap-2 text-sm text-portfolio-ink dark:text-slate-200">
-              {
-                item.bullets.map((bullet) => (
-                  <li class="flex gap-2">
-                    <Icon name="lucide:check" class="mt-0.5 size-4 shrink-0 text-portfolio-accent" aria-hidden="true" />
-                    <span>{bullet}</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </article>
+        s.items.map((item, index) => (
+          <li class="svc-row">
+            <div class="svc-in wipe">
+              <span class="svc-num mono">{String(index + 1).padStart(2, "0")}</span>
+              <div class="svc-main">
+                <Icon name={item.icon} class="svc-icon" aria-hidden="true" />
+                <h2 class="svc-title">{item.title}</h2>
+                <p class="svc-pitch">{item.pitch}</p>
+              </div>
+              <div class="svc-get">
+                <p class="mono">{s.whatYouGet}</p>
+                <ul>
+                  {item.bullets.map((bullet) => <li>{bullet}</li>)}
+                </ul>
+              </div>
+            </div>
+          </li>
         ))
       }
-    </div>
+    </ol>
+  </section>
 
-    <div class="mt-10 rounded-xl border border-portfolio-line bg-white p-8 dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-      <h2 class="text-2xl font-black">{t.services.cta.title}</h2>
-      <p class="mt-2 max-w-2xl text-sm leading-6 text-portfolio-muted dark:text-slate-300">{t.services.cta.body}</p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a href={`/${lang}/contact/`} class="rounded-md bg-portfolio-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-portfolio-accent-solid dark:bg-slate-100 dark:text-portfolio-night dark:hover:bg-portfolio-accent-solid dark:hover:text-white">
-          {t.actions.contactMe}
-        </a>
-        <a href={whatsappLink(lang)} class="rounded-md border border-portfolio-line bg-white px-5 py-3 text-sm font-bold transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel">
-          {t.actions.whatsapp}
-        </a>
-      </div>
+  <section class="wrap svc-cta">
+    <h2 class="svc-cta-title">{s.cta.title}</h2>
+    <p class="svc-cta-body">{s.cta.body}</p>
+    <div class="svc-cta-actions">
+      <a class="btn" href={`/${lang}/contact/`}>{t.actions.contactMe}</a>
+      <a class="btn btn--ghost" href={whatsappLink(lang)} target="_blank" rel="noreferrer">{t.actions.whatsapp} ↗</a>
     </div>
   </section>
 </BaseLayout>

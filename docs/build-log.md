@@ -43,3 +43,16 @@ Short log of each step. Newest at the bottom.
 - Checked: build passes. 32 browser checks pass (open/close all ways, focus trap, search, no-match, selection wrap, navigation without reload, copy email, theme, language switch, French labels, CV search, egg in 3 ways, not triggered in a form field, clean-up, reduced motion, phone). Opened screenshots: palette dark (open and search), French light, phone, egg with confetti.
 - Bug found by looking at results: searching "cv" ranked an unrelated project first (greedy letter matching); exact pieces of the text win now.
 - Open: none.
+
+## Step 9 — Polish, copy pass, performance and accessibility
+- Copy pass with `npm run copy-check`; services page rebuilt; contrast fixes; skip-link bug fixed (it was cut off at the top).
+- Keyboard-only test: 6 pages + palette + contact form, focus always visible (15/15 checks).
+- Lighthouse (final): accessibility, best practices and SEO are 100 on all tested pages. Performance: home 62 mobile / 71 desktop, case study 62 / 66, contact 99 / 83.
+- Performance below 90 on home and case study; re-test on a real deploy (PageSpeed) because local measurements are noisy.
+- Animation JS: GSAP core ~28KB + ScrollTrigger ~18KB gzip (under 60KB).
+
+## Step 10 — CV
+- Printable CV pages `/en/cv/` and `/fr/cv/`, PDFs in `public/resume/` (1 A4 page each), CV button in header (`npm run cv`).
+
+## Step 11 — SEO, security and handover
+- Sitemap, robots, hreflang, OG image, JSON-LD, `public/_headers` with CSP hashes, README with deploy steps.

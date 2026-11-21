@@ -448,3 +448,8 @@
     transition: none;
   }
 }
+
+/* The float animation only runs while the map is on screen (saves battery and main-thread work). */
+.skills:not(.in-view) .skill-chip-in {
+  animation-play-state: paused;
+}

@@ -1,6 +1,5 @@
 ---
 import { Icon } from "astro-icon/components";
-import CvDownload from "./CvDownload.astro";
 import "../styles/palette.css";
 import { content, localeLabels, profile, type Locale } from "../data/content";
 
@@ -37,7 +36,7 @@ const linkActive = "bg-portfolio-accent/10 font-semibold text-portfolio-accent";
 <header class="sticky top-0 z-40 border-b border-portfolio-line/80 bg-portfolio-paper/85 backdrop-blur-xl dark:border-portfolio-night-line dark:bg-portfolio-night/85">
   <a
     href="#main"
-    class="sr-only-focusable absolute left-4 top-2 z-50 rounded-md bg-portfolio-accent-solid px-3 py-2 text-sm font-bold text-white focus:static"
+    class="sr-only-focusable absolute left-4 top-2 z-50 rounded-md bg-portfolio-accent-solid px-3 py-2 text-sm font-bold text-white"
   >
     {t.actions.skipToContent}
   </a>
@@ -68,7 +67,7 @@ const linkActive = "bg-portfolio-accent/10 font-semibold text-portfolio-accent";
 
     <div class="hidden items-center gap-2 md:flex">
       <button type="button" class="kbd" data-palette-open aria-label={t.palette.open}><span data-palette-key>Ctrl K</span></button>
-      <CvDownload lang={lang} compact />
+      <a class="cv-btn" href={profile.resume[lang]} download>{t.footer.cv}</a>
       <a
         href={otherPath}
         class="rounded-md border border-portfolio-line bg-portfolio-panel px-3 py-2 text-sm font-bold text-portfolio-ink transition hover:border-portfolio-accent hover:text-portfolio-accent dark:border-portfolio-night-line dark:bg-portfolio-night-panel dark:text-slate-100"
@@ -111,7 +110,7 @@ const linkActive = "bg-portfolio-accent/10 font-semibold text-portfolio-accent";
         </nav>
         <button type="button" class="kbd mt-3 w-full justify-center" data-palette-open aria-label={t.palette.open}><span data-palette-key>Ctrl K</span> · {t.palette.open}</button>
         <div class="mt-3 grid grid-cols-[1fr_auto_auto] items-center gap-2 border-t border-portfolio-line pt-3 dark:border-portfolio-night-line">
-          <CvDownload lang={lang} compact />
+          <a class="cv-btn" href={profile.resume[lang]} download>{t.footer.cv}</a>
           <a
             href={otherPath}
             class="rounded-md border border-portfolio-line px-3 py-2 text-sm font-bold dark:border-portfolio-night-line"

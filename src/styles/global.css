@@ -384,3 +384,37 @@ html.has-spotlight .spotlight {
   margin: 0 auto;
   padding-inline: clamp(20px, 5vw, 64px);
 }
+
+/* ---- Small CV button in the header ---- */
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 9px;
+  border: 1px solid rgb(var(--fg) / 0.35);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(var(--fg));
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.cv-btn:hover {
+  background: rgb(var(--fg));
+  color: rgb(var(--base));
+}
+
+/* Below-the-fold sections skip style, layout and paint until they get near the screen (big win on phones).
+   `auto` in contain-intrinsic-size makes the browser remember the real height after the first render. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1100px;
+}
+
+/* Phones: skip the most expensive full-screen effects (film grain) to keep scrolling smooth and the first paint fast. */
+@media (max-width: 767px) {
+  .grain {
+    display: none;
+  }
+}

@@ -24,6 +24,14 @@
   font-variation-settings: "wdth" 90;
 }
 
+/* Desktop with motion: the scroll space of the pin (250% of the screen) is reserved with padding from the start,
+   so starting the animation later never changes the page height (no jump when someone presses End). */
+@media (min-width: 1024px) {
+  .pipe.will-pin {
+    padding-bottom: 250vh;
+  }
+}
+
 /* Desktop: the pinned stage fills the screen under the header */
 @media (min-width: 1024px) {
   .pipe-stage {
@@ -268,7 +276,7 @@ html:not(.dark) .term {
 
   .pipe-step .pipe-text,
   .pipe-step .pipe-label {
-    opacity: 0.45;
+    opacity: 0.78;
     transition: opacity 0.5s ease;
   }
 

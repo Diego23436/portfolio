@@ -77,10 +77,10 @@ const edges = architecture.edges.map(([fromId, toId]) => {
         <path class="arch-arrow" d="M 0 1 L 9 5 L 0 9 z" />
       </marker>
     </defs>
-    {edges.map((edge) => <path class="arch-edge" d={edge.d} pathLength="1" marker-end="url(#arch-head)" data-edge />)}
+    {edges.map((edge, i) => <path class="arch-edge" d={edge.d} pathLength="1" marker-end="url(#arch-head)" style={`--i:${i}`} data-edge />)}
     {
-      nodes.map((node) => (
-        <g class="arch-node" data-node>
+      nodes.map((node, i) => (
+        <g class="arch-node" style={`--i:${i}`} data-node>
           <rect x={node.cx - NODE_W / 2} y={node.cy - NODE_H / 2} width={NODE_W} height={NODE_H} rx="16" />
           <Icon
             class="arch-icon"

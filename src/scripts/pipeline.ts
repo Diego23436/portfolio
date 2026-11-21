@@ -20,6 +20,8 @@ onPage<HTMLElement>("[data-pipeline]", (root) => {
   const fill = root.querySelector<HTMLElement>("[data-pipe-fill]");
   const term = root.querySelector<HTMLElement>("[data-term]");
   if (!track || !stage || !term) return;
+  // Reserve the pin's scroll space right away (see pipeline.css). Removed again if the animation cannot start.
+  root.classList.add("will-pin");
 
   /* ---------- Terminal typing ---------- */
   const lineEls = Array.from(term.querySelectorAll<HTMLElement>(".tl"));
@@ -73,8 +75,15 @@ onPage<HTMLElement>("[data-pipeline]", (root) => {
     });
   });
 
-  void (async () => {
-    const { gsap, ScrollTrigger } = await loadGsap({ scrollTrigger: true });
+  const start = async () => {
+    let lib: Awaited<ReturnType<typeof loadGsap>>;
+    try {
+      lib = await loadGsap({ scrollTrigger: true });
+    } catch {
+      root.classList.remove("will-pin");
+      return;
+    }
+    const { gsap, ScrollTrigger } = lib;
     if (disposed || !ScrollTrigger) return;
     mm = gsap.matchMedia();
 
@@ -87,7 +96,7 @@ onPage<HTMLElement>("[data-pipeline]", (root) => {
       gsap.set(fill, { scaleX: 0 });
       gsap.set(nodes, { opacity: 0.3, scale: 0.8 });
       gsap.set(texts, { opacity: 0, y: 14 });
-      gsap.set(labels, { opacity: 0.5 });
+      gsap.set(labels, { opacity: 0.78 });
       gsap.set(term, { opacity: 0, x: 40 });
 
       const tl = gsap.timeline({
@@ -97,6 +106,7 @@ onPage<HTMLElement>("[data-pipeline]", (root) => {
           start: "top 66px",
           end: "+=250%",
           pin: true,
+          pinSpacing: false, // the space is already reserved by CSS
           scrub: 0.5,
           anticipatePin: 1,
           onUpdate: (self) => {
@@ -111,7 +121,7 @@ onPage<HTMLElement>("[data-pipeline]", (root) => {
           .to(nodes[i], { scale: 1, duration: 0.2, ease: "power2.out" }, i + 0.2)
           .to(labels[i], { opacity: 1, duration: 0.3 }, i)
           .to(texts[i], { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, i);
-        if (i > 0) tl.to(texts[i - 1], { opacity: 0.6, duration: 0.3 }, i);
+        if (i > 0) tl.to(texts[i - 1], { opacity: 0.8, duration: 0.3 }, i);
       });
       tl.to(term, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 6.2);
       tl.to({}, { duration: 0.8 }, 6.2); // hold at the end so the log has time to type
@@ -156,10 +166,24 @@ onPage<HTMLElement>("[data-pipeline]", (root) => {
         track.style.removeProperty("--p");
       };
     });
-  })();
+  };
+
+  // The animation code loads only when the section is within about two screens (it is far below the first screen).
+  const near = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        near.disconnect();
+        void start();
+      }
+    },
+    { rootMargin: "1800px 0px" },
+  );
+  near.observe(root);
+  cleanups.push(() => near.disconnect());
 
   return () => {
     disposed = true;
+    root.classList.remove("will-pin");
     mm?.revert();
     cleanups.forEach((fn) => fn());
   };

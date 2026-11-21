@@ -55,57 +55,66 @@ onPage<HTMLElement>("[data-case]", (root) => {
     cleanups.push(() => observer.disconnect());
   }
 
-  /* ---------- Architecture diagram draws itself ---------- */
+  /* ---------- Architecture diagram draws itself (CSS transitions, the script only adds a class) ---------- */
   const arch = root.querySelector<HTMLElement>("[data-arch]");
-  if (arch && !reduced) {
-    void (async () => {
-      const { gsap, ScrollTrigger } = await loadGsap({ scrollTrigger: true });
-      if (disposed || !ScrollTrigger) return;
-      const edges = arch.querySelectorAll("[data-edge]");
-      const nodes = arch.querySelectorAll("[data-node]");
-      gsap.set(edges, { strokeDashoffset: 1 });
-      gsap.set(nodes, { opacity: 0, y: 10 });
-      const trigger = ScrollTrigger.create({
-        trigger: arch,
-        start: "top 78%",
-        once: true,
-        onEnter: () => {
-          gsap.to(nodes, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 });
-          gsap.to(edges, { strokeDashoffset: 0, duration: 0.8, stagger: 0.15, ease: "power2.inOut", delay: 0.25 });
+  if (arch) {
+    if (reduced || !("IntersectionObserver" in window)) {
+      arch.classList.add("is-drawn");
+    } else {
+      const drawObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            arch.classList.add("is-drawn");
+            drawObserver.disconnect();
+          }
         },
-      });
-      cleanups.push(() => trigger.kill());
-    })();
+        { rootMargin: "0px 0px -20% 0px" },
+      );
+      drawObserver.observe(arch);
+      cleanups.push(() => drawObserver.disconnect());
+    }
   }
 
-  /* ---------- Next project preview follows the cursor (mouse only) ---------- */
+  /* ---------- Next project preview follows the cursor (mouse only). GSAP loads on the first hover. ---------- */
   const next = root.querySelector<HTMLElement>("[data-next]");
   const preview = root.querySelector<HTMLElement>("[data-next-preview]");
   if (next && preview && hasFinePointer() && !reduced) {
-    void (async () => {
-      const { gsap } = await loadGsap();
-      if (disposed) return;
-      const x = gsap.quickTo(preview, "x", { duration: 0.5, ease: "power3.out" });
-      const y = gsap.quickTo(preview, "y", { duration: 0.5, ease: "power3.out" });
-      const move = (event: PointerEvent) => {
-        x(event.clientX + 24);
-        y(event.clientY - 70);
-      };
-      const enter = (event: PointerEvent) => {
-        gsap.set(preview, { x: event.clientX + 24, y: event.clientY - 70 });
-        gsap.to(preview, { opacity: 1, scale: 1, duration: 0.35, overwrite: true });
-      };
-      const leave = () => gsap.to(preview, { opacity: 0, duration: 0.25, overwrite: true });
-      gsap.set(preview, { scale: 0.92 });
-      next.addEventListener("pointerenter", enter);
-      next.addEventListener("pointermove", move);
-      next.addEventListener("pointerleave", leave);
-      cleanups.push(() => {
-        next.removeEventListener("pointerenter", enter);
-        next.removeEventListener("pointermove", move);
-        next.removeEventListener("pointerleave", leave);
-      });
-    })();
+    type Api = { show: (event: PointerEvent) => void; move: (event: PointerEvent) => void; hide: () => void };
+    let api: Api | null = null;
+    let loading: Promise<void> | null = null;
+    const load = () =>
+      (loading ??= loadGsap().then(({ gsap }) => {
+        if (disposed) return;
+        const x = gsap.quickTo(preview, "x", { duration: 0.5, ease: "power3.out" });
+        const y = gsap.quickTo(preview, "y", { duration: 0.5, ease: "power3.out" });
+        gsap.set(preview, { scale: 0.92 });
+        api = {
+          show: (event) => {
+            gsap.set(preview, { x: event.clientX + 24, y: event.clientY - 70 });
+            gsap.to(preview, { opacity: 1, scale: 1, duration: 0.35, overwrite: true });
+          },
+          move: (event) => {
+            x(event.clientX + 24);
+            y(event.clientY - 70);
+          },
+          hide: () => {
+            gsap.to(preview, { opacity: 0, duration: 0.25, overwrite: true });
+          },
+        };
+      }));
+    const enter = (event: PointerEvent) => {
+      void load().then(() => api?.show(event));
+    };
+    const move = (event: PointerEvent) => api?.move(event);
+    const leave = () => api?.hide();
+    next.addEventListener("pointerenter", enter);
+    next.addEventListener("pointermove", move);
+    next.addEventListener("pointerleave", leave);
+    cleanups.push(() => {
+      next.removeEventListener("pointerenter", enter);
+      next.removeEventListener("pointermove", move);
+      next.removeEventListener("pointerleave", leave);
+    });
   }
 
   return () => {

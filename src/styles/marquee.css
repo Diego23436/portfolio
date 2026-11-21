@@ -37,8 +37,10 @@
 }
 
 .marquee-big .o {
-  color: transparent;
-  -webkit-text-stroke: 1px rgb(var(--accent));
+  /* Stroke first, then a fill in the page colour: hides the inner lines the variable font leaves where its shapes overlap. */
+  color: rgb(var(--base));
+  -webkit-text-stroke: 2px rgb(var(--accent));
+  paint-order: stroke fill;
 }
 
 .marquee-big .f {

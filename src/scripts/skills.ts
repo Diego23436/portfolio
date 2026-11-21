@@ -31,20 +31,20 @@ onPage<HTMLElement>("[data-skills]", (root) => {
   let disposed = false;
 
   /* ---------- Entrance: chips pop in when the map comes into view ---------- */
-  if ("IntersectionObserver" in window && !prefersReducedMotion()) {
+  if ("IntersectionObserver" in window) {
+    // .in-view: on screen (the float animation runs only then). .is-in: has been seen once (the pop-in).
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          root.classList.add("is-in");
-          observer.disconnect();
-        }
+        const on = entries.some((entry) => entry.isIntersecting);
+        root.classList.toggle("in-view", on);
+        if (on) root.classList.add("is-in");
       },
-      { threshold: 0.15 },
+      { threshold: 0.05 },
     );
     observer.observe(root);
     cleanups.push(() => observer.disconnect());
   } else {
-    root.classList.add("is-in");
+    root.classList.add("is-in", "in-view");
   }
 
   /* ---------- Helpers ---------- */
@@ -81,9 +81,10 @@ onPage<HTMLElement>("[data-skills]", (root) => {
   let closeTimer: number | undefined;
   let active: HTMLElement | null = null;
   let gsapLib: Awaited<ReturnType<typeof loadGsap>> | null = null;
-  void loadGsap().then((lib) => {
-    gsapLib = lib;
-  });
+  const ensureGsap = () => {
+    // Loaded on the first hover: the lines still appear at once if it is not ready yet.
+    if (!gsapLib) void loadGsap().then((lib) => (gsapLib = lib));
+  };
 
   const clearLines = () => svg?.replaceChildren();
 
@@ -134,6 +135,7 @@ onPage<HTMLElement>("[data-skills]", (root) => {
     window.clearTimeout(closeTimer);
     active = chip;
     const used = JSON.parse(chip.dataset.used ?? "[]") as Used[];
+    ensureGsap();
     root.classList.add("is-focus");
     chips.forEach((other) => other.classList.toggle("is-on", other === chip));
     const slugs = new Set(used.map((u) => u.slug));

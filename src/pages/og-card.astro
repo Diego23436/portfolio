@@ -1,0 +1,45 @@
+---
+// The 1200x630 share image is drawn from this page by `npm run og` (Playwright takes the screenshot).
+import "@fontsource-variable/inter";
+import "@fontsource-variable/bricolage-grotesque/wdth.css";
+import "@fontsource-variable/jetbrains-mono";
+import { profile, cutoutImage } from "../data/content";
+const cutout = cutoutImage();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <title>OG card</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; background: #070b14; }
+      .card { position: relative; width: 1200px; height: 630px; color: #f8fafc; font-family: "Inter Variable", Inter, sans-serif;
+        background:
+          radial-gradient(ellipse 50% 70% at 78% 60%, rgb(248 250 252 / 0.16), transparent 70%),
+          linear-gradient(135deg, #0b1220, #070b14); }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgb(248 250 252 / 0.045) 1px, transparent 1px), linear-gradient(90deg, rgb(248 250 252 / 0.045) 1px, transparent 1px); background-size: 60px 60px;
+        -webkit-mask-image: radial-gradient(ellipse 80% 80% at 60% 45%, #000 20%, transparent 80%); }
+      .status { position: absolute; left: 72px; top: 64px; display: flex; align-items: center; gap: 12px; font-family: "JetBrains Mono Variable", monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: #94a3b8; }
+      .dot { width: 12px; height: 12px; border-radius: 99px; background: #c6f432; }
+      .name { position: absolute; left: 68px; top: 170px; font-family: "Bricolage Grotesque Variable", sans-serif; font-weight: 800; font-variation-settings: "wdth" 90; font-size: 150px; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; }
+      .name span { display: block; }
+      .name .o { color: #0a101d; -webkit-text-stroke: 6px #94a3b8; paint-order: stroke fill; }
+      .title { position: absolute; left: 72px; bottom: 112px; font-size: 34px; font-weight: 600; letter-spacing: -0.01em; }
+      .url { position: absolute; left: 72px; bottom: 60px; font-family: "JetBrains Mono Variable", monospace; font-size: 22px; color: #94a3b8; }
+      .photo { position: absolute; right: 40px; bottom: 0; height: 590px; width: auto; filter: drop-shadow(-2px 0 0 rgb(226 232 240 / 0.5)) drop-shadow(-18px 0 30px rgb(203 213 225 / 0.2)) drop-shadow(0 30px 40px rgb(0 0 0 / 0.5)); }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="grid"></div>
+      <p class="status"><i class="dot"></i>Available for work · Douala, CM</p>
+      <p class="name"><span>NK</span><span class="o">FORLAN</span></p>
+      <p class="title">{profile.title}</p>
+      <p class="url">nkforlan.tech</p>
+      {cutout && <img class="photo" src={cutout.src} width={cutout.width} height={cutout.height} alt="" />}
+    </div>
+  </body>
+</html>

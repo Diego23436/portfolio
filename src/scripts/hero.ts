@@ -3,55 +3,50 @@ import { hasFinePointer, loadGsap, prefersReducedMotion } from "./motion";
 import { initMagnetic } from "./interactions";
 
 /**
- * Home hero: entrance timeline, rotating word, counters, photo tilt, chip drift, magnetic buttons.
+ * Home hero. The entrance itself is CSS only (hero.css), so the headline never waits for this script.
+ * This script adds: counters, rotating word, photo tilt, chip drift and magnetic buttons.
  * The clock and the "Copy email" button are handled by foundation.ts (they also appear in the footer).
  */
 onPage<HTMLElement>("[data-hero]", (hero, { initial }) => {
-  // Reduced motion: everything is visible at once, no rotation, no tilt.
-  if (prefersReducedMotion()) {
-    hero.classList.add("is-ready");
-    return;
-  }
-  // Coming from another page (View Transition): no entrance, the hero is simply there.
-  if (!initial) hero.classList.add("is-ready");
-
   let disposed = false;
   const cleanups: Array<() => void> = [];
   const all = <T extends HTMLElement>(selector: string) => Array.from(hero.querySelectorAll<T>(selector));
+  const reduced = prefersReducedMotion();
+
+  /* ---------- Counters: count up once, 1.2s (no library needed) ---------- */
+  const counters = all<HTMLElement>("[data-count]");
+  if (!reduced) {
+    // Start from 0 right away, so the final numbers never flash before the count.
+    counters.forEach((el) => (el.textContent = "0"));
+    const startAt = initial ? 1150 : 300;
+    const timer = window.setTimeout(() => {
+      const begin = performance.now();
+      const frame = (now: number) => {
+        const t = Math.min(1, (now - begin) / 1200);
+        const eased = 1 - (1 - t) * (1 - t); // easeOutQuad
+        counters.forEach((el) => {
+          el.textContent = String(Math.round((Number(el.dataset.count) || 0) * eased));
+        });
+        if (t < 1 && !disposed) requestAnimationFrame(frame);
+        else counters.forEach((el) => (el.textContent = String(Number(el.dataset.count) || 0)));
+      };
+      requestAnimationFrame(frame);
+    }, startAt);
+    cleanups.push(() => {
+      window.clearTimeout(timer);
+      counters.forEach((el) => (el.textContent = String(Number(el.dataset.count) || 0)));
+    });
+  }
+  if (reduced) return () => {};
 
   void (async () => {
+    // Let the first screen paint before loading the animation code.
+    await new Promise<void>((resolve) => (window.requestIdleCallback ? window.requestIdleCallback(() => resolve(), { timeout: 1200 }) : window.setTimeout(resolve, 300)));
+    if (disposed) return;
     const { gsap } = await loadGsap();
     if (disposed) return;
     await document.fonts.ready;
     if (disposed) return;
-
-    const top = all('[data-in="top"]');
-    const lines = all(".hero-line-in");
-    const rise = all('[data-in="rise"]');
-    const photo = all('[data-in="photo"]');
-    const glow = all('[data-in="glow"]');
-    const chips = all('[data-in="chip"]');
-    const counters = all<HTMLElement>("[data-count]");
-
-    /* ---------- Counters: count up once, 1.2s ---------- */
-    const runCounters = () => {
-      counters.forEach((el) => {
-        const target = Number(el.dataset.count) || 0;
-        const state = { value: 0 };
-        el.textContent = "0";
-        gsap.to(state, {
-          value: target,
-          duration: 1.2,
-          ease: "power2.out",
-          onUpdate: () => {
-            el.textContent = String(Math.round(state.value));
-          },
-          onComplete: () => {
-            el.textContent = String(target);
-          },
-        });
-      });
-    };
 
     /* ---------- Rotating word (every 2.2s, vertical mask slide) ---------- */
     const box = hero.querySelector<HTMLElement>("[data-words]");
@@ -59,12 +54,10 @@ onPage<HTMLElement>("[data-hero]", (hero, { initial }) => {
     let wordIndex = 0;
     let rotationCall: gsap.core.Tween | undefined;
 
-    const startRotation = (delay: number) => {
-      if (!box || words.length < 2) return;
+    if (box && words.length > 1) {
       box.style.width = `${words[0].offsetWidth}px`;
       box.classList.add("is-live");
       words.forEach((word, index) => gsap.set(word, { yPercent: index === 0 ? 0 : 130 }));
-
       const next = () => {
         rotationCall = gsap.delayedCall(2.2, next);
         const current = words[wordIndex];
@@ -76,37 +69,13 @@ onPage<HTMLElement>("[data-hero]", (hero, { initial }) => {
           .fromTo(incoming, { yPercent: 130 }, { yPercent: 0, duration: 0.6, ease: "expo.inOut" }, 0)
           .to(box, { width: incoming.offsetWidth, duration: 0.5, ease: "expo.inOut" }, 0);
       };
-      rotationCall = gsap.delayedCall(delay, next);
-    };
-
-    /* ---------- Entrance (first load only) ---------- */
-    if (initial) {
-      // The CSS start position is a pixel transform for GSAP: reset it so only yPercent moves the line.
-      gsap.set(lines, { y: 0, yPercent: 110 });
-      const tl = gsap.timeline({
-        defaults: { ease: "expo.out" },
-        onComplete: () => hero.classList.add("is-ready"),
-      });
-      tl.to(top, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0)
-        .to(lines[0], { yPercent: 0, duration: 0.9 }, 0.15)
-        .to(lines[1], { yPercent: 0, duration: 0.9 }, 0.3)
-        .fromTo(rise, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 }, 0.55)
-        .fromTo(photo, { scale: 0.96, opacity: 0 }, { scale: 1, opacity: 1, duration: 1 }, 0.7)
-        .fromTo(glow, { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "power2.out" }, 0.7)
-        .fromTo(chips, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.12 }, 0.9)
-        .call(runCounters, undefined, 1.15);
-      cleanups.push(() => tl.kill());
-      startRotation(2.2 + 1.4);
-    } else {
-      runCounters();
-      startRotation(2.2);
+      rotationCall = gsap.delayedCall(initial ? 3.6 : 2.2, next);
+      cleanups.push(() => rotationCall?.kill());
     }
-    cleanups.push(() => rotationCall?.kill());
 
     /* ---------- Chips drift slowly (deterministic, no randomness) ---------- */
-    const drifts = all("[data-drift]");
     const driftTimes = [4.6, 5.4, 6];
-    drifts.forEach((el, index) => {
+    all("[data-drift]").forEach((el, index) => {
       const tween = gsap.to(el, {
         y: index % 2 === 0 ? 6 : -6,
         duration: driftTimes[index % driftTimes.length],
@@ -129,7 +98,6 @@ onPage<HTMLElement>("[data-hero]", (hero, { initial }) => {
         x: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3.out" }),
         y: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3.out" }),
       }));
-
       const onMove = (event: PointerEvent) => {
         const bounds = hero.getBoundingClientRect();
         if (event.clientY < bounds.top || event.clientY > bounds.bottom) return;

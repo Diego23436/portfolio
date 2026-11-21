@@ -815,3 +815,35 @@
     transition: none;
   }
 }
+
+/* Architecture diagram: draws itself with CSS transitions when it scrolls into view (the script adds .is-drawn). */
+.js .arch:not(.is-drawn) [data-node] {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.js .arch:not(.is-drawn) [data-edge] {
+  stroke-dashoffset: 1;
+}
+
+.arch [data-node] {
+  transition: opacity 0.5s ease-out calc(var(--i, 0) * 0.08s), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i, 0) * 0.08s);
+}
+
+.arch [data-edge] {
+  transition: stroke-dashoffset 0.8s ease-in-out calc(0.25s + var(--i, 0) * 0.15s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .arch:not(.is-drawn) [data-node],
+  .js .arch:not(.is-drawn) [data-edge] {
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
+  }
+
+  .arch [data-node],
+  .arch [data-edge] {
+    transition: none;
+  }
+}

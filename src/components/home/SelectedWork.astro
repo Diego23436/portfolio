@@ -11,7 +11,7 @@ const main = projects.filter((project) => project.tier === "main");
 const variants = ["feature", "card", "card", "wide"] as const;
 ---
 
-<section id="work" class="wrap" style="padding-block: clamp(72px, 10vw, 140px) 0;">
+<section id="work" class="wrap defer-render" style="padding-block: clamp(72px, 10vw, 140px) 0;">
   <div class="sec-head reveal">
     <h2 class="sec-title">{t.projects.title}</h2>
     <a class="sec-link" href={`/${lang}/projects/`}>{t.projects.all} →</a>
