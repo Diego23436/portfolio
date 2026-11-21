@@ -1,0 +1,122 @@
+/* CV page: plain, black on white, ATS-friendly (real text, simple structure). One A4 page. */
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.cv-body {
+  margin: 0;
+  padding: 32px 16px;
+  background: #e5e7eb;
+  color: #111827;
+  font-family: "Inter Variable", Inter, Arial, Helvetica, sans-serif;
+  font-size: 9.6pt;
+  line-height: 1.38;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* On screen: show the sheet like a paper page */
+.cv {
+  width: 210mm;
+  max-width: 100%;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 14mm;
+  background: #fff;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 0.15);
+}
+
+.cv h1 {
+  margin: 0;
+  font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 22pt;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.cv-title {
+  margin: 2pt 0 0;
+  font-size: 11pt;
+  font-weight: 600;
+  color: #374151;
+}
+
+.cv-contact {
+  margin: 5pt 0 0;
+  font-size: 8.6pt;
+  color: #374151;
+  overflow-wrap: anywhere;
+}
+
+.cv h2 {
+  margin: 10pt 0 3pt;
+  padding-bottom: 2pt;
+  border-bottom: 0.6pt solid #9ca3af;
+  font-size: 8.6pt;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.cv p {
+  margin: 0;
+}
+
+.cv-skills {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cv-skills li {
+  margin: 1.4pt 0;
+}
+
+.cv-entry {
+  margin: 3.5pt 0;
+  break-inside: avoid;
+}
+
+.cv-entry-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 8pt;
+}
+
+.cv-when {
+  margin-left: auto;
+  color: #4b5563;
+  font-size: 8.4pt;
+}
+
+.cv-stack {
+  color: #4b5563;
+}
+
+@page {
+  size: A4;
+  margin: 14mm;
+}
+
+@media print {
+  .cv-body {
+    padding: 0;
+    background: #fff;
+  }
+
+  .cv {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
