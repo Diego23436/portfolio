@@ -39,6 +39,8 @@ export type Project = {
   team: Localized | null;
   /** true = client project: hide the repository button and show a "code private" label. */
   confidential: boolean;
+  /** Own label next to a hidden repo. null = the default "Client project, code private" from content.ts. */
+  privateLabel?: Localized | null;
   /** null = unknown (TODO), the status badge is hidden. */
   status: Localized | null;
   problem: Localized | null;
@@ -88,6 +90,7 @@ export const projects: readonly Project[] = [
     },
     team: { en: "Team of 3", fr: "Équipe de 3" },
     confidential: true,
+    privateLabel: { en: "Internship/personal project · code private", fr: "Projet de stage · code privé" },
     // TODO: ask Forlan for the status (In production / Beta / In development).
     status: null,
     problem: {
@@ -255,6 +258,7 @@ export const projects: readonly Project[] = [
     },
     team: { en: "Team project", fr: "Projet d'équipe" },
     confidential: true,
+    privateLabel: { en: "Team project · code private", fr: "Projet d'équipe · code privé" },
     status: { en: "In progress", fr: "En cours" },
     problem: {
       en: "Laundry businesses with several branches cannot follow orders, staff and prices across branches.",

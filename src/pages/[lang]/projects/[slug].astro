@@ -76,7 +76,7 @@ const sections = [
             </a>
           )
         }
-        {project.confidential && <span class="cs-private">{d.confidential}</span>}
+        {project.confidential && <span class="cs-private">{project.privateLabel?.[lang] ?? d.confidential}</span>}
       </div>
 
       <div class="cs-cover">
