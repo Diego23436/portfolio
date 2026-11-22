@@ -29,7 +29,6 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "lighthouse": "^13.6.0",
     "playwright": "^1.65.1",
     "sharp": "^0.35.5"
   }
