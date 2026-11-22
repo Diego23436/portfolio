@@ -1,6 +1,8 @@
 ---
 import "@fontsource-variable/inter";
 import "@fontsource-variable/bricolage-grotesque/wdth.css";
+import "@fontsource/instrument-serif/400-italic.css";
+import "@fontsource-variable/jetbrains-mono";
 import { content, locales, profile, projects, skillGroups, type Locale } from "../../data/content";
 import "../../styles/cv.css";
 
@@ -10,14 +12,33 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Locale;
 const t = content[lang];
-const mainProjects = projects.filter((project) => project.tier === "main");
-const labels =
+const L =
   lang === "en"
-    ? { profile: "Profile", skills: "Skills", experience: "Experience", projects: "Main projects", education: "Education", languages: "Languages", langLine: "English (first language), French (fluent)", phone: "Phone / WhatsApp" }
-    : { profile: "Profil", skills: "Compétences", experience: "Expérience", projects: "Projets principaux", education: "Formation", languages: "Langues", langLine: "Anglais (langue maternelle), français (courant)", phone: "Téléphone / WhatsApp" };
+    ? {
+        pitch: "I design the data, ship the API and the interface, and put it online.",
+        contact: "Contact", skills: "Stack", languages: "Languages", langs: [["English", "First language"], ["French", "Fluent"]],
+        education: "Education", experience: "Experience", work: "Selected work", available: "Available for work", live: "Live on the web",
+        groups: { frontend: "Front-end", backend: "Back-end", data: "Data", devops: "DevOps" },
+      }
+    : {
+        pitch: "Je conçois les données, livre l'API et l'interface, et je mets le tout en ligne.",
+        contact: "Contact", skills: "Stack", languages: "Langues", langs: [["Anglais", "Langue maternelle"], ["Français", "Courant"]],
+        education: "Formation", experience: "Expérience", work: "Projets choisis", available: "Disponible", live: "En ligne",
+        groups: { frontend: "Front-end", backend: "Back-end", data: "Données", devops: "DevOps" },
+      };
 const skillName = (skill: { name: string; nameFr?: string }) => (lang === "fr" ? (skill.nameFr ?? skill.name) : skill.name);
+// Only the strongest skills (expert or advanced), 5 per group. The full list lives on the site.
+const picks = (["frontend", "backend", "data", "devops"] as const).map((id) => {
+  const group = skillGroups.find((g) => g.id === id);
+  const items = (group?.items ?? []).filter((s) => s.level === "expert" || s.level === "advanced").slice(0, 4);
+  return { id, title: L.groups[id], items };
+}).filter((g) => g.items.length > 0);
 const site = profile.siteUrl.replace("https://", "");
 const github = profile.github.replace("https://", "");
+const work = projects.filter((p) => p.tier === "main");
+const live = projects.filter((p) => p.demoUrl);
+const demoHost = (url: string | null) => (url ? url.replace(/^https?:\/\//, "").replace(/\/$/, "") : null);
+const photo = "/images/profile/about.webp";
 ---
 
 <!doctype html>
@@ -30,84 +51,109 @@ const github = profile.github.replace("https://", "");
   </head>
   <body class="cv-body">
     <main class="cv" id="cv">
-      <header class="cv-head">
-        <h1>{profile.name}</h1>
-        <p class="cv-title">{profile.title}</p>
-        <p class="cv-contact">
-          {profile.publicEmail} · {profile.phoneDisplay} · {site} · {github} · {profile.location[lang]}
-        </p>
-      </header>
+      <aside class="cv-side">
+        <img class="cv-photo" src={photo} alt="" width="180" height="225" />
 
-      <section>
-        <h2>{labels.profile}</h2>
-        <p>{t.about.paragraphs[0]}</p>
-      </section>
+        <section>
+          <h2>{L.contact}</h2>
+          <ul class="cv-contact">
+            <li><span>@</span>{profile.publicEmail}</li>
+            <li><span>☎</span>{profile.phoneDisplay}</li>
+            <li><span>↗</span>{site}</li>
+            <li><span>⌥</span>{github}</li>
+            <li><span>⌖</span>{profile.location[lang]}</li>
+          </ul>
+        </section>
 
-      <section>
-        <h2>{labels.skills}</h2>
-        <ul class="cv-skills">
+        <section>
+          <h2>{L.skills}</h2>
           {
-            skillGroups.map((group) => (
-              <li>
-                <b>{group.title[lang]}:</b> {group.items.map((skill) => skillName(skill)).join(", ")}
-              </li>
+            picks.map((g) => (
+              <div class="cv-group">
+                <h3>{g.title}</h3>
+                <p>{g.items.map((s) => skillName(s)).join(" · ")}</p>
+              </div>
             ))
           }
-        </ul>
-      </section>
+        </section>
 
-      <section>
-        <h2>{labels.experience}</h2>
-        {
-          t.experience.items.map((item) => (
-            <article class="cv-entry">
-              <p class="cv-entry-head">
-                <span><b>{item.title}</b> · {item.place}</span>
-                {item.period && <span class="cv-when">{item.period}</span>}
-              </p>
-              <p>{item.line}</p>
-            </article>
-          ))
-        }
-      </section>
+        <section>
+          <h2>{L.education}</h2>
+          {
+            t.education.items.map((item) => (
+              <div class="cv-edu">
+                <b>{item.title}</b>
+                <span>{item.place}</span>
+                {item.period && <em>{item.period}</em>}
+              </div>
+            ))
+          }
+        </section>
 
-      <section>
-        <h2>{labels.projects}</h2>
-        {
-          mainProjects.map((project) => (
-            <article class="cv-entry">
-              <p class="cv-entry-head">
-                <span><b>{project.title}</b> · {project.roleShort[lang]}</span>
-                {project.team && <span class="cv-when">{project.team[lang]}</span>}
-              </p>
-              <p>
-                {project.hook[lang]}
-                {project.stack.length > 0 && <span class="cv-stack"> {project.stack.join(", ")}.</span>}
-              </p>
-            </article>
-          ))
-        }
-      </section>
+        <section>
+          <h2>{L.languages}</h2>
+          <ul class="cv-langs">
+            {L.langs.map(([name, level]) => <li><b>{name}</b> <span>{level}</span></li>)}
+          </ul>
+        </section>
+      </aside>
 
-      <section>
-        <h2>{labels.education}</h2>
-        {
-          t.education.items.map((item) => (
-            <article class="cv-entry">
-              <p class="cv-entry-head">
-                <span><b>{item.title}</b> · {item.place}</span>
-                {item.period && <span class="cv-when">{item.period}</span>}
-              </p>
-              {item.line && <p>{item.line}</p>}
-            </article>
-          ))
-        }
-      </section>
+      <div class="cv-main">
+        <header class="cv-head">
+          <p class="cv-status"><i></i>{L.available} · {profile.location[lang]}</p>
+          <h1>{profile.displayName}</h1>
+          <p class="cv-full">{profile.name}</p>
+          <p class="cv-role">{profile.title}</p>
+          <p class="cv-pitch">{L.pitch}</p>
+          <ul class="cv-stats">
+            {t.hero.counters.map((c) => <li><b>{c.value}</b><span>{c.label}</span></li>)}
+          </ul>
+        </header>
 
-      <section>
-        <h2>{labels.languages}</h2>
-        <p>{labels.langLine}</p>
-      </section>
+        <section>
+          <h2>{L.experience}</h2>
+          {
+            t.experience.items.map((item) => (
+              <article class="cv-row">
+                <div class="cv-row-top">
+                  <b>{item.title}</b>
+                  <span class="cv-when">{item.period}</span>
+                </div>
+                <p class="cv-place">{item.place}</p>
+                <p>{item.line}</p>
+              </article>
+            ))
+          }
+        </section>
+
+        <section>
+          <h2>{L.work}</h2>
+          {
+            work.map((project) => (
+              <article class="cv-row">
+                <div class="cv-row-top">
+                  <b>{project.title}</b>
+                  <span class="cv-when">{project.roleShort[lang]}{project.team && !["Solo", "Seul"].includes(project.team.en) ? ` · ${project.team[lang]}` : ""}</span>
+                </div>
+                <p>{project.hook[lang]}</p>
+                {(project.stack.length > 0 || project.demoUrl) && (
+                  <p class="cv-meta">
+                    {project.stack.slice(0, 5).join(" · ")}
+                    {project.stack.length > 0 && project.demoUrl ? " — " : ""}
+                    {project.demoUrl && <span class="cv-link">{demoHost(project.demoUrl)}</span>}
+                  </p>
+                )}
+              </article>
+            ))
+          }
+        </section>
+        <section>
+          <h2>{L.live}</h2>
+          <ul class="cv-live">
+            {live.map((project) => <li><b>{project.title}</b><span>{demoHost(project.demoUrl)}</span></li>)}
+          </ul>
+        </section>
+      </div>
     </main>
   </body>
 </html>
