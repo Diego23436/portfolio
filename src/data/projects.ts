@@ -90,7 +90,7 @@ export const projects: readonly Project[] = [
     },
     team: { en: "Team of 3", fr: "Équipe de 3" },
     confidential: true,
-    privateLabel: { en: "Internship/personal project · code private", fr: "Projet de stage · code privé" },
+    privateLabel: { en: "Internship & personal project · code private", fr: "Projet de stage et personnel · code privé" },
     // TODO: ask Forlan for the status (In production / Beta / In development).
     status: null,
     problem: {
