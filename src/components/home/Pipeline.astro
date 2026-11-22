@@ -8,12 +8,13 @@ const { lang } = Astro.props;
 const p = content[lang].pipeline;
 
 const logText = deployLog.lines
-  .map((line) => (line.kind === "cmd" ? `$ ${line.text}` : line.kind === "ok" ? `${line.label} ${line.value}` : line.text))
+  .map((line) => (line.kind === "cmd" ? `$ ${line.text}` : line.kind === "ok" ? `${line.label} ${line.value}`.trim() : line.text))
   .join(". ");
+const dim = (value: string) => (value ? "<span class=\"dim\">" + value + "</span>" : "");
 const logHtml = deployLog.lines
   .map((line) => {
     if (line.kind === "cmd") return `<span class="tl" data-kind="cmd"><span class="p">$</span> <span class="tx">${line.text}</span></span>`;
-    if (line.kind === "ok") return `<span class="tl" data-kind="ok"><span class="ok">✓</span> ${line.label.padEnd(8)}<span class="dim">${line.value}</span></span>`;
+    if (line.kind === "ok") return `<span class="tl" data-kind="ok"><span class="ok">✓</span> ${line.label} ${dim(line.value)}</span>`;
     return `<span class="tl" data-kind="live"><span class="liv">●</span> ${line.text}</span>`;
   })
   .join("\n");

@@ -72,7 +72,6 @@ const i18n = JSON.stringify({
   levels: Object.fromEntries(((["expert", "advanced", "working"] as const)).map((level) => [level, s.levels[level].label])),
   dots: dotCount,
   usedIn: s.usedIn,
-  noProject: s.noProject,
   close: s.close,
 });
 
@@ -190,7 +189,7 @@ const pct = (value: number, total: number) => `${((value / total) * 100).toFixed
             {cluster.chips.map((chip) => (
               <li>
                 {chip.name}: {levelLabel(chip.item.level)}.{" "}
-                {chip.used.length > 0 ? `${s.usedIn}: ${chip.used.map((u) => u.t).join(", ")}.` : s.noProject}
+                {chip.used.length > 0 ? `${s.usedIn}: ${chip.used.map((u) => u.t).join(", ")}.` : ""}
               </li>
             ))}
           </ul>

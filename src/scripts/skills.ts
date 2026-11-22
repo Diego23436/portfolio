@@ -6,7 +6,6 @@ type Texts = {
   levels: Record<string, string>;
   dots: Record<string, number>;
   usedIn: string;
-  noProject: string;
   close: string;
 };
 
@@ -71,10 +70,9 @@ onPage<HTMLElement>("[data-skills]", (root) => {
         link.textContent = project.t;
         usedBox.append(link);
       });
-    } else {
-      usedBox.textContent = text.noProject;
     }
-    target.append(title, lvl, usedBox);
+    if (used.length) target.append(title, lvl, usedBox);
+    else target.append(title, lvl);
   };
 
   /* ---------- Constellation ---------- */

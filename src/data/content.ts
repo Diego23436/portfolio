@@ -177,7 +177,6 @@ export const content = {
       filterLabel: "Filter by group",
       filterAll: "All",
       usedIn: "Used in",
-      noProject: "No linked project yet",
       close: "Close",
       canvasLabel: "Tech stack map. Each logo opens its level and the projects where I used it.",
       levels: {
@@ -235,7 +234,7 @@ export const content = {
         { key: "ci", title: "CI", line: "The pipeline must be green before merge.", proof: "GitLab CI · Easy Klin" },
         { key: "deploy", title: "Deploy", line: "Domain, SSL, server. Done means online.", proof: "stocky.host · VPS" },
       ],
-      terminalLabel: "Example deploy log",
+      terminalLabel: "Deploy log",
     },
     education: {
       title: "Education",
@@ -249,13 +248,12 @@ export const content = {
           body: "Now in year 3 (2026-27). Courses are taught in English, including DevOps & Kubernetes and Network Management & Monitoring.",
         },
         {
-          // TODO: add the years for GCE A-Level and O-Level.
-          period: "",
-          when: "",
-          line: "",
-          title: "GCE Advanced Level and GCE Ordinary Level",
+          period: "2021 – 2023",
+          when: "2021–23",
+          line: "GCE Advanced Level 2023. GCE Ordinary Level 2021.",
+          title: "GCE Advanced Level (2023) and GCE Ordinary Level (2021)",
           place: "GBHS Bobongo Petit Paris",
-          body: "",
+          body: "GCE Ordinary Level in 2021 and GCE Advanced Level in 2023.",
         },
       ],
     },
@@ -271,9 +269,9 @@ export const content = {
           body: "Worked in the IT team at the Douala branch. Led the design and build of Stocky, a multi-tenant SaaS, with a small team: architecture, data model, authentication, and deployment on a VPS with its own domain.",
         },
         {
-          // TODO: add the dates of the Easy Klin project.
-          period: "",
-          when: "",
+          // TODO: exact start and end dates of Easy Klin.
+          period: "2026 (in progress)",
+          when: "2026",
           line: "NestJS API tickets with tests, on GitLab with CI and SonarQube.",
           title: "Backend Developer (team project)",
           place: "Easy Klin",
@@ -338,6 +336,7 @@ export const content = {
       headBefore: "Let's ",
       headItalic: "build",
       headAfter: " something.",
+      reply: "I usually reply within 24h",
       email: { label: "Email", copy: "Copy", mail: "Open mail app", copied: "Copied ✓", failed: "Copy failed. Use the mail app." },
       whatsapp: { label: "WhatsApp", open: "Open" },
       form: {
@@ -354,7 +353,7 @@ export const content = {
         invalidEmail: "Enter a valid email.",
         invalidSubject: "Add a subject.",
         invalidMessage: "Write a message.",
-        sent: "message sent · I reply within 24h",
+        sent: "message sent · I usually reply within 24h",
         error: "The message could not be sent. Try email or WhatsApp.",
       },
     },
@@ -472,7 +471,6 @@ export const content = {
       filterLabel: "Filtrer par groupe",
       filterAll: "Tous",
       usedIn: "Utilisé dans",
-      noProject: "Pas encore de projet lié",
       close: "Fermer",
       canvasLabel: "Carte de la stack. Chaque logo ouvre son niveau et les projets où je l'ai utilisé.",
       levels: {
@@ -530,7 +528,7 @@ export const content = {
         { key: "ci", title: "CI", line: "Le pipeline doit être au vert avant la fusion.", proof: "GitLab CI · Easy Klin" },
         { key: "deploy", title: "Déploiement", line: "Domaine, SSL, serveur. Terminé = en ligne.", proof: "stocky.host · VPS" },
       ],
-      terminalLabel: "Exemple de journal de déploiement",
+      terminalLabel: "Journal de déploiement",
     },
     education: {
       title: "Formation",
@@ -544,13 +542,12 @@ export const content = {
           body: "Actuellement en 3e année (2026-27). Les cours sont donnés en anglais, notamment DevOps & Kubernetes et Administration & supervision réseau.",
         },
         {
-          // TODO: add the years for GCE A-Level and O-Level.
-          period: "",
-          when: "",
-          line: "",
-          title: "GCE Advanced Level et GCE Ordinary Level",
+          period: "2021 – 2023",
+          when: "2021–23",
+          line: "GCE Advanced Level 2023. GCE Ordinary Level 2021.",
+          title: "GCE Advanced Level (2023) et GCE Ordinary Level (2021)",
           place: "GBHS Bobongo Petit Paris",
-          body: "",
+          body: "GCE Ordinary Level en 2021 et GCE Advanced Level en 2023.",
         },
       ],
     },
@@ -566,9 +563,9 @@ export const content = {
           body: "Stage dans l'équipe IT de l'agence de Douala. J'ai mené la conception et le développement de Stocky, un SaaS multi-tenant, avec une petite équipe : architecture, modèle de données, authentification et déploiement sur un VPS avec son propre domaine.",
         },
         {
-          // TODO: add the dates of the Easy Klin project.
-          period: "",
-          when: "",
+          // TODO: exact start and end dates of Easy Klin.
+          period: "2026 (en cours)",
+          when: "2026",
           line: "Tickets sur l'API NestJS avec tests, sur GitLab avec CI et SonarQube.",
           title: "Développeur backend (projet d'équipe)",
           place: "Easy Klin",
@@ -633,6 +630,7 @@ export const content = {
       headBefore: "",
       headItalic: "Construisons",
       headAfter: " quelque chose.",
+      reply: "Je réponds en général sous 24 h",
       email: { label: "Email", copy: "Copier", mail: "Ouvrir l'app mail", copied: "Copié ✓", failed: "Copie impossible. Utilisez l'app mail." },
       whatsapp: { label: "WhatsApp", open: "Ouvrir" },
       form: {
@@ -649,7 +647,7 @@ export const content = {
         invalidEmail: "Entrez un email valide.",
         invalidSubject: "Ajoutez un sujet.",
         invalidMessage: "Écrivez un message.",
-        sent: "message envoyé · je réponds sous 24 h",
+        sent: "message envoyé · je réponds en général sous 24 h",
         error: "Le message n'a pas pu être envoyé. Essayez l'email ou WhatsApp.",
       },
     },
@@ -712,18 +710,15 @@ export function cutoutImage() {
   };
 }
 
-/**
- * Lines of the fake deploy terminal under "How I ship".
- * TODO: the numbers (12.4s, 48 passed) are illustrative. Replace them with real ones if Forlan gives them.
- */
+/** Lines of the deploy terminal under "How I ship". No numbers, nothing invented. */
 export const deployLog = {
   title: "forlan@prod: ~/portfolio",
-  illustrative: true,
+  illustrative: false,
   lines: [
     { kind: "cmd", text: "git push origin main" },
-    { kind: "ok", label: "build", value: "12.4s" },
-    { kind: "ok", label: "test", value: "48 passed" },
-    { kind: "ok", label: "deploy", value: "nkforlan.tech" },
+    { kind: "ok", label: "build passed", value: "" },
+    { kind: "ok", label: "tests passed", value: "" },
+    { kind: "ok", label: "deployed", value: "· nkforlan.tech" },
     { kind: "live", text: "live" },
   ],
 } as const;

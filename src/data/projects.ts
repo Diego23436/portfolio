@@ -87,7 +87,7 @@ export const projects: readonly Project[] = [
       fr: "Projet de stage chez Fast and Sure Travel. Développeur principal dans une équipe de 3 : architecture, modèle de données, authentification, journal d'audit, abonnements, serveur et domaine.",
     },
     team: { en: "Team of 3", fr: "Équipe de 3" },
-    confidential: false,
+    confidential: true,
     // TODO: ask Forlan for the status (In production / Beta / In development).
     status: null,
     problem: {
@@ -151,9 +151,10 @@ export const projects: readonly Project[] = [
       fr: "Couverture de Stocky : un tableau de bord de stock avec menu, chiffres de ventes et histogramme",
     },
     // TODO: add the repository link (or mark the project private).
+    // Repository is private on purpose (internship project, no button).
     repoUrl: null,
-    // TODO: confirm with Forlan that https://stocky.host is live, then set demoUrl.
-    demoUrl: null,
+    // stocky.host answered 200 on 2026-11-22.
+    demoUrl: "https://stocky.host",
   },
   {
     slug: "oasis-doc",
@@ -165,8 +166,7 @@ export const projects: readonly Project[] = [
     },
     kind: { en: "Document services marketplace", fr: "Marketplace de services de documents" },
     tag: { en: "Client · Solo", fr: "Client · Seul" },
-    // TODO: ask Forlan for the year.
-    year: null,
+    year: "2026",
     categories: ["client", "saas"],
     roleShort: { en: "Solo developer", fr: "Développeur unique" },
     role: {
@@ -175,8 +175,7 @@ export const projects: readonly Project[] = [
     },
     team: { en: "Solo", fr: "Seul" },
     confidential: false,
-    // TODO: ask Forlan for the status.
-    status: null,
+    status: { en: "Live", fr: "En ligne" },
     problem: {
       en: "People who need official documents (legalisation, certified translation, diploma equivalence) run between offices and get no clear tracking.",
       fr: "Ceux qui ont besoin de documents officiels (légalisation, traduction certifiée, équivalence de diplôme) courent entre les bureaux sans suivi clair.",
@@ -246,8 +245,8 @@ export const projects: readonly Project[] = [
     },
     kind: { en: "Multi-agency laundry platform", fr: "Plateforme de pressing multi-agences" },
     tag: { en: "Team · Backend", fr: "Équipe · Backend" },
-    // TODO: ask Forlan for the dates.
-    year: null,
+    // TODO: exact start and end dates.
+    year: "2026",
     categories: ["team", "saas"],
     roleShort: { en: "Backend developer", fr: "Développeur backend" },
     role: {
@@ -256,7 +255,7 @@ export const projects: readonly Project[] = [
     },
     team: { en: "Team project", fr: "Projet d'équipe" },
     confidential: true,
-    status: null,
+    status: { en: "In progress", fr: "En cours" },
     problem: {
       en: "Laundry businesses with several branches cannot follow orders, staff and prices across branches.",
       fr: "Les pressings avec plusieurs agences ne peuvent pas suivre commandes, personnel et prix d'une agence à l'autre.",
@@ -331,8 +330,7 @@ export const projects: readonly Project[] = [
     },
     kind: { en: "Smart queue system (Devops003)", fr: "Système de file d'attente (Devops003)" },
     tag: { en: "DevOps · Team of 4", fr: "DevOps · Équipe de 4" },
-    // TODO: ask Forlan for the year.
-    year: null,
+    year: "2026",
     categories: ["devops", "team"],
     roleShort: { en: "Project lead", fr: "Chef de projet" },
     role: {
@@ -341,8 +339,7 @@ export const projects: readonly Project[] = [
     },
     team: { en: "Team of 4", fr: "Équipe de 4" },
     confidential: false,
-    // TODO: ask Forlan for the status.
-    status: null,
+    status: { en: "In progress", fr: "En cours" },
     problem: {
       en: "Queues in clinics, banks and town halls are long and unfair.",
       fr: "Les files d'attente dans les cliniques, les banques et les mairies sont longues et injustes.",
@@ -403,6 +400,7 @@ export const projects: readonly Project[] = [
       fr: "Couverture de SmartQueue : une file de tickets qui traverse trois services",
     },
     // TODO: ask Forlan for the repository link.
+    // Repository is private on purpose.
     repoUrl: null,
     demoUrl: null,
   },
@@ -453,13 +451,13 @@ export const projects: readonly Project[] = [
   {
     slug: "pdv-leadex-quiz",
     tier: "more",
-    title: "PDV Leadex Quiz",
+    title: "PDV Leadex National Quiz",
     hook: {
-      en: "Exam-practice quiz platform with three roles: Student, Teacher, Administrator.",
-      fr: "Plateforme de quiz d'entraînement avec trois rôles : Étudiant, Enseignant, Administrateur.",
+      en: "GCE exam practice and timed exams, with student, teacher and admin roles.",
+      fr: "Entraînement aux examens GCE et épreuves chronométrées, avec rôles élève, enseignant et admin.",
     },
-    kind: { en: "Exam-practice quiz platform", fr: "Plateforme de quiz d'entraînement" },
-    tag: { en: "Client · Education", fr: "Client · Éducation" },
+    kind: { en: "GCE exam-practice quiz platform", fr: "Plateforme de quiz d'entraînement au GCE" },
+    tag: { en: "Education · Live", fr: "Éducation · En ligne" },
     year: null,
     categories: ["client"],
     roleShort: { en: "Full-stack developer", fr: "Développeur full-stack" },
@@ -470,13 +468,19 @@ export const projects: readonly Project[] = [
     // TODO: confirm the team size.
     team: null,
     confidential: false,
-    status: null,
-    problem: null,
-    solution: null,
+    status: { en: "Live", fr: "En ligne" },
+    problem: {
+      en: "GCE students lack a simple place to practise under real exam timing.",
+      fr: "Les élèves du GCE manquent d'un endroit simple pour s'entraîner dans les conditions réelles de temps d'examen.",
+    },
+    solution: {
+      en: "A quiz platform with a practice mode, timed exams and 3 roles: Student, Teacher and Administrator.",
+      fr: "Une plateforme de quiz avec un mode entraînement, des examens chronométrés et 3 rôles : élève, enseignant et administrateur.",
+    },
     result: null,
     highlights: {
-      en: ["3 roles: Student, Teacher, Administrator", "A formal Roles & Capabilities Guide"],
-      fr: ["3 rôles : Étudiant, Enseignant, Administrateur", "Un Guide formel des rôles et capacités"],
+      en: ["Practice mode and timed exams", "3 roles: Student, Teacher, Administrator", "I also wrote its formal Roles & Capabilities Guide"],
+      fr: ["Mode entraînement et examens chronométrés", "3 rôles : élève, enseignant, administrateur", "J'ai aussi rédigé son Guide formel des rôles et capacités"],
     },
     learning: null,
     metrics: [{ value: "3", label: { en: "user roles", fr: "rôles utilisateur" } }],
@@ -484,15 +488,15 @@ export const projects: readonly Project[] = [
     // TODO: ask Forlan for the stack.
     stack: [],
     stackIcons: [],
-    frameUrl: null,
+    frameUrl: "leadexquizapp.online",
     image: "/images/projects/pdv-leadex-quiz.svg",
     imageAlt: {
-      en: "PDV Leadex Quiz cover: a quiz question with four answer options",
-      fr: "Couverture de PDV Leadex Quiz : une question de quiz avec quatre réponses",
+      en: "PDV Leadex National Quiz cover: a quiz question with four answer options",
+      fr: "Couverture de PDV Leadex National Quiz : une question de quiz avec quatre réponses",
     },
-    // TODO: ask Forlan for the links.
+    // Stack, team size and year are unknown: hidden on purpose (TODO in data).
     repoUrl: null,
-    demoUrl: null,
+    demoUrl: "https://leadexquizapp.online",
   },
   {
     slug: "clinique-la-bienveillance",
@@ -503,7 +507,7 @@ export const projects: readonly Project[] = [
       fr: "Site de clinique bilingue FR/EN. J'ai dirigé le front-end avec 3 développeurs.",
     },
     kind: { en: "Clinic showcase website", fr: "Site vitrine de clinique" },
-    tag: { en: "Website · Team of 3", fr: "Site web · Équipe de 3" },
+    tag: { en: "Website · Live", fr: "Site web · En ligne" },
     year: null,
     categories: ["client", "team"],
     roleShort: { en: "Front-end lead", fr: "Responsable front-end" },
@@ -513,7 +517,7 @@ export const projects: readonly Project[] = [
     },
     team: { en: "Team of 3 developers", fr: "Équipe de 3 développeurs" },
     confidential: false,
-    status: null,
+    status: { en: "Live", fr: "En ligne" },
     problem: null,
     solution: null,
     result: null,
@@ -543,8 +547,7 @@ export const projects: readonly Project[] = [
       en: "Clinique La Bienveillance cover: a clinic website home page with a medical cross",
       fr: "Couverture de Clinique La Bienveillance : page d'accueil d'un site de clinique avec une croix médicale",
     },
-    // TODO: ask Forlan for the links.
     repoUrl: null,
-    demoUrl: null,
+    demoUrl: "https://cliniquelabienveillance.com",
   },
 ];

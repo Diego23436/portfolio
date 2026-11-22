@@ -56,3 +56,9 @@ Short log of each step. Newest at the bottom.
 
 ## Step 11 — SEO, security and handover
 - Sitemap, robots, hreflang, OG image, JSON-LD, `public/_headers` with CSP hashes, README with deploy steps.
+
+## Cleanup before first push
+- Removed lighthouse (use `npx lighthouse`). `docs/preview/` removed from all git history and ignored (files stay on disk).
+- Skills tooltip shows only name and level when no project is linked. Terminal log has no numbers. Contact says "I usually reply within 24h".
+- Leadex and Clinique updated (live demos); education years added; project statuses and years filled; Stocky demo shown (stocky.host answered 200).
+- CV redesigned: dark sidebar with photo, contact, stack, education, languages; main column with name, pitch, 3 numbers, experience, selected work, live links. One A4 page per language.
