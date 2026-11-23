@@ -154,8 +154,8 @@ export const content = {
     about: {
       intro: "I design and ship real products, for real businesses.",
       paragraphs: [
-        "Full-stack and DevOps engineer from Douala. I model the data first, work in tickets and merge requests, and take a product from the spec to a server with a domain.",
-        "Outside code, I am an experienced mathematics tutor. Teaching makes me better at explaining hard things simply.",
+        "Full-stack and DevOps engineer based in Douala, Cameroon. I design and build web applications, APIs and business websites, and I handle deployment, so a product goes from idea to a secure, live service.",
+        "Beyond engineering, I am an experienced mathematics tutor. Teaching sharpens how I explain technical ideas to clients and teammates, clearly and without jargon.",
       ],
       meta: "Douala, Cameroon · Open to remote work · EN / FR",
       photoCaption: "Douala, 2026",
@@ -189,13 +189,13 @@ export const content = {
       title: "Professional Skills",
       items: [
         { icon: "lucide:blocks", short: true, title: "Software architecture & system design", proof: "Clear structure, data-first design, systems that can grow." },
-        { icon: "lucide:file-text", short: false, title: "Requirements & specifications", proof: "Specs and ERDs the client approves before I code." },
-        { icon: "lucide:layout-dashboard", short: false, title: "Agile, ticket-based delivery", proof: "Sprints, boards, small merge requests and clear definitions of done." },
-        { icon: "lucide:git-pull-request", short: true, title: "Code review & Git discipline", proof: "Rebase before merge, CI must pass, quality gates." },
-        { icon: "lucide:flask-conical", short: false, title: "Test-first development", proof: "Tests written with or before the feature." },
-        { icon: "lucide:users", short: true, title: "Technical leadership", proof: "I lead small teams: scope, tickets, code review, delivery." },
+        { icon: "lucide:file-text", short: false, title: "Requirements & specifications", proof: "Clear requirements turned into a plan the client approves." },
+        { icon: "lucide:layout-dashboard", short: false, title: "Agile, ticket-based delivery", proof: "Organised delivery in short cycles, with clear goals and progress." },
+        { icon: "lucide:git-pull-request", short: true, title: "Code review & Git discipline", proof: "Reliable, reviewed code that is safe to release." },
+        { icon: "lucide:flask-conical", short: false, title: "Test-first development", proof: "Features that are tested and dependable." },
+        { icon: "lucide:users", short: true, title: "Technical leadership", proof: "I lead small teams from scope to delivery." },
         { icon: "lucide:languages", short: false, title: "Client communication (EN/FR)", proof: "I turn business needs into software, and explain it simply." },
-        { icon: "lucide:rocket", short: true, title: "Production mindset", proof: "Servers, domains, monitoring. A project is done when it is online." },
+        { icon: "lucide:rocket", short: true, title: "Production mindset", proof: "Servers, domains and monitoring. A project is done when it is online." },
       ],
     },
     projects: {
@@ -448,8 +448,8 @@ export const content = {
     about: {
       intro: "Je conçois et livre de vrais produits, pour de vraies entreprises.",
       paragraphs: [
-        "Ingénieur full-stack et DevOps à Douala. Je modélise les données d'abord, je travaille en tickets et merge requests, et je mène un produit du cahier des charges à un serveur avec un domaine.",
-        "En dehors du code, je suis répétiteur de mathématiques expérimenté. Enseigner m'aide à expliquer simplement les choses difficiles.",
+        "Ingénieur full-stack et DevOps à Douala. Je conçois et développe des applications web, des APIs et des sites d'entreprise, puis je les déploie : de l'idée à un service sécurisé en ligne.",
+        "Je suis aussi répétiteur de mathématiques expérimenté. Enseigner affine ma façon d'expliquer les idées techniques, clairement et sans jargon.",
       ],
       meta: "Douala, Cameroun · Ouvert au travail à distance · EN / FR",
       photoCaption: "Douala, 2026",
@@ -483,11 +483,11 @@ export const content = {
       title: "Compétences professionnelles",
       items: [
         { icon: "lucide:blocks", short: true, title: "Architecture logicielle & conception de systèmes", proof: "Structure claire, conception centrée sur les données, systèmes qui peuvent grandir." },
-        { icon: "lucide:file-text", short: false, title: "Besoins & spécifications", proof: "Cahiers des charges et ERD validés par le client avant le code." },
-        { icon: "lucide:layout-dashboard", short: false, title: "Livraison agile par tickets", proof: "Sprints, tableaux, petites merge requests et critères de fin clairs." },
-        { icon: "lucide:git-pull-request", short: true, title: "Revue de code & rigueur Git", proof: "Rebase avant merge, CI au vert obligatoire, quality gates." },
-        { icon: "lucide:flask-conical", short: false, title: "Développement test-first", proof: "Tests écrits avec la fonctionnalité, ou avant." },
-        { icon: "lucide:users", short: true, title: "Leadership technique", proof: "Je dirige de petites équipes : cadrage, tickets, revue de code, livraison." },
+        { icon: "lucide:file-text", short: false, title: "Besoins & spécifications", proof: "Des besoins clairs transformés en un plan validé par le client." },
+        { icon: "lucide:layout-dashboard", short: false, title: "Livraison agile par tickets", proof: "Une livraison organisée en cycles courts, avec des objectifs clairs." },
+        { icon: "lucide:git-pull-request", short: true, title: "Revue de code & rigueur Git", proof: "Un code fiable et relu, prêt à être mis en production." },
+        { icon: "lucide:flask-conical", short: false, title: "Développement test-first", proof: "Des fonctionnalités testées et fiables." },
+        { icon: "lucide:users", short: true, title: "Leadership technique", proof: "Je dirige de petites équipes, du cadrage à la livraison." },
         { icon: "lucide:languages", short: false, title: "Communication client (EN/FR)", proof: "Je transforme un besoin métier en logiciel et je l'explique simplement." },
         { icon: "lucide:rocket", short: true, title: "Esprit production", proof: "Serveurs, domaines, supervision. Un projet est fini quand il est en ligne." },
       ],
