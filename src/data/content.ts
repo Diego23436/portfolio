@@ -93,7 +93,7 @@ export const content = {
     meta: {
       title: "Nk Forlan | Full-Stack & DevOps Engineer in Douala",
       description:
-        "Portfolio of Nk Forlan, a full-stack and DevOps engineer in Douala, Cameroon. Multi-tenant SaaS, document marketplaces, back-office tools and business websites, from data model to production server.",
+        "Portfolio of Nk Forlan, a full-stack and DevOps engineer in Douala, Cameroon. Web apps, APIs, DevOps and business websites, from data model to production server.",
     },
     nav: {
       home: "Home",
@@ -148,7 +148,7 @@ export const content = {
         { value: 4, label: "team projects" },
         { value: 2, label: "languages" },
       ],
-      chips: { ci: "CI passed · main", deploy: "stocky.host · deploying", langs: "EN / FR" },
+      chips: { ci: "CI passed · main", deploy: "production · deploying", langs: "EN / FR" },
       marquee: ["FULL-STACK", "DEVOPS", "SAAS", "API DESIGN", "CI/CD"],
     },
     about: {
@@ -163,9 +163,9 @@ export const content = {
         title: "Now",
         updated: "Updated Nov 2026",
         items: [
-          "Shipping Stocky, with a team of 3.",
+          "Shipping SaaS products with small teams.",
           "BTech year 3 at IUC: DevOps & Kubernetes, Network Management.",
-          "Backend tickets on Easy Klin.",
+          "Backend work on NestJS APIs.",
           "Building this portfolio.",
         ],
       },
@@ -188,12 +188,12 @@ export const content = {
     proSkills: {
       title: "Professional Skills",
       items: [
-        { icon: "lucide:blocks", short: true, title: "Software architecture & system design", proof: "Multi-tenant SaaS, microservices and data-first design." },
+        { icon: "lucide:blocks", short: true, title: "Software architecture & system design", proof: "Clear structure, data-first design, systems that can grow." },
         { icon: "lucide:file-text", short: false, title: "Requirements & specifications", proof: "Specs and ERDs the client approves before I code." },
         { icon: "lucide:layout-dashboard", short: false, title: "Agile, ticket-based delivery", proof: "Sprints, boards, small merge requests and clear definitions of done." },
         { icon: "lucide:git-pull-request", short: true, title: "Code review & Git discipline", proof: "Rebase before merge, CI must pass, quality gates." },
         { icon: "lucide:flask-conical", short: false, title: "Test-first development", proof: "Tests written with or before the feature." },
-        { icon: "lucide:users", short: true, title: "Technical leadership", proof: "I lead small teams: Stocky, SmartQueue, the clinic website." },
+        { icon: "lucide:users", short: true, title: "Technical leadership", proof: "I lead small teams: scope, tickets, code review, delivery." },
         { icon: "lucide:languages", short: false, title: "Client communication (EN/FR)", proof: "I turn business needs into software, and explain it simply." },
         { icon: "lucide:rocket", short: true, title: "Production mindset", proof: "Servers, domains, monitoring. A project is done when it is online." },
       ],
@@ -227,12 +227,12 @@ export const content = {
       title: "How I ship",
       stages: [
         { key: "spec", title: "Spec", line: "I write the spec the client signs off.", proof: "cahier des charges · EN/FR" },
-        { key: "erd", title: "ERD", line: "I model the data before any code.", proof: "8 entities · Oasis-Doc" },
-        { key: "tickets", title: "Tickets", line: "Work is split into small tickets on a board.", proof: "28 tickets · Stocky" },
+        { key: "erd", title: "ERD", line: "I model the data before any code.", proof: "entities · relations · constraints" },
+        { key: "tickets", title: "Tickets", line: "Work is split into small tickets on a board.", proof: "boards · sprints · tickets" },
         { key: "code", title: "Code", line: "Tests first. Small changes.", proof: "NestJS · Next.js · TypeScript" },
-        { key: "review", title: "Review", line: "Rebase, merge request, review. Nothing lands unread.", proof: "SonarQube gate · Easy Klin" },
-        { key: "ci", title: "CI", line: "The pipeline must be green before merge.", proof: "GitLab CI · Easy Klin" },
-        { key: "deploy", title: "Deploy", line: "Domain, SSL, server. Done means online.", proof: "stocky.host · VPS" },
+        { key: "review", title: "Review", line: "Rebase, merge request, review. Nothing lands unread.", proof: "SonarQube gate · merge requests" },
+        { key: "ci", title: "CI", line: "The pipeline must be green before merge.", proof: "GitLab CI · pipelines" },
+        { key: "deploy", title: "Deploy", line: "Domain, SSL, server. Done means online.", proof: "domain · SSL · VPS" },
       ],
       terminalLabel: "Deploy log",
     },
@@ -281,10 +281,10 @@ export const content = {
           // TODO: add the start year of freelance work.
           period: "Ongoing",
           when: "Ongoing",
-          line: "Web apps and sites for local businesses: documents, back office, quiz, clinic.",
+          line: "Web apps and websites for local businesses and institutions.",
           title: "Freelance Full-Stack Developer",
           place: "Independent",
-          body: "Web apps and websites for local businesses and institutions: document services, an immigration agency back office, an education quiz platform and a clinic website.",
+          body: "Web apps and websites for local businesses and institutions: back-office tools, online services, education platforms and showcase sites.",
         },
       ],
     },
@@ -295,9 +295,9 @@ export const content = {
         {
           icon: "lucide:layers",
           title: "SaaS & Web Applications",
-          pitch: "Multi-tenant platforms and back-office tools that handle real business data.",
+          pitch: "Web platforms and back-office tools that handle real business data.",
           bullets: [
-            "Multi-tenant platforms with separate data per customer",
+            "Web platforms with roles, data and customer accounts",
             "Dashboards and admin tools",
             "REST APIs with clean documentation",
             "Roles and permissions",
@@ -306,7 +306,7 @@ export const content = {
         {
           icon: "lucide:globe",
           title: "Business Websites",
-          pitch: "Fast, bilingual showcase websites for clinics, agencies and shops.",
+          pitch: "Fast, bilingual websites for businesses, organisations and professionals.",
           bullets: [
             "French and English versions",
             "Fast and mobile-friendly pages",
@@ -388,7 +388,7 @@ export const content = {
     meta: {
       title: "Nk Forlan | Ingénieur Full-Stack & DevOps à Douala",
       description:
-        "Portfolio de Nk Forlan, ingénieur full-stack et DevOps à Douala, au Cameroun. SaaS multi-tenant, marketplaces de documents, outils de back-office et sites vitrines, du modèle de données au serveur de production.",
+        "Portfolio de Nk Forlan, ingénieur full-stack et DevOps à Douala, au Cameroun. Applications web, APIs, DevOps et sites d'entreprise, du modèle de données au serveur de production.",
     },
     nav: {
       home: "Accueil",
@@ -442,7 +442,7 @@ export const content = {
         { value: 4, label: "projets d'équipe" },
         { value: 2, label: "langues" },
       ],
-      chips: { ci: "CI réussie · main", deploy: "stocky.host · déploiement", langs: "EN / FR" },
+      chips: { ci: "CI réussie · main", deploy: "production · déploiement", langs: "EN / FR" },
       marquee: ["FULL-STACK", "DEVOPS", "SAAS", "CONCEPTION D'API", "CI/CD"],
     },
     about: {
@@ -457,9 +457,9 @@ export const content = {
         title: "En ce moment",
         updated: "Mis à jour nov. 2026",
         items: [
-          "Livraison de Stocky, en équipe de 3.",
+          "Livraison de produits SaaS avec de petites équipes.",
           "BTech 3e année à l'IUC : DevOps & Kubernetes, Administration réseau.",
-          "Tickets backend sur Easy Klin.",
+          "Travail backend sur des APIs NestJS.",
           "Construction de ce portfolio.",
         ],
       },
@@ -482,12 +482,12 @@ export const content = {
     proSkills: {
       title: "Compétences professionnelles",
       items: [
-        { icon: "lucide:blocks", short: true, title: "Architecture logicielle & conception de systèmes", proof: "SaaS multi-tenant, microservices et conception centrée sur les données." },
+        { icon: "lucide:blocks", short: true, title: "Architecture logicielle & conception de systèmes", proof: "Structure claire, conception centrée sur les données, systèmes qui peuvent grandir." },
         { icon: "lucide:file-text", short: false, title: "Besoins & spécifications", proof: "Cahiers des charges et ERD validés par le client avant le code." },
         { icon: "lucide:layout-dashboard", short: false, title: "Livraison agile par tickets", proof: "Sprints, tableaux, petites merge requests et critères de fin clairs." },
         { icon: "lucide:git-pull-request", short: true, title: "Revue de code & rigueur Git", proof: "Rebase avant merge, CI au vert obligatoire, quality gates." },
         { icon: "lucide:flask-conical", short: false, title: "Développement test-first", proof: "Tests écrits avec la fonctionnalité, ou avant." },
-        { icon: "lucide:users", short: true, title: "Leadership technique", proof: "Je dirige de petites équipes : Stocky, SmartQueue, la clinique." },
+        { icon: "lucide:users", short: true, title: "Leadership technique", proof: "Je dirige de petites équipes : cadrage, tickets, revue de code, livraison." },
         { icon: "lucide:languages", short: false, title: "Communication client (EN/FR)", proof: "Je transforme un besoin métier en logiciel et je l'explique simplement." },
         { icon: "lucide:rocket", short: true, title: "Esprit production", proof: "Serveurs, domaines, supervision. Un projet est fini quand il est en ligne." },
       ],
@@ -521,12 +521,12 @@ export const content = {
       title: "Comment je livre",
       stages: [
         { key: "spec", title: "Spec", line: "Je rédige le cahier des charges que le client valide.", proof: "cahier des charges · EN/FR" },
-        { key: "erd", title: "ERD", line: "Je modélise les données avant tout code.", proof: "8 entités · Oasis-Doc" },
-        { key: "tickets", title: "Tickets", line: "Le travail est découpé en petits tickets sur un tableau.", proof: "28 tickets · Stocky" },
+        { key: "erd", title: "ERD", line: "Je modélise les données avant tout code.", proof: "entités · relations · contraintes" },
+        { key: "tickets", title: "Tickets", line: "Le travail est découpé en petits tickets sur un tableau.", proof: "tableaux · sprints · tickets" },
         { key: "code", title: "Code", line: "Les tests d'abord. De petits changements.", proof: "NestJS · Next.js · TypeScript" },
-        { key: "review", title: "Revue", line: "Rebase, merge request, revue. Rien n'est fusionné sans relecture.", proof: "gate SonarQube · Easy Klin" },
-        { key: "ci", title: "CI", line: "Le pipeline doit être au vert avant la fusion.", proof: "GitLab CI · Easy Klin" },
-        { key: "deploy", title: "Déploiement", line: "Domaine, SSL, serveur. Terminé = en ligne.", proof: "stocky.host · VPS" },
+        { key: "review", title: "Revue", line: "Rebase, merge request, revue. Rien n'est fusionné sans relecture.", proof: "gate SonarQube · merge requests" },
+        { key: "ci", title: "CI", line: "Le pipeline doit être au vert avant la fusion.", proof: "GitLab CI · pipelines" },
+        { key: "deploy", title: "Déploiement", line: "Domaine, SSL, serveur. Terminé = en ligne.", proof: "domaine · SSL · VPS" },
       ],
       terminalLabel: "Journal de déploiement",
     },
@@ -575,10 +575,10 @@ export const content = {
           // TODO: add the start year of freelance work.
           period: "En cours",
           when: "En cours",
-          line: "Applications et sites pour des entreprises locales : documents, back-office, quiz, clinique.",
+          line: "Applications et sites web pour des entreprises et institutions locales.",
           title: "Développeur full-stack freelance",
           place: "Indépendant",
-          body: "Applications et sites web pour des entreprises et institutions locales : services de documents, back-office d'une agence d'immigration, plateforme de quiz éducative et site de clinique.",
+          body: "Applications et sites web pour des entreprises et institutions locales : outils de back-office, services en ligne, plateformes éducatives et sites vitrines.",
         },
       ],
     },
@@ -589,9 +589,9 @@ export const content = {
         {
           icon: "lucide:layers",
           title: "SaaS & applications web",
-          pitch: "Des plateformes multi-tenant et des outils de back-office qui gèrent de vraies données métier.",
+          pitch: "Des plateformes web et des outils de back-office qui gèrent de vraies données métier.",
           bullets: [
-            "Plateformes multi-tenant avec données séparées par client",
+            "Plateformes web avec rôles, données et comptes clients",
             "Tableaux de bord et outils d'administration",
             "APIs REST bien documentées",
             "Rôles et permissions",
@@ -600,7 +600,7 @@ export const content = {
         {
           icon: "lucide:globe",
           title: "Sites web d'entreprise",
-          pitch: "Des sites vitrines rapides et bilingues pour cliniques, agences et boutiques.",
+          pitch: "Des sites rapides et bilingues pour entreprises, organisations et professionnels.",
           bullets: [
             "Versions française et anglaise",
             "Pages rapides et adaptées au mobile",
