@@ -7,7 +7,7 @@ import { copyText } from "./toast";
 
 const root = document.documentElement;
 
-/* ---------------- Theme (dark first) ---------------- */
+/* ---------------- Theme (light by default) ---------------- */
 function storedTheme(): "dark" | "light" | null {
   try {
     const value = localStorage.getItem("theme");
