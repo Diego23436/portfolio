@@ -22,7 +22,10 @@ onPage<HTMLElement>("[data-skills]", (root) => {
   const tip = root.querySelector<HTMLElement>("[data-tip]");
   const svg = root.querySelector<SVGSVGElement>("[data-lines]");
   const sheet = root.querySelector<HTMLElement>("[data-sheet]");
-  const sheetCard = root.querySelector<HTMLElement>("[data-sheet-card]");
+  // Portal: a fixed sheet inside .defer-render / .reveal is clipped to its parent (content-visibility, transforms).
+  // Moving it to <body> makes it cover the real screen. It is removed again when the page changes.
+  if (sheet) document.body.append(sheet);
+  const sheetCard = sheet?.querySelector<HTMLElement>("[data-sheet-card]") ?? null;
   const chips = Array.from(root.querySelectorAll<HTMLElement>("[data-skill]"));
   const pills = Array.from(root.querySelectorAll<HTMLElement>("[data-pill]"));
   const labels = Array.from(root.querySelectorAll<HTMLElement>(".cluster-label"));
@@ -187,7 +190,8 @@ onPage<HTMLElement>("[data-skills]", (root) => {
   const closeSheet = () => {
     if (!sheet || sheet.hidden) return;
     sheet.hidden = true;
-    opener?.focus();
+    document.documentElement.classList.remove("sheet-open");
+    opener?.focus({ preventScroll: true });
   };
   const openSheet = (button: HTMLElement) => {
     if (!sheet || !sheetCard) return;
@@ -200,11 +204,27 @@ onPage<HTMLElement>("[data-skills]", (root) => {
     done.addEventListener("click", closeSheet);
     sheetCard.append(done);
     sheet.hidden = false;
-    done.focus();
+    document.documentElement.classList.add("sheet-open");
+    done.focus({ preventScroll: true });
   };
   root.querySelectorAll<HTMLElement>("[data-skill-btn]").forEach((button) => button.addEventListener("click", () => openSheet(button)));
   sheet?.addEventListener("click", (event) => {
     if (event.target === sheet) closeSheet();
+  });
+  // Keep Tab inside the open sheet.
+  sheet?.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab" || !sheetCard) return;
+    const items = Array.from(sheetCard.querySelectorAll<HTMLElement>("a[href], button"));
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 
   const onKey = (event: KeyboardEvent) => {
@@ -222,6 +242,8 @@ onPage<HTMLElement>("[data-skills]", (root) => {
   return () => {
     disposed = true;
     window.clearTimeout(closeTimer);
+    document.documentElement.classList.remove("sheet-open");
+    sheet?.remove();
     cleanups.forEach((fn) => fn());
     void disposed;
   };

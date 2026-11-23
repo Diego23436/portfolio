@@ -343,10 +343,20 @@
 
 .sheet-card {
   width: 100%;
-  padding: 24px 20px 32px;
+  max-height: 70vh;
+  max-height: 70svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 24px 20px calc(32px + env(safe-area-inset-bottom, 0px));
   border-radius: 20px 20px 0 0;
   border: 1px solid rgb(var(--edge) / 0.2);
   background: rgb(var(--surface));
+}
+
+/* Page does not scroll behind the open sheet */
+html.sheet-open,
+html.sheet-open body {
+  overflow: hidden;
 }
 
 .sheet-close {
